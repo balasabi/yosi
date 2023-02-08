@@ -23,11 +23,11 @@ function TestKit(props) {
                 </Grid>
                 <Grid item xs={12} sm={12} md={10} lg={7} xl={4} style={{ marginLeft: "12px" }}>
                     <Grid container>
-                        <Grid item xs={3} sm={4} md={3} lg={3} xl={3} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testKitMode === "TKS" ? "#024751" : "#474747", borderBottom: state.testKitMode === "TKS" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("TKS")}>Test kit sources</CustomizedButtons>
+                        <Grid item xs={3} sm={4} md={3} lg={3} xl={4}>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testKitMode === "TKS" ? "#024751" : "#474747", borderBottom: state.testKitMode === "TKS" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("TKS")}>Test kit sources</CustomizedButtons>
                         </Grid>
-                        <Grid item xs={3} sm={4} md={3} lg={3} xl={3}>
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testKitMode === "TKT" ? "#024751" : "#474747", borderBottom: state.testKitMode === "TKT" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("TKT")}>Test kit tracking</CustomizedButtons>
+                        <Grid item xs={3} sm={4} md={3} lg={3} xl={4}>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testKitMode === "TKT" ? "#024751" : "#474747", borderBottom: state.testKitMode === "TKT" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("TKT")}>Test kit tracking</CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>

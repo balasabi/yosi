@@ -15,6 +15,11 @@ const StyledButton = styled(ListItemButton)(({ theme }) => ({
         borderRadius: '8px',
         margin: '0px 5px'
     },
+    '&:focus:within': {
+        backgroundColor: 'red',
+        borderRadius: '8px',
+        margin: '0px 5px'
+    },
 }))
 
 const Accordion = styled((props) => (
@@ -82,7 +87,7 @@ export default function Sidebar(props) {
                                         }
                                     </AccordionSummary>
                                     {item.pages.length > 0 && item.pages.map((item, index) =>
-                                        <AccordionDetails style={{ padding: '0px 0px 0px 20px' }} key={index.toString()}>
+                                        <AccordionDetails style={{ padding: '0px 5px 0px 10px' }} key={index.toString()}>
                                             {props.isOpen === true ?
                                                 <StyledButton onClick={() => handleSubUrl(item.url)}>
                                                     <ListItemIcon>{item.menuIcon}</ListItemIcon>
