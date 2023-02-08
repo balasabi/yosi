@@ -5,7 +5,7 @@ import Image from 'next/image';
 import arrow from '../../../public/Images/arrow.png';
 import _ from 'underscore';
 import Upload from '../../../public/Images/upload.png';
-import Vector from '../../../public/Images/Vector.png';
+import Barcode from '../../../public/Images/barcode.png';
 import CustomizedButtons from '../../components/CustomButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -195,7 +195,7 @@ function Dashboard(props) {
                             <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Scan patient</Typography>
                             <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Tap to scan a patient</Typography>
                             <div style={{ display:"flex",justifyContent:"center", alignItems:"center", marginTop:10, width:70,height:70,backgroundColor: "#FEC14B",borderRadius:35}}>
-                             <Image src={Vector} alt='barcode' width={"5vw"} height={"5vh"} />
+                             <Image src={Barcode} alt='Vector' width={"5vw"} height={"5vh"} />
                            </div>
                         </Grid>
                         <Grid container style={{ display: "flex", flexDirection: "row", alignItems: "center", }}>
