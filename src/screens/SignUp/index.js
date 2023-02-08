@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Typography, Grid, TextField, Button, IconButton } from '@mui/material';
+import { Typography, Grid, TextField, Button } from '@mui/material';
 import Image from 'next/image';
-import Logo from '../../../public/Images/logo.png'
-import Login from '../Login';
+import Logo from '../../../public/Images/logo.png';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 function SignUp(props) {
     const [state, setState] = useState({
@@ -12,15 +12,16 @@ function SignUp(props) {
     })
 
     const router = useRouter();
+    const isLogin = useSelector(state => state.sessionReducer.isLogin);
 
     const Login = () => {
         router.push({ pathname: '/' })
-    }
+    };
 
     return (
         <>
-            <Grid container justifyContent='center' alignItems='center' style={{ height: "100vh" }}>
-                <Grid item xs={4}>
+            <Grid container justifyContent='center' alignItems='center'>
+                <Grid item xs={12} sm={6} md={5} lg={4}>
                     <Grid container spacing={4} justifyContent='center' alignItems='center'>
                         <Grid item xs={12} textAlign='center'>
                             <Image src={Logo} alt='logo' width={240} height={80} />
@@ -35,7 +36,7 @@ function SignUp(props) {
                                 label='Email address'
                                 onChange={(e) => setState({ ...state, email: e.target.value })}
                                 error={state.emailError}
-                                value={state.email} />
+                                value={isLogin.email} />
                         </Grid>
                         <Grid item xs={8}>
                             <Button variant='contained' fullWidth style={{ backgroundColor: "#024751", textTransform: 'none', padding: "10px" }}>Continue</Button>
@@ -50,13 +51,9 @@ function SignUp(props) {
                             <Typography>or</Typography>
                             <div style={{ background: "#998E8A", height: 1, width: "15vw", marginLeft: "10px" }} />
                         </Grid>
-                        {/* <Grid item xs={8} style={{background:"#FBF7F4"}}>
-                           <IconButton ><Typography>Continue with google</Typography></IconButton> 
-                        </Grid> */}
                     </Grid>
                 </Grid>
             </Grid>
-
         </>
     )
 }

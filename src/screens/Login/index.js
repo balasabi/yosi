@@ -1,27 +1,50 @@
-import React, { useState } from 'react';
-import { Typography, Grid, TextField, Button, IconButton } from '@mui/material';
+import React, { useState, useRef } from 'react';
+import { Typography, Grid, TextField, Button } from '@mui/material';
 import Image from 'next/image';
-import Logo from '../../../public/Images/logo.png'
+import Logo from '../../../public/Images/logo.png';
 import { useRouter } from 'next/router';
-
+import CustomizedButtons from '../../components/CustomButton';
+import { login } from "../../store/actions/sessionAction";
+import { useDispatch } from 'react-redux';
 
 function Login(props) {
     const [state, setState] = useState({
         email: "",
         emailError: false,
-        password: ""
+        password: "", passwordError: false
     })
 
     const router = useRouter();
+    const dispatch = useDispatch();
+    const ref = useRef();
 
     const SignUp = () => {
         router.push({ pathname: '/sign-up' })
-    }
+    };
+
+    const loginAction = () => {
+        let isError = false;
+
+        if(state.email === null || state.email === ""){
+            setState(ref => ({...ref, emailError: true}) )
+            isError = true;
+        }
+        if(state.password === null || state.password === ""){
+            setState(ref => ({...ref, passwordError: true}) )
+            isError = true;
+        }
+        if(isError === false){
+        let data = {};
+        data.email = state.email;
+        data.password = state.password;
+        dispatch(login(data))
+        }
+    };
 
     return (
         <>
-            <Grid container justifyContent='center' alignItems='center' style={{ height: "100vh" }}>
-                <Grid item xs={4}>
+            <Grid container justifyContent='center' alignItems='center'>
+                <Grid item xs={12} sm={6} md={5} lg={4}>
                     <Grid container spacing={4} justifyContent='center' alignItems='center'>
                         <Grid item xs={12} textAlign='center'>
                             <Image src={Logo} alt='logo' width={240} height={80} />
@@ -34,25 +57,27 @@ function Login(props) {
                                 fullWidth
                                 size="small"
                                 label='Email address'
-                                onChange={(e) => setState({ ...state, email: e.target.value })}
+                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
                                 error={state.emailError}
+                                helperText={state.emailError === true ? "Please enter email" : ""}
                                 value={state.email} />
                         </Grid>
                         <Grid item xs={8}>
-                            <TextField
-                                variant='standard'
+                            <TextField variant='standard'
                                 fullWidth
                                 size="small"
                                 label='Password'
                                 value={state.password}
-                                onChange={(e) => setState({ ...state, password: e.target.value })} />
+                                error={state.passwordError}
+                                onChange={(e) => setState({ ...state, password: e.target.value, passwordError:false })} 
+                                helperText={state.passwordError ===  true ? "Please enter password" : "" }/>
                         </Grid>
                         <Grid item xs={8}>
-                            <Button variant='contained' fullWidth style={{ backgroundColor: "#024751", textTransform: 'none', padding: "10px" }}>Login</Button>
+                            <CustomizedButtons variant="contained" fullWidth onClick={() => loginAction()}>Login</CustomizedButtons>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} justifyContent='center' alignItems='center'>
-                        <Grid item xs={8} >
+                        <Grid item xs={8}>
                             <Typography align="left" style={{ lineHeight: "24px", fontSize: "14px", marginTop: "7px" }}>Do you have an account? <span><Button variant="text" style={{ color: "#024751", textTransform: "none" }} onClick={() => SignUp()}>Sign up</Button></span></Typography>
                         </Grid>
                         <Grid item xs={8} style={{ display: "flex", alignItems: "center" }}>
@@ -60,13 +85,9 @@ function Login(props) {
                             <Typography>or</Typography>
                             <div style={{ background: "#998E8A", height: 1, width: "15vw", marginLeft: "10px" }} />
                         </Grid>
-                        {/* <Grid item xs={8} style={{background:"#FBF7F4"}}>
-                           <IconButton ><Typography>Continue with google</Typography></IconButton> 
-                        </Grid> */}
                     </Grid>
                 </Grid>
             </Grid>
-
         </>
     )
 }

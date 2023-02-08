@@ -1,17 +1,19 @@
-
-import AdminLayout from "./adminLayout";
+import DefaultLayout from "./defaultLayout";
+import AdminLayout from "./adminLayout/components"
 
 const layouts = {
-  admin: AdminLayout
+   default: DefaultLayout,
+   admin: AdminLayout
 };
-const LayoutWrapper = (props) => {
-
+const LayoutWrapper = (props) => { 
+     
   const Layout = layouts[props.children.type.layout];
-  console.log("********xzdzxc******"+ props.children.type.layout)
-  // if we have a registered layout render children with said layout
+  
   if (Layout != null) {
     return <Layout {...props}>{props.children}</Layout>;
   }
+  // if not render children with fragment
+  return  <DefaultLayout {...props}>{props.children}</DefaultLayout>;
 };
 
 export default LayoutWrapper;
