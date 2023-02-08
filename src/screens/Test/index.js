@@ -24,7 +24,7 @@ function Test(props) {
                         Tests
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sm={12} md={10} lg={7} xl={4} style={{ marginLeft: "12px" }}>
+                <Grid item xs={12} sm={12} md={10} lg={7} xl={4} style={{ marginLeft: "12px", borderColor:"1px solid red" }}>
                     <Grid container>
                         <Grid item xs={2} >
                             <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "R" ? "#024751" : "#474747", borderBottom: state.testMode === "R" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("R")}>Results</CustomizedButtons>

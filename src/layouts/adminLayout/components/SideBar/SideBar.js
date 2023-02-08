@@ -84,7 +84,7 @@ export default function Sidebar(props) {
                                     {item.pages.length > 0 && item.pages.map((item, index) =>
                                         <AccordionDetails style={{ padding: '0px 0px 0px 20px' }} key={index.toString()}>
                                             {props.isOpen === true ?
-                                                <ListItemButton onClick={() => handleSubUrl(item.url)} >
+                                                <ListItemButton onClick={() => handleSubUrl(item.url)}>
                                                     <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                                     <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.title}</Typography>
                                                 </ListItemButton>
@@ -100,14 +100,14 @@ export default function Sidebar(props) {
                                 :
                                 <div key={index.toString()}>
                                     {props.isOpen === true ?
-                                        <ListItemButton onClick={() => handleUrl(item.url)}>
+                                        <ListItemButton onClick={() => handleUrl(item.url)} style={{ padding: '15px 16px' }}>
                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                             <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
                                         </ListItemButton>
                                         :
                                         <ListItemButton onClick={() => handleUrl(item.url)} style={{ display: 'flex', flexDirection: 'column' }}>
                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
-                                            <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
+                                            <Typography style={{ fontSize: item.name === "Patients" ? "16px" : "12px" && item.name === "Dashboard" ? "16px" : "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
                                         </ListItemButton>
                                     }
                                 </div>
@@ -118,18 +118,18 @@ export default function Sidebar(props) {
                             {props.isOpen === true ?
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton>
-                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#024751' }} /></ListItemIcon>
+                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#C1E2D8', backgroundColor: '#000' }} /></ListItemIcon>
                                         <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>Gowtham Ramanujam</Typography>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')}>
-                                        <ListItemIcon><LogoutIcon /></ListItemIcon>
+                                        <ListItemIcon><LogoutIcon sx={{ color: "#000" }} /></ListItemIcon>
                                         <ListItemText style={{ color: 'red' }}>Log out</ListItemText>
                                     </ListItemButton>
                                 </Grid>
                                 :
-                                <Grid item xs={12}>
+                                <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#024751' }} /></ListItemIcon>
+                                        <ListItemIcon><Avatar fontSize='10' sx={{ color: '#C1E2D8', backgroundColor: '#000' }} /></ListItemIcon>
                                         <Typography style={{ fontSize: '12px', wordWrap: 'break-word' }}>Gowtham Ramanujam</Typography>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')} style={{ display: 'flex', flexDirection: 'column' }}>

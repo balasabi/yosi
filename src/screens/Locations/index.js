@@ -69,9 +69,9 @@ function Locations(props) {
         <>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography>Lab Locations</Typography>
+                    <Typography fontWeight={800} fontSize={"24px"}>Lab Locations</Typography>
                 </Grid>
-                <Grid item xs={12} marginBottom={"20px"} >
+                <Grid item xs={12} marginBottom={"20px"}>
                     <Grid container>
                         <Grid item xs={5}>
                             <CustomSearchInput

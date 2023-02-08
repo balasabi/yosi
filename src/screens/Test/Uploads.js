@@ -14,10 +14,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Black',
-        padding: "12px"
+        padding: "12px",
+        fontWeight:800
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
+        fontSize: 17,
         fontFamily: 'Avenir',
         padding: "10px"
     },
@@ -108,13 +109,13 @@ function Uploads(props) {
                         {!!state.upload && state.upload.map((upload, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
-                                    <StyledTableCell >{upload.test_upload_name}</StyledTableCell>
-                                    <StyledTableCell >{upload.tube_number}</StyledTableCell>
-                                    <StyledTableCell >{upload.result}</StyledTableCell>
-                                    <StyledTableCell >{upload.file_name}</StyledTableCell>
-                                    <StyledTableCell >{upload.created_by}</StyledTableCell>
-                                    <StyledTableCell >{upload.created_date}</StyledTableCell>
-                                    <StyledTableCell >{upload.status}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.test_upload_name}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.tube_number}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.result}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.file_name}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.created_by}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.created_date}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{upload.status}</StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
                         ))}

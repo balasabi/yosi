@@ -15,12 +15,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         border: "none",
         color: "#848991",
-        // cursor: "none",
         fontFamily: "Avenir",
     },
     [`&.${tableCellClasses.body}`]: {
         color: "#313233",
-        // cursor: "none",
         border: "none",
         fontFamily: "Avenir"
     }
@@ -119,7 +117,7 @@ function Type(props) {
                                                 <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', borderRadius: "8px", padding: "10px" }}>
                                                     <Grid item xs={12} >
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "20px", lineHeight: "32px", fontFamily: "Avenir-Black",
+                                                            letterSpacing: "0.4px", fontWeight:800, fontSize: "20px", lineHeight: "32px", fontFamily: "Avenir-Black",
                                                             overflow: 'hidden',
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,
@@ -142,7 +140,7 @@ function Type(props) {
                                                     </Grid>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
+                                                            letterSpacing: "0.4px", fontWeight:900, color:"#10101099", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
                                                             overflow: 'hidden',
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,
@@ -150,28 +148,28 @@ function Type(props) {
                                                     </Grid>
                                                     <Grid item xs={12} style={{ marginBottom: "5px" }} >
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
+                                                            letterSpacing: "0.4px", fontWeight:900, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
                                                             overflow: 'hidden',
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,
                                                         }} color={"#313237"}>Description: </Typography>
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
+                                                            letterSpacing: "0.4px", fontWeight:400, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
                                                             overflow: 'hidden',
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,
                                                         }} color={"rgba(16, 16, 16, 0.6)"}> {type.description_1}</Typography>
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
+                                                            letterSpacing: "0.4px", fontWeight:400, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
                                                             overflow: 'hidden',
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,
                                                         }} color={"rgba(16, 16, 16, 0.6)"}> {type.description_2}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
-                                                    <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px" }}>
+                                                    <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor:"pointer" }}>
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", display: '-webkit-box',
+                                                            letterSpacing: "0.4px", fontWeight:900, fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", display: '-webkit-box',
                                                             overflow: 'hidden',
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,

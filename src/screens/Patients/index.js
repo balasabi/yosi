@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
-import { Checkbox, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Button, TablePagination } from '@mui/material';
+import { Checkbox, Table, TableBody, TableCell, TableContainer, TableHead,styled, tableCellClasses,tableRowClasses, TableRow, Paper, Grid, Button, TablePagination } from '@mui/material';
 import vector from '../../../public/Images/vector.png';
 import Image from 'next/image';
 import _ from 'underscore';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+      backgroundColor: "#E7E7E7",
+      color: theme.palette.common.black,
+      fontFamily: 'Avenir-Black',
+      padding: "3px"
+  },
+  [`&.${tableCellClasses.body}`]: {
+      fontSize: 16,
+      fontFamily: 'Avenir',
+      padding: "2px"
+  },
+}));
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  [`&.${tableRowClasses.root}`]: {
+  },
+  '&:nth-of-type(odd)': {
+      //backgroundColor: theme.palette.action.hover,
+  },
+}));
 
 class Patients extends Component {
   constructor() {
@@ -91,23 +112,24 @@ class Patients extends Component {
   render() {
     return (
       <div>
-        <Grid item xs={12} style={{ fontWeight: 'bold', fontSize: '30px' }}>Patients</Grid>
+        <Grid item xs={12} style={{ fontSize: "24px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "40px", marginBottom:"10px"}}>Patients</Grid>
         <TableContainer component={Paper} style={{ marginTop: '20px' }}>
           <Table aria-label="simple table" size='small'>
             <TableHead style={{ backgroundColor: '#E7E7E7' }}>
               <TableRow>
-                <TableCell align='right'>
+                <StyledTableCell align='right'>
                   <Checkbox 
+                  style={{display:"flex",justifyContent:"flex-start"}}
                   checked={this.state.isClickCheckBox}
                     onClick={() => this.checkBoxAction()}
                   />
-                </TableCell>
-                <TableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Name<Button onClick={this.sortedData()}><Image src={vector} alt="vector" /></Button>
-                </TableCell>
-                <TableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Email ID</TableCell>
-                <TableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Phone</TableCell>
-                <TableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>DOB<Button><Image src={vector} alt="vector" /></Button>
-                </TableCell>
+                </StyledTableCell>
+                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Name<Button onClick={this.sortedData()}><Image src={vector} alt="vector" /></Button>
+                </StyledTableCell>
+                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Email ID</StyledTableCell>
+                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Phone</StyledTableCell>
+                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>DOB<Button><Image src={vector} alt="vector" /></Button>
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -117,16 +139,17 @@ class Patients extends Component {
                   style={{ background: (index % 2) == 0 ? 'white' : '#F2F2F2' }}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell align='right'>
+                  <StyledTableCell align='right'>
                     <Checkbox
+                     style={{display:"flex",justifyContent:"flex-start"}}
                       checked={this.state.selectedPatients.includes(row.id)}
                       onClick={() => this.singleSelectAction(row.id)}
                     />
-                  </TableCell>
-                  <TableCell align="left">{row.name}</TableCell>
-                  <TableCell align="left">{row.email}</TableCell>
-                  <TableCell align="left">{row.phone}</TableCell>
-                  <TableCell align="left">{row.dob}</TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell align="left">{row.name}</StyledTableCell>
+                  <StyledTableCell align="left">{row.email}</StyledTableCell>
+                  <StyledTableCell align="left">{row.phone}</StyledTableCell>
+                  <StyledTableCell align="left">{row.dob}</StyledTableCell>
                 </TableRow>
               ))}
             </TableBody>

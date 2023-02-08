@@ -36,7 +36,7 @@ export const sideMenu = [
     {
         name: "Clients",
         menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />,
-        pages: [{ title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} /> }, { title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />, }, { title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />, }, { title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />, }]
+        pages: [{ title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />}]
     },
     {
         name: "Test kits",
@@ -47,7 +47,7 @@ export const sideMenu = [
         name: "Configure",
         menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />,
         url: '/',
-        pages: [{ title: "configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' }]
+        pages: [{ title: "Configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' }]
     },
     {
         name: "User management",

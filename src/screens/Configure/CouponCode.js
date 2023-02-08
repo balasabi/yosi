@@ -9,28 +9,6 @@ import DownArrow from "../../../public/Images/downArrow.png";
 import Image from 'next/image';
 import Edit from '../../../public/Images/editIcon.png';
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: "#E7E7E7",
-        color: theme.palette.common.black,
-        fontFamily: 'Avenir-Black',
-        padding: "12px",
-        fontWeight: 900,
-        fontSize: "18px",
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
-        fontFamily: 'Avenir',
-
-    },
-}));
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    [`&.${tableRowClasses.root}`]: {
-    },
-    '&:nth-of-type(odd)': {
-    },
-}));
-
 function CouponCode() {
 
     const [state, setState] = useState({

@@ -14,10 +14,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Black',
-        padding: "12px"
+        padding: "12px",
+        fontWeight:800
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
+        fontSize: 17,
         fontFamily: 'Avenir',
         padding: "10px"
     },
@@ -106,12 +107,12 @@ function Category(props) {
                         {!!state.category && state.category.map((category, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
-                                    <StyledTableCell >{category.name}</StyledTableCell>
-                                    <StyledTableCell >{category.code}</StyledTableCell>
-                                    <StyledTableCell >{category.short_code}</StyledTableCell>
-                                    <StyledTableCell >{category.sequence_number}</StyledTableCell>
-                                    <StyledTableCell style={{ color: "#3FA455" }}>{category.status}</StyledTableCell>
-                                    <StyledTableCell style={{ wordBreak: "break-word" }}>{category.description}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.name}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.code}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.short_code}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.sequence_number}</StyledTableCell>
+                                    <StyledTableCell style={{ color: "#3FA455",fontSize:"14px" }}>{category.status}</StyledTableCell>
+                                    <StyledTableCell style={{ wordBreak: "break-word",fontSize:"14px"}}>{category.description}</StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
                         ))}

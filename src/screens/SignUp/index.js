@@ -34,9 +34,10 @@ function SignUp(props) {
                                 fullWidth
                                 size="small"
                                 label='Email address'
-                                onChange={(e) => setState({ ...state, email: e.target.value })}
+                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
                                 error={state.emailError}
-                                value={isLogin.email} />
+                                helperText={state.emailError === true ? "Please enter email" : ""}
+                                value={state.email}  />
                         </Grid>
                         <Grid item xs={8}>
                             <Button variant='contained' fullWidth style={{ backgroundColor: "#024751", textTransform: 'none', padding: "10px" }}>Continue</Button>

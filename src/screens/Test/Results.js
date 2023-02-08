@@ -22,10 +22,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Black',
-        padding: "3px"
+        padding: "3px",
+        fontWeight:800
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
+        fontSize: 17,
         fontFamily: 'Avenir',
         padding: "2px"
     },
@@ -193,7 +194,7 @@ function Result(props) {
                                 <StyledTableCell >Test ID</StyledTableCell>
                                 <StyledTableCell >
                                     <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                        <Typography style={{ fontSize: "14.5px", fontFamily: "Avenir-Black", color: "#000" }}>Patient Name</Typography>
+                                        <Typography style={{ fontSize: "14.5px", fontFamily: "Avenir-Black", color: "#000", fontWeight:800 }}>Patient Name</Typography>
                                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
                                             <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
                                             <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />

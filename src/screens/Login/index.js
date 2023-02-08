@@ -1,17 +1,20 @@
 import React, { useState, useRef } from 'react';
-import { Typography, Grid, TextField, Button } from '@mui/material';
+import { Typography, Grid, TextField, Button, OutlinedInput, InputAdornment, IconButton } from '@mui/material';
 import Image from 'next/image';
 import Logo from '../../../public/Images/logo.png';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
 import { login } from "../../store/actions/sessionAction";
 import { useDispatch } from 'react-redux';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function Login(props) {
     const [state, setState] = useState({
         email: "",
         emailError: false,
-        password: "", passwordError: false
+        password: "",
+        passwordError: false,
+        showPassword:false
     })
 
     const router = useRouter();
@@ -30,16 +33,18 @@ function Login(props) {
             isError = true;
         }
         if(state.password === null || state.password === ""){
-            setState(ref => ({...ref, passwordError: true}) )
+            setState(ref => ({...ref, passwordError: true}))
             isError = true;
         }
         if(isError === false){
         let data = {};
         data.email = state.email;
         data.password = state.password;
-        dispatch(login(data))
+         dispatch(login(data))
         }
     };
+
+    const handleClickShowPassword = () => setState({showPassword: !state.showPassword})
 
     return (
         <>
@@ -66,7 +71,8 @@ function Login(props) {
                             <TextField variant='standard'
                                 fullWidth
                                 size="small"
-                                label='Password'
+                                type={ "password" }
+                                label={"Password"}
                                 value={state.password}
                                 error={state.passwordError}
                                 onChange={(e) => setState({ ...state, password: e.target.value, passwordError:false })} 

@@ -15,10 +15,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Black',
-        padding: "12px"
+        padding: "12px",
+        fontWeight:800
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 16,
+        fontSize: 17,
         fontFamily: 'Avenir',
         padding: "10px"
     },
@@ -106,10 +107,10 @@ function Classification(props) {
                         {!!state.classification && state.classification.map((classification, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
-                                    <StyledTableCell >{classification.name}</StyledTableCell>
-                                    <StyledTableCell >{classification.code}</StyledTableCell>
-                                    <StyledTableCell >{classification.test_type}</StyledTableCell>
-                                    <StyledTableCell >{classification.test_groups}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.name}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.code}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.test_type}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.test_groups}</StyledTableCell>
                                     <StyledTableCell style={{ color: "#3FA455" }}>{classification.status}</StyledTableCell>
                                     <StyledTableCell >
                                         <div style={{ display: "flex", flexDirection: "row" }}>
