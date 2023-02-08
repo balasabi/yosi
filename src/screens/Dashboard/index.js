@@ -47,8 +47,7 @@ function Dashboard(props) {
             { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
             { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CRAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
             { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-            { "id": 5, "testId": "WEL-00020", "patientName": "Mani ", "testType": "Insurance CRAB test", "collectionDate": "16/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" }
-        ],
+             ],
         isClickCheckBox: false,
         selectedPatients: [],
         test: null,
@@ -85,19 +84,19 @@ function Dashboard(props) {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "40px" }}>
+                    <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "20px" }}>
                         Dashboard
                     </Typography>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "40px", marginRight: 10 }}>
+                    <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "20px", marginRight: 10 }}>
                         Recent patients
                     </Typography>
                     <Typography style={{ fontFamily: 'Avenir', fontSize: "15px", justifyContent: "center", alignItems: "center", borderRadius: 5, paddingRight: 3, paddingLeft: 3, border: "1px solid #474747", }}>
                         See more
                     </Typography>
                 </Grid>
-                <Grid item xs={12} marginTop={"5px"}>
+                <Grid item xs={12} marginTop={"1px"}>
                     <Paper>
                         <TableContainer>
                             <Table>
@@ -140,7 +139,7 @@ function Dashboard(props) {
                     </Paper>
                 </Grid>
                 <Grid item xs={8} style={{ display: "flex", flexDirection: "row", }}>
-                    <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "25px", padding: "15px", borderRadius: "15px" }} >
+                    <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "2px", padding: "10px", borderRadius: "15px" }} >
                         <Grid item xs={12} style={{ border: "2px dashed #D9D9D9", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "25px" }}>
                             <Image src={Upload} alt='upload' width={"20vw"} height={"20vh"} />
                             <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Upload test</Typography>
