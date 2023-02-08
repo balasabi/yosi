@@ -15,7 +15,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontFamily: 'Avenir-Black',
         padding: "12px",
         fontWeight:900,
-        fontSize:"18px"
+        fontSize:"18px",
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 16,
@@ -36,11 +36,11 @@ function CountryCode(){
         page: 0,
         rowsPerPage: 10,
         countryCode: [
-            { 'Code': '+91', 'Name': 'India', 'ISO': 'IND', 'Status': 'Active', 'Action': '05/05/1998' },
-            { 'Code': '+1', 'Name': 'United States of America', 'ISO': 'USA', 'Status': 'Active', 'Action': '05/05/1998' },
-            { 'Code': '+4', 'Name': 'Colombia', 'ISO': 'COL', 'Status': 'Active', 'Action': '05/05/1998' },
-            { 'Code': '+5', 'Name': 'Pakistan', 'ISO': 'PAK', 'Status': 'Active', 'Action': '05/05/1998' },
-            { 'Code': '+34', 'Name': 'Africa', 'ISO': 'AFR', 'Status': 'Active', 'Action': '05/05/1998' },
+            { 'Code': '+91', 'Name': 'India', 'ISO': 'IND', 'Status': 'Active', 'Action': '' },
+            { 'Code': '+1', 'Name': 'United States of America', 'ISO': 'USA', 'Status': 'Active', 'Action': '' },
+            { 'Code': '+4', 'Name': 'Colombia', 'ISO': 'COL', 'Status': 'Active', 'Action': '' },
+            { 'Code': '+5', 'Name': 'Pakistan', 'ISO': 'PAK', 'Status': 'Active', 'Action': '' },
+            { 'Code': '+34', 'Name': 'Africa', 'ISO': 'AFR', 'Status': 'Active', 'Action': '' },
         ]
     },
     )
@@ -82,10 +82,10 @@ function CountryCode(){
                     <TableHead>
                         <TableRow>
                             <StyledTableCell style={{ width: "210px" }}>Code</StyledTableCell>
-                            <StyledTableCell style={{ width: "130px" }}>Name</StyledTableCell>
-                            <StyledTableCell >ISO</StyledTableCell>
-                            <StyledTableCell >Status</StyledTableCell>
-                            <StyledTableCell >Action</StyledTableCell>
+                            <StyledTableCell style={{ width: "300px" }}>Name</StyledTableCell>
+                            <StyledTableCell style={{ width: "200px" }}>ISO</StyledTableCell>
+                            <StyledTableCell style={{ width: "200px" }}>Status</StyledTableCell>
+                            <StyledTableCell style={{ width: "100px" }}>Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     {!!state.countryCode && state.countryCode.map((code, index) => (
@@ -94,7 +94,7 @@ function CountryCode(){
                                 <StyledTableCell style={{fontSize: "14px"}}>{code.Code}</StyledTableCell>
                                 <StyledTableCell style={{fontSize: "14px"}}>{code.Name}</StyledTableCell>
                                 <StyledTableCell style={{fontSize: "14px"}}>{code.ISO}</StyledTableCell>
-                                <StyledTableCell style={{color: "#024751"}}>{code.Action}</StyledTableCell>
+                                <StyledTableCell style={{fontSize: "14px"}}>{code.Status}</StyledTableCell>
                                 <StyledTableCell >
                                     <div style={{ display: "flex", flexDirection: "row" }}>
                                         <Image src={Edit} alt='edit' width={18} height={18} />
