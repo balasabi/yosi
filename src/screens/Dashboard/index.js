@@ -45,8 +45,8 @@ function Dashboard(props) {
         userTest: [
             { "id": 1, "testId": "WEL-00001", "patientName": "Basco", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
             { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-            { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CRAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-            { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
+            { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00014", "result": "Negative", "analysis": "result available" },
+            { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00015", "result": "Negative", "analysis": "result available" },
              ],
         isClickCheckBox: false,
         selectedPatients: [],
@@ -189,7 +189,7 @@ function Dashboard(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={4} style={{ display: "flex", flexDirection: "row", }}>
-                    <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "25px", padding: "15px", borderRadius: "15px" }} >
+                    <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "2px", padding: "10px", borderRadius: "15px" }} >
                         <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Scan patient</Typography>
                             <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Tap to scan a patient</Typography>
