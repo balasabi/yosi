@@ -9,7 +9,6 @@ import IdentificationBadge from '../../public/Images/IdentificationBadge.png';
 import UsersThree from '../../public/Images/UsersThree.png';
 import IdentificationCard from '../../public/Images/IdentificationCard.png';
 
-
 export const sideMenu = [
     {
         name: "Dashboard",
@@ -58,6 +57,6 @@ export const sideMenu = [
     {
         name: "Custom reports",
         menuIcon: <Image src={Notebook} alt={"Ellipse"} width={20} height={20} />,
-        url: '/custom-report',
+        // url: '/custom-report',
         pages: []
     }];

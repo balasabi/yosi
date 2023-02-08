@@ -9,6 +9,14 @@ import { AccordionDetails, Grid, ListItemButton, Avatar, Typography, ListItemIco
 import { sideMenu } from '../../../../helpers/pages';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+const StyledButton = styled(ListItemButton)(({ theme }) => ({
+    '&:focus': {
+        backgroundColor: '#C1E2D8',
+        borderRadius: '8px',
+        margin: '0px 5px'
+    },
+}))
+
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -18,7 +26,7 @@ const Accordion = styled((props) => (
     },
     '&:before': {
         display: 'none',
-    },
+    }
 }));
 
 const AccordionSummary = styled((props) => (
@@ -34,21 +42,13 @@ const AccordionSummary = styled((props) => (
     '& .MuiAccordionSummary-content': {
         whiteSpace: "nowrap",
         padding: '0px 0px 0px 0px'
-    },
-
+    }
 }));
 
 export default function Sidebar(props) {
     const [expanded, setExpanded] = useState(false);
 
     const router = useRouter();
-
-    const input = {
-        fontFamily: 'Avenir',
-        fontSize: '16px',
-        fontWeight: '400',
-        lineHeight: '24px'
-    }
 
     const handleUrl = (param) => {
         let selectedUrl = sideMenu.find((item) => item.url === param)
@@ -58,7 +58,7 @@ export default function Sidebar(props) {
     const handleSubUrl = (param) => {
         router.push(param)
     };
-    const { classes } = props;
+
     return (
         <>
             <List>
@@ -84,10 +84,10 @@ export default function Sidebar(props) {
                                     {item.pages.length > 0 && item.pages.map((item, index) =>
                                         <AccordionDetails style={{ padding: '0px 0px 0px 20px' }} key={index.toString()}>
                                             {props.isOpen === true ?
-                                                <ListItemButton onClick={() => handleSubUrl(item.url)}>
+                                                <StyledButton onClick={() => handleSubUrl(item.url)}>
                                                     <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                                     <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.title}</Typography>
-                                                </ListItemButton>
+                                                </StyledButton>
                                                 :
                                                 <ListItemButton onClick={() => handleSubUrl(item.url)} >
                                                     <ListItemIcon>{item.menuIcon}</ListItemIcon>
@@ -100,15 +100,15 @@ export default function Sidebar(props) {
                                 :
                                 <div key={index.toString()}>
                                     {props.isOpen === true ?
-                                        <ListItemButton onClick={() => handleUrl(item.url)} style={{ padding: '15px 16px' }}>
+                                        <StyledButton onClick={() => item.url !== undefined && handleUrl(item.url)} style={{ padding: '15px 16px' }}>
                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                             <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
-                                        </ListItemButton>
+                                        </StyledButton>
                                         :
-                                        <ListItemButton onClick={() => handleUrl(item.url)} style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <StyledButton onClick={() => handleUrl(item.url)} style={{ display: 'flex', flexDirection: 'column' }}>
                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                             <Typography style={{ fontSize: item.name === "Patients" ? "16px" : "12px" && item.name === "Dashboard" ? "16px" : "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
-                                        </ListItemButton>
+                                        </StyledButton>
                                     }
                                 </div>
                         )}

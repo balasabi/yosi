@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Table, TableBody, TableCell, tableCellClasses, IconButton, TableRow, TableHead, TableContainer, Checkbox, Paper, TextField, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel} from '@mui/material';
+import { Grid, Typography, Table, TableBody, TableCell, tableCellClasses, IconButton, TableRow, TableHead, TableContainer, Checkbox, Paper, TextField, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
 import { styled } from '@mui/material';
 import Image from 'next/image';
 import arrow from '../../../public/Images/arrow.png';
 import _ from 'underscore';
 import Upload from '../../../public/Images/upload.png';
+import Vector from '../../../public/Images/Vector.png';
 import CustomizedButtons from '../../components/CustomButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -43,15 +44,15 @@ function Dashboard(props) {
     const [state, setState] = useState({
         userTest: [
             { "id": 1, "testId": "WEL-00001", "patientName": "Basco", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
-        { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-        { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CRAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-        { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-        { "id": 5, "testId": "WEL-00020", "patientName": "Mani ", "testType": "Insurance CRAB test", "collectionDate": "16/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" }
+            { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
+            { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CRAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
+            { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
+            { "id": 5, "testId": "WEL-00020", "patientName": "Mani ", "testType": "Insurance CRAB test", "collectionDate": "16/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" }
         ],
         isClickCheckBox: false,
         selectedPatients: [],
-        test:null,
-        lab:null
+        test: null,
+        lab: null
     })
 
     const checkBoxAction = () => {
@@ -120,8 +121,8 @@ function Dashboard(props) {
                                     {state.userTest !== undefined && state.userTest.map((item, index) =>
                                         <StyledTableRow key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
                                             <StyledTableCell>
-                                                <Checkbox 
-                                                checked={state.selectedPatients.includes(item.id)}
+                                                <Checkbox
+                                                    checked={state.selectedPatients.includes(item.id)}
                                                     onClick={() => singleSelectAction(item.id)} />
                                             </StyledTableCell>
                                             <StyledTableCell>{item.testId}</StyledTableCell>
@@ -181,46 +182,51 @@ function Dashboard(props) {
                                 },
                             }} />} label="Format" />
                         </Grid>
-     <Grid item xs={4}>
-     <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", border: "1px solid #024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px", borderRadius: "3px" }} onClick={() => alert("WIP")} >
-                                        Upload
-                                    </CustomizedButtons>
-                                    </Grid>
-</Grid>
-</Grid>
-<Grid item  xs={4} style={{display:"flex", flexDirection:"row", }}>
-<Grid container style={{boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop:"25px", padding:"15px", borderRadius:"15px"}} >
-<Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                        <Grid item xs={4}>
+                            <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", border: "1px solid #024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px", borderRadius: "3px" }} onClick={() => alert("WIP")} >
+                                Upload
+                            </CustomizedButtons>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid item xs={4} style={{ display: "flex", flexDirection: "row", }}>
+                    <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "25px", padding: "15px", borderRadius: "15px" }} >
+                        <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Scan patient</Typography>
                             <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Tap to scan a patient</Typography>
+                            <div style={{ display:"flex",justifyContent:"center", alignItems:"center", marginTop:10, width:70,height:70,backgroundColor: "#FEC14B",borderRadius:35}}>
+                             <Image src={Vector} alt='barcode' width={"5vw"} height={"5vh"} />
+                           </div>
                         </Grid>
-                        <Grid container  style={{display: "flex", flexDirection: "row", alignItems: "center",}}>
-                        <Grid item xs={5} style={{  border:"1px solid #D9D9D9"}}/>
-                        <Grid item xs={0}>
-                            <Typography style={{marginLeft:"5px", marginRight:"5px", fontSize: "10px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >or</Typography>
+                        <Grid container style={{ display: "flex", flexDirection: "row", alignItems: "center", }}>
+                            <Grid item xs={5} style={{ border: "1px solid #D9D9D9" }} >
+                           
                             </Grid>
-                            <Grid item xs={5} style={{  border:"1px solid #D9D9D9"}}/>
-                       </Grid>
-                        
-                       <Grid item xs={12} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                       <TextField size="small"
-                                    placeholder='Enter Patient ID'
-                                    inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" } }}
-                                    value={state.lab}
-                                    onChange={(event) => this.setState({ lab: event.target.value })}
-                                />
-                                <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "3px", marginTop:"10px"}} onClick={() => alert("WIP")} >
-                                        Find
-                                    </CustomizedButtons>
-                                    </Grid>
+                            <Grid item xs={0}>
+                                <Typography style={{ marginLeft: "5px", marginRight: "5px", fontSize: "10px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >or</Typography>
+                            </Grid>
+                            <Grid item xs={5} style={{ border: "1px solid #D9D9D9" }} />
                         </Grid>
-   </Grid>
-   
-</Grid>
+
+                        <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                            <TextField size="small"
+                                placeholder='Enter Patient ID'
+                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" } }}
+                                value={state.lab}
+                                onChange={(event) => this.setState({ lab: event.target.value })}
+                            />
+                            <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "3px", marginTop: "10px" }} onClick={() => alert("WIP")} >
+                                Find
+                            </CustomizedButtons>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+            </Grid>
 
 
 
-          
+
         </>
     )
 }

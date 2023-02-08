@@ -4,6 +4,6 @@ import { router } from 'next/router';
 export function login(data) {
 	return async dispatch => {
 		dispatch(loginSuccess(data))
-		router.push({ pathname: '/patients' })
+		router.push({ pathname: '/dashboard' })
 	}
 }

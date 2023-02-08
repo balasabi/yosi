@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
     Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
     tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, RadioGroup, FormControlLabel, Radio
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import Union from '../../../public/Images/union.png';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -60,8 +60,6 @@ function ClientTestCategory(props) {
 
     const router = useRouter();
     const dispatch = useDispatch();
-    const signPad = useRef({});
-    const testResult = useSelector(state => state.testResultReducer.testResult);
 
     const handleChangePage = (event, newPage) => {
         setState({ ...state, page: newPage });
@@ -73,13 +71,15 @@ function ClientTestCategory(props) {
 
     const addTestClose = () => {
         setState({ ...state, addTestOpen: false })
-    }
+    };
+
     const submit = async () => {
 
-    }
+    };
+
     const cancel = () => {
         setState({ ...state, addTestOpen: false })
-    }
+    };
 
     return (
         <>

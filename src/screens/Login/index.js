@@ -40,7 +40,7 @@ function Login(props) {
         let data = {};
         data.email = state.email;
         data.password = state.password;
-         dispatch(login(data))
+        dispatch(login(data))
         }
     };
 
@@ -71,12 +71,22 @@ function Login(props) {
                             <TextField variant='standard'
                                 fullWidth
                                 size="small"
-                                type={ "password" }
-                                label={"Password"}
+                                type={ state.showPassword ? "text" : "password" }
+                                label={!!state.password ?  null : "Password"}
                                 value={state.password}
                                 error={state.passwordError}
                                 onChange={(e) => setState({ ...state, password: e.target.value, passwordError:false })} 
-                                helperText={state.passwordError ===  true ? "Please enter password" : "" }/>
+                                helperText={state.passwordError ===  true ? "Please enter password" : "" }
+                                InputProps={{
+                                    endAdornment:
+                                <InputAdornment position='start'>
+                                <IconButton 
+                                onClick={handleClickShowPassword}
+                                edge={"end"}>
+                                {state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                                </InputAdornment>
+                            }}/>
                         </Grid>
                         <Grid item xs={8}>
                             <CustomizedButtons variant="contained" fullWidth onClick={() => loginAction()}>Login</CustomizedButtons>

@@ -24,25 +24,25 @@ function Test(props) {
                         Tests
                     </Typography>
                 </Grid>
-                <Grid item xs={12} sm={12} md={10} lg={7} xl={4} style={{ marginLeft: "12px" }}>
+                <Grid item xs={12} sm={12} md={10} lg={7} style={{ marginLeft: "12px" }}>
                     <Grid container>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "R" ? "#024751" : "#474747", borderBottom: state.testMode === "R" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("R")}>Results</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "R" ? "#024751" : "#474747", borderBottom: state.testMode === "R" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("R")}>Results</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "U" ? "#024751" : "#474747", borderBottom: state.testMode === "U" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("U")}>Uploads</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "U" ? "#024751" : "#474747", borderBottom: state.testMode === "U" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("U")}>Uploads</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "T" ? "#024751" : "#474747", borderBottom: state.testMode === "T" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("T")}>Types</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "T" ? "#024751" : "#474747", borderBottom: state.testMode === "T" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("T")}>Types</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "G" ? "#024751" : "#474747", borderBottom: state.testMode === "G" ? "3px solid #024751" : "none", borderRadius: "0px", marginLeft: -10 }} onClick={() => buttonAction("G")}>Groups</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "G" ? "#024751" : "#474747", borderBottom: state.testMode === "G" ? "4px solid #024751" : "none", borderRadius: "0px", marginLeft: -10 }} onClick={() => buttonAction("G")}>Groups</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "C" ? "#024751" : "#474747", borderBottom: state.testMode === "C" ? "3px solid #024751" : "none", borderRadius: "0px", marginLeft: -10 }} onClick={() => buttonAction("C")}>Category</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "C" ? "#024751" : "#474747", borderBottom: state.testMode === "C" ? "4px solid #024751" : "none", borderRadius: "0px", marginLeft: -10 }} onClick={() => buttonAction("C")}>Category</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "CL" ? "#024751" : "#474747", borderBottom: state.testMode === "CL" ? "3px solid #024751" : "none", borderRadius: "0px", marginLeft: "5px" }} onClick={() => buttonAction("CL")}>Classification</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "CL" ? "#024751" : "#474747", borderBottom: state.testMode === "CL" ? "4px solid #024751" : "none", borderRadius: "0px", marginLeft: "5px" }} onClick={() => buttonAction("CL")}>Classification</CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -27,16 +27,16 @@ function Clients(props) {
                 <Grid item xs={12} sm={7} style={{ marginLeft: "12px" }}>
                     <Grid container>
                         <Grid item xs={3}>
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "CDB" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "CDB" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("CDB")} >Client DB</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "CDB" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "CDB" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("CDB")} >Client DB</CustomizedButtons>
                         </Grid>
                         <Grid item xs={4} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "U" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "CTR" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("CTR")}>Client test results</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "U" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "CTR" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("CTR")}>Client test results</CustomizedButtons>
                         </Grid>
                         <Grid item xs={4} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "T" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "CTC" ? "3px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("CTC")}>Client test category</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "T" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "CTC" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("CTC")}>Client test category</CustomizedButtons>
                         </Grid>
                         <Grid item xs={1} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "CL" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "PA" ? "3px solid #024751" : "none", borderRadius: "0px", marginLeft: "5px" }} onClick={() => buttonAction("PA")} >Partners</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.clienteDefaultMode === "CL" ? "#024751" : "#474747", borderBottom: state.clienteDefaultMode === "PA" ? "4px solid #024751" : "none", borderRadius: "0px", marginLeft: "5px" }} onClick={() => buttonAction("PA")} >Partners</CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>
