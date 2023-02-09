@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, Table, TableBody, tableRowClasses, FormHelperText, FormControl, Select, MenuItem } from '@mui/material';
-import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
-import DownArrow from '../../../public/Images/downArrow.png';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import RightArrow from '../../../public/Images/go.png';
 
@@ -74,14 +72,21 @@ function Type(props) {
             }
         ],
         status: "",
-        result: ""
+        result: "",
+        date:""
     })
+
+    const Placeholder = ({ children }) => {
+        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
+      };
 
     const handleChange = (event, param) => {
         if (param === "S") {
             setState({ ...state, status: event.target.value });
         } else if (param === "R") {
             setState({ ...state, result: event.target.value });
+        } else if ( param === "D"){
+            setState({...state, date:e.target.value});
         }
     };
 
@@ -98,18 +103,18 @@ function Type(props) {
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                             <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 100, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight:"2px solid #E8E8E8" }}>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
                                 <Select
                                     value={state.result}
                                     onChange={(e) => handleChange(e, "R")}
                                     displayEmpty
                                     renderValue={state.result !== "" ? undefined : () => <Placeholder>All Results</Placeholder>} >
-                                    <MenuItem value={"Insurance At-Home COVID Kit"}>Insurance At-Home COVID Kit</MenuItem>
-                                    <MenuItem value={"Insurance At-Home COVID Kit 2"}>Insurance At-Home COVID Kit 2</MenuItem>
+                                <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Negative</MenuItem>
+                                <MenuItem value={"Inactive"}>Positive</MenuItem>
                                 </Select>
-                           </FormControl>
-                            
-                            <FormControl sx={{ m: 1, minWidth: 100, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 },borderRight:"2px solid #E8E8E8" }}>
+                            </FormControl>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
                                 <Select
                                     value={state.status}
                                     onChange={(e) => handleChange(e, "S")}
@@ -121,12 +126,17 @@ function Type(props) {
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
                                 </Select>
                             </FormControl>
-                            <CustomizedButtons variant={"text"} style={{ padding: "0px 15px 0px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight: "8px" }} >
-                                    Date
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"10vw"} height={"20vh"} />
-                            </CustomizedButtons>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} >
+                                <Select
+                                    value={state.date}
+                                    onChange={(e) => handleChange(e, "D")}
+                                    displayEmpty
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    renderValue={
+                                        state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
+                                    }>
+                                </Select>
+                            </FormControl>
                         </Grid>
                     </Grid>
                 </Grid>

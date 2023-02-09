@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import {
     Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter
+    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, FormControl, Select, MenuItem
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
@@ -51,6 +51,10 @@ function Result(props) {
         ordering_provider: "",
         test_lab: "",
         signature: null,
+        results:"",
+        testType:"",
+        allLocations:"",
+        date:"",
         test: [
             {
                 id:1,
@@ -237,9 +241,26 @@ function Result(props) {
         setState({ ...state, addTestOpen: false })
         console.log("******submit******" + JSON.stringify(data))
     }
+
     const cancel = () => {
         setState({ ...state, addTestOpen: false })
     }
+
+    const Placeholder = ({ children }) => {
+        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
+      };
+
+    const handleChange = (e, param) => {
+        if(param === "R"){
+        setState({ ...state, results: e.target.value })
+    }else if(param === "T"){
+        setState({ ...state, testType: e.target.value })
+    }else if(param === "L"){
+        setState({ ...state, allLocations: e.target.value })
+    }else if(param === "D"){
+        setState({ ...state, date: e.target.value })
+    }
+}
 
    return (
         <>
@@ -262,30 +283,59 @@ function Result(props) {
                         </Grid>
                         <Grid item xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                             <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }}>
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight:"8px" }} >
-                                    All Results
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }}>
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight:"8px" }} >
-                                    All Test Type
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }}>
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight:"8px" }} >
-                                    All Locations
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }}>
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight:"8px" }} >
-                                    Date
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.results}
+                                onChange={(e)=>handleChange(e,"R")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
+                                  }>
+                                <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Negative</MenuItem>
+                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.testType}
+                                onChange={(e)=>handleChange(e,"T")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.testType !== "" ? undefined : () => <Placeholder>All Test Types</Placeholder>
+                                  }>
+                                <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Negative</MenuItem>
+                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.allLocations}
+                                onChange={(e)=>handleChange(e,"L")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.allLocations !== "" ? undefined : () => <Placeholder>All Locations</Placeholder>
+                                  }>
+                                <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Adyar</MenuItem>
+                                <MenuItem value={"Inactive"}>Velachery</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <Select
+                                value={state.date}
+                                onChange={(e)=>handleChange(e,"D")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
+                                  }>
+                            </Select>
+                        </FormControl>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -354,7 +404,7 @@ function Result(props) {
                 <Dialog open={state.addTestOpen} onClose={() => addTestClose()} maxWidth={'sm'} >
                 <Grid container>
                     <Grid item xs={12} style={{display:"flex", justifyContent:"flex-end"}}>
-                    <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize:"45px", marginRight:-5, marginTop:-5, position:"absolute"}} onClick={() => addTestClose()} />
+                    <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize:"45px", position:"absolute"}} onClick={() => addTestClose()} />
                        </Grid>
                       </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test result</DialogTitle>

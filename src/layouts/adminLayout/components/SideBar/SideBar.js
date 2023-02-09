@@ -135,7 +135,7 @@ export default function Sidebar(props) {
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ListItemIcon><Avatar fontSize='10' sx={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
-                                        <Typography style={{ fontSize: '12px', wordWrap: 'break-word' }}>Gowtham Ramanujam</Typography>
+                                        <Typography  style={{fontSize: '12px',overflowWrap: 'break-word'}} >Gowtham Ramanujam</Typography>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')} style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ListItemIcon><LogoutIcon  sx={{ color: '#024751'}} /></ListItemIcon>

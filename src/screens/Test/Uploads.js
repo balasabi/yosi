@@ -227,9 +227,6 @@ function Uploads(props) {
                                 renderValue={
                                     state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
                                   }>
-                                <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Negative"}>Negative</MenuItem>
-                                <MenuItem value={"Positive"}>Positive</MenuItem>
                             </Select>
                         </FormControl>
                         </Grid>
