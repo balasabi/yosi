@@ -89,7 +89,7 @@ export default function Sidebar(props) {
                                     {item.pages.length > 0 && item.pages.map((item, index) =>
                                    <AccordionDetails style={{ padding: '0px 5px 0px 10px' }} key={index.toString()}>
                                             {props.isOpen === true ?
-                                                <StyledButton onClick={() => handleSubUrl(item.url)} style={{backgroundColor:(router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#C1E2D8" : "#fff"}}>
+                                                <StyledButton onClick={() => handleSubUrl(item.url)} style={{backgroundColor:(router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#C1E2D8" : "#fff", borderRadius: '8px', margin: '0px 5px'}}>
                                                     <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                                     <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.title}</Typography>
                                                 </StyledButton>
@@ -105,12 +105,12 @@ export default function Sidebar(props) {
                                 :
                                 <div key={index.toString()}>
                                     {props.isOpen === true ?
-                                        <StyledButton onClick={() => item.url !== undefined && handleUrl(item.url)} style={{ padding: '15px 16px', backgroundColor:(router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#C1E2D8" : "#fff" }}>
+                                        <StyledButton onClick={() => item.url !== undefined && handleUrl(item.url)} style={{ padding: '15px 16px', backgroundColor:(router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#C1E2D8" : "#fff", borderRadius: '8px', margin: '0px 5px' }}>
                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                             <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
                                         </StyledButton>
                                         :
-                                        <StyledButton onClick={() => handleUrl(item.url)} style={{ display: 'flex', flexDirection: 'column', backgroundColor:(router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#C1E2D8" : "#fff" }}>
+                                        <StyledButton onClick={() => handleUrl(item.url)} style={{ display: 'flex', flexDirection: 'column', backgroundColor:(router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#C1E2D8" : "#fff", borderRadius: '8px', margin: '0px 5px' }}>
                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                             <Typography style={{ fontSize: item.name === "Patients" ? "16px" : "12px" && item.name === "Dashboard" ? "16px" : "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>{item.name}</Typography>
                                         </StyledButton>
