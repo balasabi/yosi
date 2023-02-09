@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Table, TableBody, TableCell, tableCellClasses, IconButton, TableRow, TableHead, TableContainer, Checkbox, Paper, TextField, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
+import { Grid, Typography, Table, TableBody, TableCell, tableCellClasses, IconButton, TableRow, TableHead, TableContainer, Checkbox, Paper, TextField, Radio, FormControlLabel } from '@mui/material';
 import { styled } from '@mui/material';
 import Image from 'next/image';
 import arrow from '../../../public/Images/arrow.png';
@@ -37,19 +37,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-
 function Dashboard(props) {
     const [state, setState] = useState({
-        userTest: [
-            { "id": 1, "testId": "WEL-00001", "patientName": "Basco", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
-            { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
-            { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00014", "result": "Negative", "analysis": "result available" },
-            { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00015", "result": "Negative", "analysis": "result available" },
-        ],
         isClickCheckBox: false,
         selectedPatients: [],
         test: null,
-        lab: null
+        lab: null,
+        isClick: false,
+        useMoreUserTest: [
+            { "id": 1, "testId": "WEL-00001", "patientName": "Basco", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
+            { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
+            { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00014", "result": "Negative", "analysis": "result available" },
+            { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00015", "result": "Positive", "analysis": "result available" },
+            { "id": 5, "testId": "WEL-00020", "patientName": "Smith", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
+            { "id": 6, "testId": "WEL-00021", "patientName": "Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
+            { "id": 7, "testId": "WEL-00022", "patientName": "shruthi", "testType": "Insurance CAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00014", "result": "Positive", "analysis": "result available" },
+            { "id": 8, "testId": "WEL-00023", "patientName": "Rajesh", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00015", "result": "Negative", "analysis": "result available" },
+        ],
     })
 
     const checkBoxAction = () => {
@@ -77,9 +81,11 @@ function Dashboard(props) {
             })
         }
     }
+    const seeMoreAction = () => {
+        setState({ ...state, isClick: !state.isClick })
+    }
 
-
-
+    let testList = state.isClick ? state.useMoreUserTest : state.useMoreUserTest.slice(0, 4)
     return (
         <>
             <Grid container spacing={2}>
@@ -92,8 +98,8 @@ function Dashboard(props) {
                     <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "20px", marginRight: 10 }}>
                         Recent patients
                     </Typography>
-                    <Typography style={{ fontFamily: 'Avenir', fontSize: "15px", justifyContent: "center", alignItems: "center", borderRadius: 5, paddingRight: 3, paddingLeft: 3, border: "1px solid #474747", }}>
-                        See more
+                    <Typography style={{ fontFamily: 'Avenir', fontSize: "12px", justifyContent: "center", alignItems: "center", borderRadius: 5, padding: "3px 8px 3px 8px", border: "1px solid rgba(71, 71, 71, 0.6)", cursor: "pointer", color: "rgba(71, 71, 71, 0.6)" }} onClick={() => seeMoreAction()}>
+                        {state.isClick ? "Show less" : "Show more"}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} marginTop={"1px"}>
@@ -117,7 +123,7 @@ function Dashboard(props) {
                                     </StyledTableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {state.userTest !== undefined && state.userTest.map((item, index) =>
+                                    {testList !== undefined && testList.map((item, index) =>
                                         <StyledTableRow key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
                                             <StyledTableCell>
                                                 <Checkbox
