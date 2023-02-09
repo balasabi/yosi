@@ -4,9 +4,6 @@ import {
     tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import CustomizedButtons from '../../components/CustomButton';
-import Image from 'next/image';
-import DownArrow from '../../../public/Images/downArrow.png';
 import CustomSearchInput from '../../components/CustomSearchInput';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -27,7 +24,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
     },
     '&:nth-of-type(odd)': {
-        //backgroundColor: theme.palette.action.hover,
     },
 }));
 
@@ -197,7 +193,7 @@ function Uploads(props) {
                                 displayEmpty
                                 inputProps={{ 'aria-label': 'Without label' }}
                                 renderValue={
-                                    state.result !== "" ? undefined : () => <Placeholder>Results</Placeholder>
+                                    state.result !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
                                 <MenuItem value={"Negative"}>Negative</MenuItem>
@@ -214,8 +210,8 @@ function Uploads(props) {
                                     state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Negative"}>Negative</MenuItem>
-                                <MenuItem value={"Positive"}>Positive</MenuItem>
+                                <MenuItem value={"Success"}>Success</MenuItem>
+                                <MenuItem value={"Failure"}>Failure</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">

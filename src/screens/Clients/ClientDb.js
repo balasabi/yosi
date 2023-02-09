@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, TablePagination, TableFooter
+    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
 } from '@mui/material';
-import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
-import DownArrow from '../../../public/Images/downArrow.png';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import Edit from '../../../public/Images/editIcon.png';
 
@@ -27,7 +25,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
     },
     '&:nth-of-type(odd)': {
-        //backgroundColor: theme.palette.action.hover,
     },
 }));
 
@@ -37,6 +34,7 @@ function ClientDb(props) {
         page: 0,
         rowsPerPage: 10,
         searchText: "",
+        status:"",
         clientDbData: [
             {
                 client_name: "Molina",
@@ -63,6 +61,22 @@ function ClientDb(props) {
         setState({ ...state, rowsPerPage: event.target.value, page: 0 });
     };
 
+    const Placeholder = ({ children }) => {
+        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
+      };
+
+    const handleChange = (e, param) => {
+        if(param === "R"){
+        setState({ ...state, results: e.target.value })
+    }else if(param === "T"){
+        setState({ ...state, testType: e.target.value })
+    }else if(param === "L"){
+        setState({ ...state, allLocations: e.target.value })
+    }else if(param === "D"){
+        setState({ ...state, date: e.target.value })
+    }
+}
+
     return (
         <>
             <Grid container>
@@ -75,12 +89,20 @@ function ClientDb(props) {
                         </Grid>
                         <Grid item xs={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                             <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <CustomizedButtons variant={"text"} style={{ padding: "0px 15px 0px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }} >
-                                    All Results
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <Select
+                                value={state.status}
+                                onChange={(e)=>handleChange(e,"L")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
+                                  }>
+                                <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Active</MenuItem>
+                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                            </Select>
+                        </FormControl>
                         </Grid>
                         <Grid item xs={12} style={{ marginTop: "15px" }}>
                             <Table>

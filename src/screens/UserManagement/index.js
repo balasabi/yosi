@@ -91,10 +91,6 @@ function UsersManagement(props) {
         selectedUser: []
     })
 
-    const status = ["Active", "Inactive"];
-
-    const roles = ["Admin", "Lab technician", "System admin", "Developer", "Data analyst", "Location Manager", "PSR tech", "Lab executive", "Client Manager", "Client operator", "Client physician"];
-
     function compare(a, b) {
         console.log("&&&&&")
         if (state.sort === false) {
@@ -123,14 +119,6 @@ function UsersManagement(props) {
 
     const handleChangeRowsPerPage = (event) => {
         setState({ ...state, rowsPerPage: event.target.value, page: 0 });
-    };
-
-    const handleStatus = (event) => {
-        setState({ ...state, status: event.target.value })
-    };
-
-    const handleRoles = (event) => {
-        setState({ ...state, roles: event.target.value })
     };
 
     const handlePermission = () => {
@@ -177,6 +165,18 @@ function UsersManagement(props) {
         }
     }
 
+    const Placeholder = ({ children }) => {
+        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
+      };
+
+    const handleChange = (e, param) => {
+        if(param === "R"){
+        setState({ ...state, roles: e.target.value })
+    }else if(param === "S"){
+        setState({ ...state, status: e.target.value })
+    }
+}
+
     return (
         <>
             <Grid container spacing={2}>
@@ -215,35 +215,34 @@ function UsersManagement(props) {
                         </Grid>
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-end" alignItems="center">
-                                <Grid item xs={12} sm={8} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                                     <Typography>Filter by</Typography>
-                                    <FormControl sx={{ m: 1, minWidth: 100 }}>
-                                        <Select size="small"
-                                            displayEmpty
-                                            value={state.roles}
-                                            onChange={handleRoles}
-                                            input={<CustomInput />}>
-                                            <MenuItem value="">All roles</MenuItem>
-                                            {roles.map((item, index) => (
-                                                <MenuItem key={index} value={item}>{item}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={4} textAlign='right'>
-                                    <FormControl sx={{ m: 1, minWidth: 100 }}>
-                                        <Select size='small'
-                                            onChange={handleStatus}
-                                            displayEmpty
-                                            value={state.status}
-                                            input={<CustomInput />}>
-                                            <MenuItem value="">All Statuses</MenuItem>
-                                            {status.map((item, index) =>
-                                                <MenuItem key={index.toString()} value={item}>{item}</MenuItem>
-                                            )}
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.roles}
+                                onChange={(e)=>handleChange(e,"PR")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.roles !== "" ? undefined : () => <Placeholder>All Roles</Placeholder>
+                                  }>
+                                <MenuItem value={"Admin"}>Admin</MenuItem>
+                                <MenuItem value={"Doctor"}>Doctor</MenuItem>
+                                <MenuItem value={"Lab Technician"}>Lab Technician</MenuItem>
+                            </Select>
+                        </FormControl>
+                                <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <Select
+                                value={state.status}
+                                onChange={(e)=>handleChange(e,"PR")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
+                                  }>
+                                <MenuItem value={"Active"}>Active</MenuItem>
+                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                            </Select>
+                        </FormControl>
                             </Grid>
                         </Grid>
                     </Grid>

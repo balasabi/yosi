@@ -183,8 +183,8 @@ function Category(props) {
                                     state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Negative"}>Negative</MenuItem>
+                                <MenuItem value={"Positive"}>Positive</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
@@ -197,8 +197,8 @@ function Category(props) {
                                     state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Active"}>Active</MenuItem>
+                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">

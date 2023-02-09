@@ -4,9 +4,7 @@ import {
     tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
-import DownArrow from '../../../public/Images/downArrow.png';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import Edit from '../../../public/Images/editIcon.png';
 
@@ -28,7 +26,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
     },
     '&:nth-of-type(odd)': {
-        //backgroundColor: theme.palette.action.hover,
     },
 }));
 
@@ -189,8 +186,8 @@ function Classification(props) {
                                     state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Active"}>Active</MenuItem>
+                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">

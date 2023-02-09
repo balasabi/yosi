@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, TablePagination, TableFooter
+    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
 } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
 import Union from '../../../public/Images/union.png';
-import DownArrow from '../../../public/Images/downArrow.png';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
@@ -27,7 +26,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
     },
     '&:nth-of-type(odd)': {
-        //backgroundColor: theme.palette.action.hover,
     },
 }));
 
@@ -35,6 +33,10 @@ function TestKitTracking(props) {
     const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
+        price:"",
+        insurance:"",
+        payment:"",
+        status:"",
         test_kit_tracking: [
             {
                 client_name: "Molina",
@@ -56,6 +58,22 @@ function TestKitTracking(props) {
         setState({ ...state, rowsPerPage: event.target.value, page: 0 });
     };
 
+    const Placeholder = ({ children }) => {
+        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
+      };
+
+    const handleChange = (e, param) => {
+        if(param === "PR"){
+        setState({ ...state, price: e.target.value })
+    }else if(param === "I"){
+        setState({ ...state, insurance: e.target.value })
+    }else if(param === "P"){
+        setState({ ...state, payment: e.target.value })
+    }else if(param === "S"){
+        setState({ ...state, status: e.target.value })
+    }
+}
+
     return (
         <>
             <Grid container>
@@ -71,30 +89,58 @@ function TestKitTracking(props) {
                         </Grid>
                         <Grid item xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                             <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight: "8px" }} >
-                                    All Price
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight: "8px" }} >
-                                    All Insurance
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight: "8px" }} >
-                                    All Payment
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight: "8px" }} >
-                                    Status
-                                </Typography>
-                                <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                            </CustomizedButtons>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.price}
+                                onChange={(e)=>handleChange(e,"PR")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.price !== "" ? undefined : () => <Placeholder>All Price</Placeholder>
+                                  }>
+                                <MenuItem value={"Dollars"}>Dollars</MenuItem>
+                                <MenuItem value={"Rupees"}>Rupees</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.insurance}
+                                onChange={(e)=>handleChange(e,"I")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.insurance !== "" ? undefined : () => <Placeholder>All Insurance</Placeholder>
+                                  }>
+                                <MenuItem value={"Insurance At-Home COVID Kit"}>Insurance At-Home COVID Kit</MenuItem>
+                                <MenuItem value={"Rapid Antigen Test"}>Rapid Antigen Test</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
+                            <Select
+                                value={state.payment}
+                                onChange={(e)=>handleChange(e,"P")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.payment !== "" ? undefined : () => <Placeholder>All Payment</Placeholder>
+                                  }>
+                                <MenuItem value={"Unknown"}>Unknown</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <Select
+                                value={state.status}
+                                onChange={(e)=>handleChange(e,"S")}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>
+                                  }>
+                                     <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Active</MenuItem>
+                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                            </Select>
+                        </FormControl>
                         </Grid>
                     </Grid>
                 </Grid>

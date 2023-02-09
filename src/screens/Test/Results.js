@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import Send from '../../../public/Images/send.png';
 import Union from '../../../public/Images/union.png';
-import DownArrow from '../../../public/Images/downArrow.png';
 import SignatureCanvas from 'react-signature-canvas';
 import { addTestResultAction } from "../../store/actions/testResultAction";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -35,7 +34,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
     },
     '&:nth-of-type(odd)': {
-        //backgroundColor: theme.palette.action.hover,
     },
 }));
 
@@ -293,8 +291,8 @@ function Result(props) {
                                     state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Negative"}>Negative</MenuItem>
+                                <MenuItem value={"Success"}>Success</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
@@ -307,8 +305,8 @@ function Result(props) {
                                     state.testType !== "" ? undefined : () => <Placeholder>All Test Types</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Negative"}>Negative</MenuItem>
+                                <MenuItem value={"Positive"}>Positive</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
@@ -321,8 +319,8 @@ function Result(props) {
                                     state.allLocations !== "" ? undefined : () => <Placeholder>All Locations</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Adyar</MenuItem>
-                                <MenuItem value={"Inactive"}>Velachery</MenuItem>
+                                <MenuItem value={"Adyar"}>Adyar</MenuItem>
+                                <MenuItem value={"Velachery"}>Velachery</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">

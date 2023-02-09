@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, Table, TableBody, tableRowClasses, FormHelperText, FormControl, Select, MenuItem } from '@mui/material';
+import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, Table, TableBody, tableRowClasses, FormControl, Select, MenuItem } from '@mui/material';
 import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import RightArrow from '../../../public/Images/go.png';
@@ -110,8 +110,8 @@ function Type(props) {
                                     displayEmpty
                                     renderValue={state.result !== "" ? undefined : () => <Placeholder>All Results</Placeholder>} >
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Negative"}>Negative</MenuItem>
+                                <MenuItem value={"Positive"}>Positive</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
