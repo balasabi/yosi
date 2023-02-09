@@ -130,10 +130,7 @@ function Result(props) {
         setState({ ...state, addTestOpen: false })
     }
 
-   
-
-   
-    return (
+   return (
         <>
             <Grid container>
                 <Grid item xs={12} >
@@ -262,7 +259,7 @@ function Result(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.first_name}
-                                            onChange={(event) => setState({ first_name: event.target.value })}
+                                            onChange={(event) => setState({...state, first_name: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -271,7 +268,7 @@ function Result(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.last_name}
-                                            onChange={(event) => setState({ last_name: event.target.value })}
+                                            onChange={(event) => setState({ ...state, last_name: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -280,7 +277,7 @@ function Result(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.location}
-                                            onChange={(event) => setState({ location: event.target.value })}
+                                            onChange={(event) => setState({...state, location: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -289,7 +286,7 @@ function Result(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.location_test_type}
-                                            onChange={(event) => setState({ location_test_type: event.target.value })}
+                                            onChange={(event) => setState({...state, location_test_type: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -298,7 +295,7 @@ function Result(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.ordering_provider}
-                                            onChange={(event) => setState({ ordering_provider: event.target.value })}
+                                            onChange={(event) => setState({...state, ordering_provider: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
@@ -307,7 +304,7 @@ function Result(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.test_lab}
-                                            onChange={(event) => setState({ test_lab: event.target.value })}
+                                            onChange={(event) => setState({...state, test_lab: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>

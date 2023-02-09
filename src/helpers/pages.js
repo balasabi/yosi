@@ -30,7 +30,7 @@ export const sideMenu = [
     {
         name: "Location",
         menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />,
-        pages: [{ title: "Test location", menuIcon: <Image src={Location} alt={"Ellipse"} width={18} height={21} />, url: '/locations' }, { title: "Tests", menuIcon: <Image src={Location} alt={"Ellipse"} width={18} height={21} />, url: '/locations' }]
+        pages: [{ title: "Test location", menuIcon: <Image src={Location} alt={"Ellipse"} width={18} height={21} />, url: '/locations' }]
     },
     {
         name: "Clients",
