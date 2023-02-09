@@ -6,7 +6,7 @@ import yosiTop from '../../../../../public/Images/yosiTop.png';
 import bell from '../../../../../public/Images/bell.png';
 import back from '../../../../../public/Images/back.png';
 import go from '../../../../../public/Images/go.png';
-import { AiOutlineArrowRight,AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineArrowRight, AiOutlineSearch } from "react-icons/ai";
 
 
 function TopBar(props) {
@@ -30,26 +30,26 @@ function TopBar(props) {
                                 </Grid>
                                 <Grid item xs={3} sm={1} textAlign="left">
                                     <IconButton><Image src={back} alt="back" width={20} height={20} /></IconButton>
-                                    <IconButton><AiOutlineArrowRight  style={{width:20,height:20}} color="#446F75"/></IconButton>
-                                   
+                                    <IconButton><AiOutlineArrowRight style={{ width: 20, height: 20 }} color="#446F75" /></IconButton>
+
                                 </Grid>
                                 <Grid item xs={4} sm={6} textAlign='left'>
                                     <TextField
                                         size='small'
-                                        placeholder='Search input text'                                       
+                                        placeholder='Search input text'
                                         InputProps={{
                                             sx: { width: "600px", background: "#366369", color: "#FFF", borderRadius: "8px" },
                                             startAdornment: (
                                                 <IconButton>
-                                                 <AiOutlineSearch  style={{width:20,height:20}} color="#fff"/>   
-                                               </IconButton>
+                                                    <AiOutlineSearch style={{ width: 20, height: 20 }} color="#fff" />
+                                                </IconButton>
                                             ),
-                                         }}
-                                   
-                                   />
-                                    
+                                        }}
+
+                                    />
+
                                 </Grid>
-                               
+
                                 <Grid item xs={2} textAlign="right">
                                     <Image src={bell} alt="YOSI LAB" width={22} height={25} />
                                 </Grid>

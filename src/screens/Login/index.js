@@ -61,7 +61,7 @@ function Login(props) {
                             <TextField variant='standard'
                                 fullWidth
                                 size="small"
-                                label='Email address'
+                                placeholder={'Email address'}
                                 onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
                                 error={state.emailError}
                                 helperText={state.emailError === true ? "Please enter email" : ""}
@@ -72,7 +72,7 @@ function Login(props) {
                                 fullWidth
                                 size="small"
                                 type={ state.showPassword ? "text" : "password" }
-                                label={!!state.password ?  null : "Password"}
+                                placeholder={!!state.password ?  null : "Password"}
                                 value={state.password}
                                 error={state.passwordError}
                                 onChange={(e) => setState({ ...state, password: e.target.value, passwordError:false })} 
