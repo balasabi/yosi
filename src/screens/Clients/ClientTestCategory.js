@@ -180,7 +180,7 @@ function ClientTestCategory(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.first_name}
-                                            onChange={(event) => this.setState({ first_name: event.target.value })}
+                                            onChange={(event) => setState({ first_name: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
@@ -189,7 +189,7 @@ function ClientTestCategory(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.last_name}
-                                            onChange={(event) => this.setState({ last_name: event.target.value })}
+                                            onChange={(event) => setState({ last_name: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
@@ -198,7 +198,7 @@ function ClientTestCategory(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.location}
-                                            onChange={(event) => this.setState({ location: event.target.value })}
+                                            onChange={(event) => setState({ location: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
@@ -207,7 +207,7 @@ function ClientTestCategory(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.location_test_type}
-                                            onChange={(event) => this.setState({ location_test_type: event.target.value })}
+                                            onChange={(event) => setState({ location_test_type: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
@@ -216,7 +216,7 @@ function ClientTestCategory(props) {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             value={state.ordering_provider}
-                                            onChange={(event) => this.setState({ ordering_provider: event.target.value })}
+                                            onChange={(event) => setState({ ordering_provider: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>

@@ -38,8 +38,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-
-
 function Dashboard(props) {
     const [state, setState] = useState({
         userTest: [
@@ -47,7 +45,7 @@ function Dashboard(props) {
             { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
             { "id": 3, "testId": "WEL-00018", "patientName": "John Smith", "testType": "Insurance CAB test", "collectionDate": "14/12/2022 11.00 AM ", "tubeNumber": "T00014", "result": "Negative", "analysis": "result available" },
             { "id": 4, "testId": "WEL-00019", "patientName": "Raja", "testType": "Insurance CRAB test", "collectionDate": "15/12/2022 11.00 AM", "tubeNumber": "T00015", "result": "Negative", "analysis": "result available" },
-             ],
+        ],
         isClickCheckBox: false,
         selectedPatients: [],
         test: null,
@@ -79,6 +77,8 @@ function Dashboard(props) {
             })
         }
     }
+
+
 
     return (
         <>
@@ -154,7 +154,7 @@ function Dashboard(props) {
                                     fullWidth
                                     inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                     value={state.test}
-                                    onChange={(event) => this.setState({ test: event.target.value })}
+                                    onChange={(event) => setState({ test: event.target.value })}
                                 />
                             </Grid>
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
@@ -164,7 +164,7 @@ function Dashboard(props) {
                                     fullWidth
                                     inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                     value={state.lab}
-                                    onChange={(event) => this.setState({ lab: event.target.value })}
+                                    onChange={(event) => setState({ lab: event.target.value })}
                                 />
                             </Grid>
                         </Grid>
@@ -193,26 +193,23 @@ function Dashboard(props) {
                         <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Scan patient</Typography>
                             <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Tap to scan a patient</Typography>
-                            <div style={{ display:"flex",justifyContent:"center", alignItems:"center", marginTop:10, width:70,height:70,backgroundColor: "#FEC14B",borderRadius:35}}>
-                             <Image src={Barcode} alt='Vector' width={"5vw"} height={"5vh"} />
-                           </div>
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 10, width: 70, height: 70, backgroundColor: "#FEC14B", borderRadius: 35 }}>
+                                <Image src={Barcode} alt='Vector' width={"5vw"} height={"5vh"} />
+                            </div>
                         </Grid>
                         <Grid container style={{ display: "flex", flexDirection: "row", alignItems: "center", }}>
-                            <Grid item xs={5} style={{ border: "1px solid #D9D9D9" }} >
-                           
-                            </Grid>
+                            <Grid item xs={6} style={{ border: "1px solid #D9D9D9" }} />
                             <Grid item xs={0}>
                                 <Typography style={{ marginLeft: "5px", marginRight: "5px", fontSize: "10px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >or</Typography>
                             </Grid>
                             <Grid item xs={5} style={{ border: "1px solid #D9D9D9" }} />
                         </Grid>
-
                         <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <TextField size="small"
                                 placeholder='Enter Patient ID'
                                 inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" } }}
                                 value={state.lab}
-                                onChange={(event) => this.setState({ lab: event.target.value })}
+                                onChange={(event) => setState({ lab: event.target.value })}
                             />
                             <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "3px", marginTop: "10px" }} onClick={() => alert("WIP")} >
                                 Find
@@ -220,12 +217,7 @@ function Dashboard(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-
             </Grid>
-
-
-
-
         </>
     )
 }
