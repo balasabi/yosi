@@ -21,7 +21,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   [`&.${tableRowClasses.root}`]: {
   },
   '&:nth-of-type(odd)': {
-      //backgroundColor: theme.palette.action.hover,
   },
 }));
 
@@ -47,7 +46,6 @@ class Patients extends Component {
       rowsPerPage: 7,
       isClickCheckBox: false,
       selectedPatients: []
-      // sortOrder: 'asc'
     }
   }
 
@@ -58,24 +56,6 @@ class Patients extends Component {
       }
     })
   }
-
-
-
-  // const handlecheck = async (param) => {
-
-  //   console.log("(((((param))))))" + JSON.stringify(param))
-  //   await setIsChecked(!param)
-  // console.log("(((((param))))))" + isChecked)
-  // console.log("((((())))))" + JSON.stringify(_.pluck(rows, 'id')))
-  // console.log("(((((param))))))" + JSON.stringify(isChecked))
-  // if (!param) {
-  //   setselectedIds(_.pluck(rows, 'id'))
-  // } else {
-  //   setselectedIds([])
-  // }
-  // };
-
-
 
   checkBoxAction = () => {
     this.setState({
@@ -137,8 +117,7 @@ class Patients extends Component {
                 <TableRow
                   key={index}
                   style={{ background: (index % 2) == 0 ? 'white' : '#F2F2F2' }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <StyledTableCell align='right'>
                     <Checkbox
                      style={{display:"flex",justifyContent:"flex-start"}}

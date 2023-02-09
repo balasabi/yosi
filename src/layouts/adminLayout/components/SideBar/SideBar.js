@@ -123,22 +123,22 @@ export default function Sidebar(props) {
                             {props.isOpen === true ?
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton>
-                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#C1E2D8', backgroundColor: '#000' }} /></ListItemIcon>
+                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
                                         <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" }}>Gowtham Ramanujam</Typography>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')}>
-                                        <ListItemIcon><LogoutIcon sx={{ color: "#000" }} /></ListItemIcon>
+                                        <ListItemIcon><LogoutIcon sx={{ color: "#024751", marginLeft:1 }} /></ListItemIcon>
                                         <ListItemText style={{ color: 'red' }}>Log out</ListItemText>
                                     </ListItemButton>
                                 </Grid>
                                 :
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <ListItemIcon><Avatar fontSize='10' sx={{ color: '#C1E2D8', backgroundColor: '#000' }} /></ListItemIcon>
+                                        <ListItemIcon><Avatar fontSize='10' sx={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
                                         <Typography style={{ fontSize: '12px', wordWrap: 'break-word' }}>Gowtham Ramanujam</Typography>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')} style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <ListItemIcon><LogoutIcon /></ListItemIcon>
+                                        <ListItemIcon><LogoutIcon  sx={{ color: '#024751'}} /></ListItemIcon>
                                         <Typography style={{ color: 'red', fontSize: '12px' }}>Log out</Typography>
                                     </ListItemButton>
                                 </Grid>

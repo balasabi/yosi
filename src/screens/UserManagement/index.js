@@ -188,19 +188,19 @@ function UsersManagement(props) {
                         <Grid item xs={12} sm={3}>
                             <Grid container>
                                 {state.isActive === false ?
-                                    <Grid item xs={6} sm={3} style={{ borderBottom: '4px solid #024751' }}>
+                                    <Grid item xs={6} sm={3} lg={3} style={{ borderBottom: '4px solid #024751' }}>
                                         <CustomizedButtons variant="text" onClick={() => handleUser()}><Typography align='center' style={{ fontWeight: "bold" }}>Users</Typography></CustomizedButtons>
                                     </Grid> :
-                                    <Grid item xs={6} sm={4}>
+                                    <Grid item xs={6} sm={4} lg={3}>
                                         <CustomizedButtons variant="text" onClick={() => handleUser()}>Users</CustomizedButtons>
                                     </Grid>
                                 }
                                 {state.isActive === true ?
-                                    <Grid item xs={6} sm={8} style={{ borderBottom: '4px solid #024751 ' }}>
+                                    <Grid item xs={6} sm={8} lg={9} style={{ borderBottom: '4px solid #024751 ' }}>
                                         <CustomizedButtons variant="text" onClick={() => handlePermission()}><Typography style={{ fontWeight: "bold" }}>Roles and Permission</Typography></CustomizedButtons>
                                     </Grid>
                                     :
-                                    <Grid item xs={6} sm={8}>
+                                    <Grid item xs={6} sm={8} lg={9}>
                                         <CustomizedButtons variant="text" onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
                                     </Grid>
                                 }

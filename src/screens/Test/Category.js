@@ -44,7 +44,95 @@ function Category(props) {
                 sequence_number: "1",
                 status: "Active",
                 description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
-            }
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
+            {
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
+                status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+            },
         ]
     })
 
@@ -104,7 +192,7 @@ function Category(props) {
                                 <StyledTableCell >Description</StyledTableCell>
                             </TableRow>
                         </TableHead>
-                        {!!state.category && state.category.map((category, index) => (
+                        {!!state.category && state.category.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((category, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
                                     <StyledTableCell style={{fontSize:"14px"}}>{category.name}</StyledTableCell>

@@ -52,7 +52,38 @@ function Result(props) {
         test_lab: "",
         signature: null,
         test: [
-            {id:1,
+            {
+                id:1,
+                test_id: "WEL-000001",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:2,
+                test_id: "WEL-000002",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:3,
+                test_id: "WEL-000003",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:4,
                 test_id: "WEL-000004",
                 patient_name: "Kenny sebastin",
                 test_type: "Insurance CAB Test - Camelback",
@@ -60,7 +91,87 @@ function Result(props) {
                 tube_number: "T5000",
                 result: "Negative",
                 analysis: "Result available"
-            }
+            },
+            {
+                id:5,
+                test_id: "WEL-000005",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:6,
+                test_id: "WEL-000006",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:7,
+                test_id: "WEL-000007",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:8,
+                test_id: "WEL-000008",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:9,
+                test_id: "WEL-000009",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:10,
+                test_id: "WEL-000010",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:11,
+                test_id: "WEL-000011",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
+            {
+                id:12,
+                test_id: "WEL-000012",
+                patient_name: "Kenny sebastin",
+                test_type: "Insurance CAB Test - Camelback",
+                collection_date: "12/13/2022 01:57:25",
+                tube_number: "T5000",
+                result: "Negative",
+                analysis: "Result available"
+            },
         ],
         isClickCheckBox: false,
         selectedresults: []
@@ -205,13 +316,13 @@ function Result(props) {
                                 <StyledTableCell >Analysis</StyledTableCell>
                             </TableRow>
                         </TableHead>
-                        {!!state.test && state.test.map((test, index) => (
+                        {!!state.test && state.test.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((test, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
                                     <StyledTableCell align="center">
                                         <Checkbox
                                           checked={state.selectedresults.includes(test.id)}
-                                          onClick={() => singleSelectAction(test.id)} 
+                                        //   onClick={() => singleSelectAction(test.id)} 
                                          />
                                     </StyledTableCell>
                                     <StyledTableCell >{test.test_id}</StyledTableCell>
@@ -227,11 +338,12 @@ function Result(props) {
                         <TableFooter>
                             <TableRow>
                                 <TablePagination
+                                 //rowsPerPageOptions={[10, 25]}
                                     count={!!state.test && state.test.length}
                                     page={state.page}
                                     onPageChange={handleChangePage}
                                     rowsPerPage={state.rowsPerPage}
-                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                    onRowsPerPageChange={(e) =>handleChangeRowsPerPage(e)}
                                     labelRowsPerPage={"No. of items per page : "}
                                     sx={{ borderBottom: "1.43px solid #D5DBE1" }}
                                 />

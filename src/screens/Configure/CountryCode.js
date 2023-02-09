@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import { Typography, Grid, Table, TableHead, TableRow, styled, TableCell, tableCellClasses,
-    tableRowClasses, TableBody, TablePagination, TableFooter } from '@mui/material';
-import DownArrow from "../../../public/Images/downArrow.png";
+import React, { useState } from "react";
+import {
+    Typography, Grid, Table, TableHead, TableRow, styled, TableCell, tableCellClasses,
+    tableRowClasses, TableBody, TablePagination, TableFooter, Select, MenuItem, FormControl, Placeholder
+} from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import plus from "../../../public/Images/plus.png";
 import Edit from '../../../public/Images/editIcon.png';
@@ -14,8 +15,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Black',
         padding: "12px",
-        fontWeight:900,
-        fontSize:"18px",
+        fontWeight: 900,
+        fontSize: "18px",
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 16,
@@ -30,11 +31,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function CountryCode(){
+function CountryCode() {
 
-    const [state,setState]=useState({
+    const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
+        status: "",
         countryCode: [
             { 'Code': '+91', 'Name': 'India', 'ISO': 'IND', 'Status': 'Active', 'Action': '' },
             { 'Code': '+1', 'Name': 'United States of America', 'ISO': 'USA', 'Status': 'Active', 'Action': '' },
@@ -44,6 +46,13 @@ function CountryCode(){
         ]
     },
     )
+    const Placeholder = ({ children }) => {
+        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
+      };
+
+    const handleChange = (e) => {
+        setState({ ...state, status: e.target.value })
+    }
 
     const handleChangePage = (event, newPage) => {
         setState({ ...state, page: newPage });
@@ -53,9 +62,9 @@ function CountryCode(){
         setState({ ...state, rowsPerPage: event.target.value, page: 0 });
     };
 
-    return(
+    return (
         <>
-        <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
+            <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
             <Grid item xs={12} display={"flex"} flexDirection={'row'}>
                 <Grid container>
                     <Grid item xs={6}>
@@ -68,33 +77,41 @@ function CountryCode(){
                     </Grid>
                     <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                         <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                        <CustomizedButtons variant={"text"} style={{ padding: "0px 15px 0px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4" }} >
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px", marginRight: '10px', fontWeight: 900 }}>
-                                All Status
-                            </Typography>
-                            <Image src={DownArrow} alt='downArrow' width={"20vw"} height={"20vh"} />
-                        </CustomizedButtons>
+                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <Select
+                                value={state.status}
+                                onChange={handleChange}
+                                displayEmpty
+                                inputProps={{ 'aria-label': 'Without label' }}
+                                renderValue={
+                                    state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>
+                                  }>
+                                <MenuItem value={"All"}>All</MenuItem>
+                                <MenuItem value={"Active"}>Active</MenuItem>
+                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12} style={{ marginTop: "15px" }}>
-                <Table>
+                <Table minwidth={650}>
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell style={{ width: "210px" }}>Code</StyledTableCell>
-                            <StyledTableCell style={{ width: "300px" }}>Name</StyledTableCell>
-                            <StyledTableCell style={{ width: "200px" }}>ISO</StyledTableCell>
-                            <StyledTableCell style={{ width: "200px" }}>Status</StyledTableCell>
-                            <StyledTableCell style={{ width: "100px" }}>Action</StyledTableCell>
+                            <StyledTableCell>Code</StyledTableCell>
+                            <StyledTableCell>Name</StyledTableCell>
+                            <StyledTableCell>ISO</StyledTableCell>
+                            <StyledTableCell>Status</StyledTableCell>
+                            <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     {!!state.countryCode && state.countryCode.map((code, index) => (
                         <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
-                            <StyledTableRow >
-                                <StyledTableCell style={{fontSize: "14px"}}>{code.Code}</StyledTableCell>
-                                <StyledTableCell style={{fontSize: "14px"}}>{code.Name}</StyledTableCell>
-                                <StyledTableCell style={{fontSize: "14px"}}>{code.ISO}</StyledTableCell>
-                                <StyledTableCell style={{fontSize: "14px"}}>{code.Status}</StyledTableCell>
+                            <StyledTableRow>
+                                <StyledTableCell style={{ fontSize: "14px" }}>{code.Code}</StyledTableCell>
+                                <StyledTableCell style={{ fontSize: "14px" }}>{code.Name}</StyledTableCell>
+                                <StyledTableCell style={{ fontSize: "14px" }}>{code.ISO}</StyledTableCell>
+                                <StyledTableCell style={{ fontSize: "14px", color: "#3FA455" }}>{code.Status}</StyledTableCell>
                                 <StyledTableCell >
                                     <div style={{ display: "flex", flexDirection: "row" }}>
                                         <Image src={Edit} alt='edit' width={18} height={18} />

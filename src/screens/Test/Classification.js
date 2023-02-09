@@ -44,7 +44,84 @@ function Classification(props) {
                 test_type: "7",
                 test_groups: "1",
                 status: "Active",
-            }
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
+            {
+                name: "COVID/Influenza Test ",
+                code: "PCR",
+                test_type: "7",
+                test_groups: "1",
+                status: "Active",
+            },
         ]
     })
 
@@ -104,7 +181,7 @@ function Classification(props) {
                                 <StyledTableCell >Action</StyledTableCell>
                             </TableRow>
                         </TableHead>
-                        {!!state.classification && state.classification.map((classification, index) => (
+                        {!!state.classification && state.classification.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((classification, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
                                     <StyledTableCell style={{fontSize:"14px"}}>{classification.name}</StyledTableCell>
