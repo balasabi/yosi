@@ -34,31 +34,31 @@ function TodayAppointments(props) {
                 id: "PID0001",
                 patient_name: "Kavi",
                 test_name: "Heart Test",
-                timing: "09.00 AM"
+                timing: "09:00 AM"
             },
             {
                 id: "PID0002",
                 patient_name: "Arun",
                 test_name: "Full CheckUp",
-                timing: "10.00 AM"
+                timing: "10:00 AM"
             },
             {
                 id: "PID0003",
                 patient_name: "Veni",
                 test_name: "Blood Test",
-                timing: "11.00 AM"
+                timing: "11:00 AM"
             },
             {
                 id: "PID0004",
                 patient_name: "Pavi",
                 test_name: "Heart Test",
-                timing: "12.00 PM"
+                timing: "1:00 PM"
             },
             {
                 id: "PID0005",
                 patient_name: "Siva",
                 test_name: "Blood Test",
-                timing: "14.00 PM"
+                timing: "3:00 PM"
             }
         ]
     })
@@ -68,7 +68,7 @@ function TodayAppointments(props) {
         const timer = setInterval(() => { // Creates an interval which will update the current data every minute
             // This will trigger a rerender every component that uses the useDate hook.
             setDate(new Date());
-        }, 60 * 1000);
+        }, 1000);
         return () => {
             clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
         }
@@ -84,7 +84,7 @@ function TodayAppointments(props) {
                             <Grid container style={{ display: "flex", flexDirection: "column", backgroundColor: "#024751", padding: "5px", borderRadius: "5px", justifyContent: "center" }}>
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", backgroundColor: "#024751", borderRadius: "5px", justifyContent: "center" }}>
                                     <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff" }}> Date : </Typography>
-                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(today).format("DD/MM/YYYY hh:mm a")} </Typography>
+                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(today).format("DD/MM/YYYY hh:mm:ss a")} </Typography>
                                 </Grid>
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", backgroundColor: "#024751", borderRadius: "5px", justifyContent: "center" }}>
                                     <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff" }}>Appointments :  </Typography>

@@ -14,16 +14,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         borderBottom: '1px solid #E7E7E7',
         color: theme.palette.common.black,
         padding: "2px",
-        fontFamily: 'Avenir',
+        fontFamily: 'Avenir-Bold',
         fontSize: '16px',
         fontStyle: "normal"
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: "16px",
         padding: "1px",
-        fontFamily: "Avenir",
+        fontFamily: "Avenir-Book",
         fontStyle: "normal",
-        fontSize: '16px',
     },
 }))
 
@@ -90,15 +89,13 @@ function Dashboard(props) {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "20px" }}>
-                        Dashboard
-                    </Typography>
+                    <Typography className='header'>Dashboard</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "20px", marginRight: 10 }}>
+                    <Typography className='header' style={{ marginRight: 10 }}>
                         Recent Appointments
                     </Typography>
-                    <Typography style={{ fontFamily: 'Avenir', fontSize: "12px", justifyContent: "center", alignItems: "center", borderRadius: 5, padding: "3px 8px 3px 8px", border: "1px solid rgba(71, 71, 71, 0.6)", cursor: "pointer", color: "rgba(71, 71, 71, 0.6)" }} onClick={() => seeMoreAction()}>
+                    <Typography style={{ fontFamily: 'Avenir-Book', fontSize: "12px", justifyContent: "center", alignItems: "center", borderRadius: 5, padding: "3px 8px 3px 8px", border: "1px solid rgba(71, 71, 71, 0.6)", cursor: "pointer", color: "rgba(71, 71, 71, 0.6)" }} onClick={() => seeMoreAction()}>
                         {state.isClick ? "Show less" : "Show more"}
                     </Typography>
                 </Grid>
@@ -113,10 +110,9 @@ function Dashboard(props) {
                                                 checked={state.isClickCheckBox}
                                                 onClick={() => checkBoxAction()}
                                             /></StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Test Type </StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}><div style={{ display: "flex" }}>Patient Name<IconButton><Image src={arrow} alt={'arrow'} width={10} height={10} /></IconButton></div></StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Appointment Date & Time </StyledTableCell>
-                                      
+                                        <StyledTableCell >Test Type </StyledTableCell>
+                                        <StyledTableCell><div style={{ display: "flex" }}>Patient Name<IconButton><Image src={arrow} alt={'arrow'} width={10} height={10} /></IconButton></div></StyledTableCell>
+                                        <StyledTableCell>Appointment Date & Time </StyledTableCell>
                                     </StyledTableRow>
                                 </TableHead>
                                 <TableBody>
@@ -129,9 +125,7 @@ function Dashboard(props) {
                                             </StyledTableCell>
                                             <StyledTableCell>{item.testId}</StyledTableCell>
                                             <StyledTableCell>{item.patientName}</StyledTableCell>
-                                        
                                             <StyledTableCell>{item.collectionDate}</StyledTableCell>
-                                          
                                         </StyledTableRow>
                                     )}
                                 </TableBody>
@@ -143,17 +137,17 @@ function Dashboard(props) {
                     <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "2px", padding: "10px", borderRadius: "15px" }} >
                         <Grid item xs={12} style={{ border: "2px dashed #D9D9D9", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "25px" }}>
                             <Image src={Upload} alt='upload' width={"20vw"} height={"20vh"} />
-                            <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Upload test</Typography>
-                            <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Supports: .csv, .xl</Typography>
-                            <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Maximum size: .10Kb</Typography>
+                            <Typography className='header'>Upload test</Typography>
+                            <Typography style={{ fontSize: "12px", fontFamily: "Avenir-Book", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Supports: .csv, .xl</Typography>
+                            <Typography style={{ fontSize: "12px", fontFamily: "Avenir-Book", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Maximum size: .10Kb</Typography>
                         </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <TextField size="small"
                                     select
-                                    label={<Typography style={{ fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#024751" }} >Select Test</Typography>}
+                                    label={<Typography style={{ fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal", lineHeight: "24px", color: "#024751" }} >Select Test</Typography>}
                                     fullWidth
-                                    inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                    inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                     value={state.test}
                                     onChange={(event) => setState({ test: event.target.value })}
                                 />
@@ -161,16 +155,16 @@ function Dashboard(props) {
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <TextField size="small"
                                     select
-                                    label={<Typography style={{ fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#024751" }} >Select Lab</Typography>}
+                                    label={<Typography style={{ fontSize: "14px", fontFamily: "Avenir-Book-Book", fontStyle: "normal", lineHeight: "24px", color: "#024751" }} >Select Lab</Typography>}
                                     fullWidth
-                                    inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                    inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book-Book", backgroundColor: "#FBF7F4" } }}
                                     value={state.lab}
                                     onChange={(event) => setState({ lab: event.target.value })}
                                 />
                             </Grid>
                         </Grid>
                         <Grid item xs={12} style={{ marginTop: "20px", display: "flex", flexDirection: "row" }}>
-                            <Typography style={{ fontSize: "15px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#000", marginRight: "10px", textAlign: "center", marginTop: "8px" }} >Sheet format</Typography>
+                            <Typography style={{ fontSize: "15px", fontFamily: "Avenir-Book", fontStyle: "normal", lineHeight: "24px", color: "#000", marginRight: "10px", textAlign: "center", marginTop: "8px" }} >Sheet format</Typography>
                             <FormControlLabel value="female" control={<Radio sx={{
                                 '& .MuiSvgIcon-root': {
                                     fontSize: 20,
@@ -183,7 +177,7 @@ function Dashboard(props) {
                             }} />} label="Format" />
                         </Grid>
                         <Grid item xs={4}>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", border: "1px solid #024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px", borderRadius: "3px" }} onClick={() => alert("WIP")} >
+                            <CustomizedButtons variant={"text"} className='subText' style={{ padding: "4px 60px 4px 60px", border: "1px solid #024751", textTransform: "none", color: "#024751", marginLeft: "5px", borderRadius: "3px" }} onClick={() => alert("WIP")} >
                                 Upload
                             </CustomizedButtons>
                         </Grid>
@@ -192,27 +186,27 @@ function Dashboard(props) {
                 <Grid item xs={4} style={{ display: "flex", flexDirection: "row", }}>
                     <Grid container style={{ boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', marginTop: "2px", padding: "10px", borderRadius: "15px" }} >
                         <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                            <Typography style={{ fontSize: "22px", fontFamily: "Avenir-Black", fontStyle: "normal", lineHeight: "40px" }} >Scan patient</Typography>
-                            <Typography style={{ fontSize: "12px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Tap to scan a patient</Typography>
+                            <Typography className='header' >Scan patient</Typography>
+                            <Typography style={{ fontSize: "12px", fontFamily: "Avenir-Book", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >Tap to scan a patient</Typography>
                             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 10, width: 70, height: 70, backgroundColor: "#FEC14B", borderRadius: 35 }}>
                                 <Image src={Barcode} alt='Vector' width={"5vw"} height={"5vh"} />
                             </div>
                         </Grid>
                         <Grid container style={{ display: "flex", flexDirection: "row", alignItems: "center", }}>
                             <Grid item xs={6} style={{ border: "1px solid #D9D9D9" }} />
-                            <Grid item xs={0}>
-                                <Typography style={{ marginLeft: "5px", marginRight: "5px", fontSize: "10px", fontFamily: "Avenir", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >or</Typography>
+                            <Grid item xs={1}>
+                                <Typography style={{ marginLeft: "5px", marginRight: "5px", fontSize: "10px", fontFamily: "Avenir-Book-Book", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >or</Typography>
                             </Grid>
                             <Grid item xs={5} style={{ border: "1px solid #D9D9D9" }} />
                         </Grid>
                         <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <TextField size="small"
                                 placeholder='Enter Patient ID'
-                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir" } }}
+                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book" } }}
                                 value={state.lab}
                                 onChange={(event) => setState({ lab: event.target.value })}
                             />
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "3px", marginTop: "10px" }} onClick={() => alert("WIP")} >
+                            <CustomizedButtons variant={"text"} style={{ padding: "4px 60px 4px 60px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book-Book", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "3px", marginTop: "10px" }} onClick={() => alert("WIP")} >
                                 Find
                             </CustomizedButtons>
                         </Grid>
