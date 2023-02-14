@@ -1,13 +1,14 @@
 import React, { useState, useRef } from 'react';
 import {
-    Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
+    Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, TextField,
+    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem, TableContainer, Paper, Dialog, DialogTitle,DialogContent 
 } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
-import Union from '../../../public/Images/union.png';
+import Union from '../../../public/Images/plus.png';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -37,6 +38,7 @@ function TestKitTracking(props) {
         insurance:"",
         payment:"",
         status:"",
+        statusFilter:"",
         test_kit_tracking: [
             {
                 client_name: "Molina",
@@ -47,7 +49,8 @@ function TestKitTracking(props) {
                 batch_no: "BAT00001",
                 event_date: "12/13/2022, 01:57:25"
             }
-        ]
+        ],
+        addTestKitOpen:false
     })
 
     const handleChangePage = (event, newPage) => {
@@ -73,16 +76,25 @@ function TestKitTracking(props) {
         setState({ ...state, status: e.target.value })
     }
 }
-
+const submit =()=>{
+    alert("WIP");
+    setState({ ...state, addTestKitOpen: false })
+}
+const cancel = () => {
+    setState({ ...state, addTestKitOpen: false })
+}
+const addTestKitClose = () => {
+    setState({ ...state, addTestKitOpen: false })
+}
     return (
         <>
             <Grid container>
                 <Grid item xs={12} >
                     <Grid container >
                         <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-                            <CustomizedButtons variant={"text"} onClick={() => alert("WIP")} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#FBF7F4", marginTop: "20px" }} >
+                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", backgroundColor: "#024751", marginTop: "20px" }} onClick={() => setState({ ...state, addTestKitOpen: true })}>
                                 <Image src={Union} alt='union' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }} >
+                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px" }} >
                                     Add test kit batch
                                 </Typography>
                             </CustomizedButtons>
@@ -129,12 +141,12 @@ function TestKitTracking(props) {
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
                             <Select
-                                value={state.status}
+                                value={state.statusFilter}
                                 onChange={(e)=>handleChange(e,"S")}
                                 displayEmpty
                                 inputProps={{ 'aria-label': 'Without label' }}
                                 renderValue={
-                                    state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>
+                                    state.statusFilter !== "" ? undefined : () => <Placeholder>Status</Placeholder>
                                   }>
                                      <MenuItem value={"All"}>All</MenuItem>
                                 <MenuItem value={"Active"}>Active</MenuItem>
@@ -145,6 +157,7 @@ function TestKitTracking(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "15px" }}>
+                <TableContainer component={Paper} >
                     <Table>
                         <TableHead>
                             <TableRow >
@@ -192,7 +205,105 @@ function TestKitTracking(props) {
                             </TableRow>
                         </TableFooter>
                     </Table>
+                    </TableContainer>
                 </Grid>
+                <Dialog open={state.addTestKitOpen} onClose={() => addTestKitClose()} maxWidth={'sm'} >
+                   <Grid container>
+                       <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
+                           <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => addTestKitClose()} />
+                       </Grid>
+                   </Grid>
+                   <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test result</DialogTitle>
+                   <DialogContent>
+                       <Grid container>
+                           <Grid item xs={12} >
+                               <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Test information</Typography>
+                           </Grid>
+                           <Grid item xs={12}>
+                               <Grid container spacing={2}>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Client name"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.client_name}
+                                           onChange={(event) => setState({ ...state, client_name: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"From location"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.from_location}
+                                           onChange={(event) => setState({ ...state, from_location: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Quantity"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.quantity}
+                                           onChange={(event) => setState({ ...state, quantity: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Date and time "}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.date_and_time}
+                                           onChange={(event) => setState({ ...state, date_and_time: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                   <Select
+                                            size="small"
+                                            value={state.status}
+                                            onChange={(event) => setState({ ...state, status: event.target.value })}
+                                            displayEmpty
+                                            fullWidth
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            renderValue={
+                                                state.status !== "" ? undefined : () => <Placeholder><Typography style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4", color:"#998E8A"} }>Status</Typography></Placeholder>
+                                            }>
+                                            <MenuItem value={"All"}>All</MenuItem>
+                                            <MenuItem value={"Active"}>Active</MenuItem>
+                                            <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                                        </Select>
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Batch no"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.batch_no}
+                                           onChange={(event) => setState({ ...state, batch_no: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Event date"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.event_date}
+                                           onChange={(event) => setState({ ...state, event_date: event.target.value })}
+                                       />
+                                   </Grid>
+                                </Grid>
+                               <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+                                   <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
+                                       Cancel
+                                   </CustomizedButtons>
+                                   <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
+                                       Submit
+                                   </CustomizedButtons>
+                               </Grid>
+                           </Grid>
+                       </Grid>
+                   </DialogContent>
+               </Dialog>
             </Grid>
         </>
     )

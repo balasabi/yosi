@@ -69,7 +69,7 @@ function AddUser(props) {
             setState(ref => ({ ...ref, emailError: true }))
             isError = true;
         }
-        if (isError === false) {
+        if (isError === false && props.mode==="ADD" ) {
             let data = {};
             data.email = email;
             data.first_name = firstName;
@@ -153,7 +153,7 @@ function AddUser(props) {
                                         </Grid>
                                         <Grid item xs={6} textAlign='center'>
                                             <CustomizedButtons variant="contained" onClick={() => handleSubmit()}>
-                                                Submit
+                                               {props.mode==="ADD" ? "Submit" : "Update"}
                                             </CustomizedButtons>
                                         </Grid>
                                     </Grid>

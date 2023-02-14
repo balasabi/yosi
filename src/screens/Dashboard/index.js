@@ -96,7 +96,7 @@ function Dashboard(props) {
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                     <Typography style={{ fontSize: "20px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "20px", marginRight: 10 }}>
-                        Recent patients
+                        Recent Appointments
                     </Typography>
                     <Typography style={{ fontFamily: 'Avenir', fontSize: "12px", justifyContent: "center", alignItems: "center", borderRadius: 5, padding: "3px 8px 3px 8px", border: "1px solid rgba(71, 71, 71, 0.6)", cursor: "pointer", color: "rgba(71, 71, 71, 0.6)" }} onClick={() => seeMoreAction()}>
                         {state.isClick ? "Show less" : "Show more"}
@@ -113,13 +113,10 @@ function Dashboard(props) {
                                                 checked={state.isClickCheckBox}
                                                 onClick={() => checkBoxAction()}
                                             /></StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Test ID</StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}><div style={{ display: "flex" }}>Patient Name<IconButton><Image src={arrow} alt={'arrow'} width={10} height={10} /></IconButton></div></StyledTableCell>
                                         <StyledTableCell style={{ fontWeight: "bold" }}>Test Type </StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Collection Date </StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Tupe Number</StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Result</StyledTableCell>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>Analysis</StyledTableCell>
+                                        <StyledTableCell style={{ fontWeight: "bold" }}><div style={{ display: "flex" }}>Patient Name<IconButton><Image src={arrow} alt={'arrow'} width={10} height={10} /></IconButton></div></StyledTableCell>
+                                        <StyledTableCell style={{ fontWeight: "bold" }}>Appointment Date & Time </StyledTableCell>
+                                      
                                     </StyledTableRow>
                                 </TableHead>
                                 <TableBody>
@@ -132,11 +129,9 @@ function Dashboard(props) {
                                             </StyledTableCell>
                                             <StyledTableCell>{item.testId}</StyledTableCell>
                                             <StyledTableCell>{item.patientName}</StyledTableCell>
-                                            <StyledTableCell>{item.testType}</StyledTableCell>
+                                        
                                             <StyledTableCell>{item.collectionDate}</StyledTableCell>
-                                            <StyledTableCell> {item.tubeNumber} </StyledTableCell>
-                                            <StyledTableCell> {item.result} </StyledTableCell>
-                                            <StyledTableCell> {item.analysis} </StyledTableCell>
+                                          
                                         </StyledTableRow>
                                     )}
                                 </TableBody>

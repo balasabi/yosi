@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
+    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem, TableContainer, Paper,
 } from '@mui/material';
 import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
@@ -105,6 +105,7 @@ function ClientDb(props) {
                         </FormControl>
                         </Grid>
                         <Grid item xs={12} style={{ marginTop: "15px" }}>
+                        <TableContainer component={Paper} >
                             <Table>
                                 <TableHead>
                                     <TableRow >
@@ -147,6 +148,7 @@ function ClientDb(props) {
                                     </TableRow>
                                 </TableFooter>
                             </Table>
+                            </TableContainer>
                         </Grid>
                     </Grid>
                 </Grid>

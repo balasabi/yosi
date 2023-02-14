@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, FormControl, Select, MenuItem } from '@mui/material';
+import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, FormControl, Select, MenuItem, IconButton } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
 import DownArrow from '../../../public/Images/downArrow.png';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import RightArrow from '../../../public/Images/go.png';
+import { useRouter } from 'next/router';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
@@ -15,18 +16,19 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         border: "none",
         color: "#848991",
-        fontFamily: "Avenir",
+        fontFamily: "Avenir-Heavy",
     },
     [`&.${tableCellClasses.body}`]: {
         color: "#313233",
         border: "none",
-        fontFamily: "Avenir"
+        fontFamily: "Avenir-Book"
     }
 }));
 
 function Locations(props) {
     const [state, setState] = useState({
-        status:"",
+        status: "",
+        openLocation: false,
         type: [
             {
                 name: "Avadale (AVD)",
@@ -67,18 +69,25 @@ function Locations(props) {
         ]
     })
 
+    const router = useRouter();
+
     const Placeholder = ({ children }) => {
-        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
-      };
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+    };
 
     const handleChange = (e) => {
         setState({ ...state, status: e.target.value })
-}
+    };
+
+    const handleView = () => {
+        router.push('/locations/view-location')
+    };
+
     return (
         <>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography fontWeight={800} fontSize={"24px"}>Lab Locations</Typography>
+                    <Typography className='header'>Lab Locations</Typography>
                 </Grid>
                 <Grid item xs={12} marginBottom={"20px"}>
                     <Grid container>
@@ -89,21 +98,21 @@ function Locations(props) {
                             />
                         </Grid>
                         <Grid item xs={7} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
-                            <Select
-                                value={state.status}
-                                onChange={(e)=>handleChange(e,"T")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
-                                  }>
-                                <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Active</MenuItem>
-                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
-                            </Select>
-                        </FormControl>
+                            <Typography style={{ fontSize: "1em", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Bold", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                                <Select
+                                    value={state.status}
+                                    onChange={(e) => handleChange(e, "T")}
+                                    displayEmpty
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                    renderValue={
+                                        state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
+                                    }>
+                                    <MenuItem value={"All"}>All</MenuItem>
+                                    <MenuItem value={"Active"}>Active</MenuItem>
+                                    <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -113,13 +122,7 @@ function Locations(props) {
                             <Grid item xs={12} sm={4} key={index.toString()}>
                                 <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', borderRadius: "8px", padding: "10px" }}>
                                     <Grid item xs={12} >
-                                        <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "20px", lineHeight: "32px", fontFamily: "Avenir-Black",
-                                            fontWeight: 800,
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
-                                        }} color={"#000000"}>{item.name} </Typography>
+                                        <Typography className='subHeading'>{item.name} </Typography>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
                                         <Typography style={{
@@ -185,7 +188,9 @@ function Locations(props) {
                                             WebkitLineClamp: 3,
                                             fontWeight: 'bold'
                                         }} color={"#313237"}>Show Details</Typography>
-                                        <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} />
+                                        <IconButton onClick={() => handleView()}>
+                                            <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} />
+                                        </IconButton>
                                     </Grid>
                                 </Grid>
                             </Grid>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, RadioGroup, FormControlLabel, Radio
-} from '@mui/material';
+    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, RadioGroup, FormControlLabel, Radio,
+     TableContainer, Paper,} from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
 import { useDispatch } from 'react-redux';
@@ -111,6 +111,7 @@ function ClientTestCategory(props) {
                             <Typography>Molina</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
+                        <TableContainer component={Paper} >
                             <Table>
                                 <TableHead>
                                     <TableRow >
@@ -162,6 +163,7 @@ function ClientTestCategory(props) {
                                     </TableRow>
                                 </TableFooter>
                             </Table>
+                            </TableContainer>
                         </AccordionDetails>
                     </Accordion>
                 </Grid>

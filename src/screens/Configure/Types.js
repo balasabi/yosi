@@ -208,7 +208,7 @@ function Type(props) {
                                                             WebkitBoxOrient: 'vertical',
                                                             WebkitLineClamp: 3,
                                                         }} color={"#313237"}>Show Details</Typography>
-                                                        <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} />
+                                                        <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} onClick={()=> alert("WIP")} />
                                                     </Grid>
                                                 </Grid>
                                             </StyledTableCell>

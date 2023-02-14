@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     Grid, Typography, Select, MenuItem, Table, TableBody, TableCell, tableCellClasses,
     TableRow, TableHead, TableContainer, Checkbox, Button, Paper, TablePagination,
-    FormControl, Dialog, DialogTitle, DialogContent, Drawer
+    FormControl, Dialog, DialogTitle, DialogContent, Drawer,
 } from '@mui/material';
 import plus from '../../../public/Images/plus.png';
 import { styled } from '@mui/material';
@@ -88,7 +88,8 @@ function UsersManagement(props) {
         openPermission: false,
         sort: false,
         isClickCheckBox: false,
-        selectedUser: []
+        selectedUser: [],
+        mode:"ADD"
     })
 
     function compare(a, b) {
@@ -126,11 +127,14 @@ function UsersManagement(props) {
     };
 
     const handleUser = () => {
-        setState({ ...state, isActive: !state.isActive })
+        setState({ ...state, isActive: state.isActive })
     };
 
     const addUser = () => {
-        setState({ ...state, addUserOpen: true })
+        setState({ ...state, addUserOpen: true, mode:"ADD" })
+    };
+    const editUser = () => {
+        setState({ ...state, addUserOpen: true, mode:"EDIT" })
     };
 
     const handleClose = () => {
@@ -176,7 +180,9 @@ function UsersManagement(props) {
         setState({ ...state, status: e.target.value })
     }
 }
-
+const buttonAction = (param) => {
+    setState({ userManagementMode: param })
+}
     return (
         <>
             <Grid container spacing={2}>
@@ -211,7 +217,12 @@ function UsersManagement(props) {
                 <Grid item xs={12}>
                     <Grid container justifyContent='flex-end'>
                         <Grid item xs={12} sm={6} textAlign="flex-start">
-                            <CustomizedButtons variant="contained" onClick={() => addUser()} style={{ padding: "8px" }}><div style={{ display: "flex", alignItems: "center", paddingRight: "7px" }}> <Image src={plus} alt="+" width={14} height={15} /></div>New User</CustomizedButtons>
+                            <CustomizedButtons variant="contained" onClick={() => addUser()} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", }}>
+                                <Image src={plus} alt="+" width={14} height={15} />
+                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", marginLeft: "5px" }}>
+                                    New User
+                                </Typography>
+                            </CustomizedButtons>
                         </Grid>
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-end" alignItems="center">
@@ -248,7 +259,8 @@ function UsersManagement(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <Table sx={{ minWidth: 650 }}>
+                <TableContainer component={Paper} >
+                    <Table >
                         <TableHead>
                             <StyledTableRow>
                                 <StyledTableCell><Checkbox
@@ -287,11 +299,12 @@ function UsersManagement(props) {
                                     <StyledTableCell>{item.phone}</StyledTableCell>
                                     <StyledTableCell>{item.role}</StyledTableCell>
                                     <StyledTableCell>{item.status}</StyledTableCell>
-                                    <StyledTableCell><Button style={{ textTransform: "none", color: "#000" }}><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
+                                    <StyledTableCell><Button style={{ textTransform: "none", color: "#000" }} onClick={()=>editUser()} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
                                 </StyledTableRow>
                             )}
                         </TableBody>
-                    </Table>
+                        </Table>
+                        </TableContainer>
                     <TablePagination component="div"
                         rowsPerPageOptions={[10, 25]}
                         count={state.users.length}
@@ -300,15 +313,16 @@ function UsersManagement(props) {
                         labelRowsPerPage="No. of items per page"
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)} />
+                      
                 </Grid>
 
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>
                     <DialogTitle>
-                        <Typography style={{ paddingBottom: '10px', fontWeight: "bold" }}><span style={{ color: '#024751' }}>Add </span> New User</Typography>
+                        <Typography style={{ paddingBottom: '10px', fontWeight: "bold" }}><span style={{ color: '#024751' }}>{state.mode==="ADD" ? "Add" : "Edit"}</span> New User</Typography>
                         <div style={{ background: '#E8E8E8', height: 1 }}></div>
                     </DialogTitle>
                     <DialogContent>
-                        <AddUser close={handleClose} />
+                        <AddUser close={handleClose} mode={state.mode} />
                     </DialogContent>
                 </Dialog>
                 <Drawer anchor={'right'} open={state.openPermission} PaperProps={{ sx: { marginTop: '75px' } }}>

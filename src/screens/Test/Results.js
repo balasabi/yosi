@@ -1,15 +1,15 @@
 import React, { useState, useRef } from 'react';
 import {
-    Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, FormControl, Select, MenuItem
+    Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, TableContainer, Paper,
+    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, FormControl, Select, MenuItem, Autocomplete
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
 import Send from '../../../public/Images/send.png';
-import Union from '../../../public/Images/union.png';
-import SignatureCanvas from 'react-signature-canvas';
+import Union from '../../../public/Images/plus.png';
+// import SignatureCanvas from 'react-signature-canvas';
 import { addTestResultAction } from "../../store/actions/testResultAction";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -42,7 +42,7 @@ function Result(props) {
         page: 0,
         rowsPerPage: 10,
         addTestOpen: false,
-        first_name: "",
+        name: "",
         last_name: "",
         location: "",
         location_test_type: "",
@@ -222,19 +222,19 @@ function Result(props) {
     }
 
     const submit = async () => {
-        await setState({
-            signature: signPad.current.getTrimmedCanvas()
-                .toDataURL('image/png')
-        })
-        let { first_name, last_name, location, location_test_type, ordering_provider, test_lab, signature } = state;
+        // await setState({
+        //     signature: signPad.current.getTrimmedCanvas()
+        //         .toDataURL('image/png')
+        // })
+        let { name, last_name, location, location_test_type, ordering_provider, test_lab, signature } = state;
         let data = {}
-        data.first_name = first_name;
-        data.last_name = last_name;
+        data.name = name;
+        // data.last_name = last_name;
         data.location = location;
         data.location_test_type = location_test_type;
         data.ordering_provider = ordering_provider;
-        data.test_lab = test_lab;
-        data.signature = signature;
+        // data.test_lab = test_lab;
+        // data.signature = signature;
         dispatch(addTestResultAction(data))
         setState({ ...state, addTestOpen: false })
         console.log("******submit******" + JSON.stringify(data))
@@ -265,232 +265,234 @@ function Result(props) {
             <Grid container>
                 <Grid item xs={12} >
                     <Grid container >
-                        <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }}>
-                                <Image src={Send} alt='send' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }} >
-                                    Export
-                                </Typography>
-                            </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }}>
-                                <Image src={Union} alt='union' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }} >
-                                    Test Results
-                                </Typography>
-                            </CustomizedButtons>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
-                            <Select
-                                value={state.results}
-                                onChange={(e)=>handleChange(e,"R")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
-                                  }>
-                                <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Negative"}>Negative</MenuItem>
-                                <MenuItem value={"Success"}>Success</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
-                            <Select
-                                value={state.testType}
-                                onChange={(e)=>handleChange(e,"T")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.testType !== "" ? undefined : () => <Placeholder>All Test Types</Placeholder>
-                                  }>
-                                <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Negative"}>Negative</MenuItem>
-                                <MenuItem value={"Positive"}>Positive</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
-                            <Select
-                                value={state.allLocations}
-                                onChange={(e)=>handleChange(e,"L")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.allLocations !== "" ? undefined : () => <Placeholder>All Locations</Placeholder>
-                                  }>
-                                <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Adyar"}>Adyar</MenuItem>
-                                <MenuItem value={"Velachery"}>Velachery</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
-                            <Select
-                                value={state.date}
-                                onChange={(e)=>handleChange(e,"D")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
-                                  }>
-                            </Select>
-                        </FormControl>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12} style={{ marginTop: "15px" }}>
-                    <Table>
-                        <TableHead>
-                            <TableRow >
-                                <StyledTableCell align="center">
-                                    <Checkbox
-                                      checked={state.isClickCheckBox}
-                                      onClick={() => checkBoxAction()}
-                                     />
-                                </StyledTableCell>
-                                <StyledTableCell >Test ID</StyledTableCell>
-                                <StyledTableCell >
-                                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                        <Typography style={{ fontSize: "14.5px", fontFamily: "Avenir-Black", color: "#000", fontWeight:800 }}>Patient Name</Typography>
-                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
-                                            <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                                            <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />
-                                        </div>
-                                    </div>
-                                </StyledTableCell>
-                                <StyledTableCell >Test Type</StyledTableCell>
-                                <StyledTableCell >Collection Date</StyledTableCell>
-                                <StyledTableCell >Tube Number</StyledTableCell>
-                                <StyledTableCell >Result</StyledTableCell>
-                                <StyledTableCell >Analysis</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        {!!state.test && state.test.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((test, index) => (
-                            <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
-                                <StyledTableRow >
-                                    <StyledTableCell align="center">
-                                        <Checkbox
-                                          checked={state.selectedresults.includes(test.id)}
-                                        //   onClick={() => singleSelectAction(test.id)} 
-                                         />
-                                    </StyledTableCell>
-                                    <StyledTableCell >{test.test_id}</StyledTableCell>
-                                    <StyledTableCell >{test.patient_name}</StyledTableCell>
-                                    <StyledTableCell >{test.test_type}</StyledTableCell>
-                                    <StyledTableCell >{test.collection_date}</StyledTableCell>
-                                    <StyledTableCell >{test.tube_number}</StyledTableCell>
-                                    <StyledTableCell >{test.result}</StyledTableCell>
-                                    <StyledTableCell >{test.analysis}</StyledTableCell>
-                                </StyledTableRow>
-                            </TableBody>
-                        ))}
-                        <TableFooter>
-                            <TableRow>
-                                <TablePagination
-                                 //rowsPerPageOptions={[10, 25]}
-                                    count={!!state.test && state.test.length}
-                                    page={state.page}
-                                    onPageChange={handleChangePage}
-                                    rowsPerPage={state.rowsPerPage}
-                                    onRowsPerPageChange={(e) =>handleChangeRowsPerPage(e)}
-                                    labelRowsPerPage={"No. of items per page : "}
-                                    sx={{ borderBottom: "1.43px solid #D5DBE1" }}
-                                />
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
-                </Grid>
-                <Dialog open={state.addTestOpen} onClose={() => addTestClose()} maxWidth={'sm'} >
-                <Grid container>
-                    <Grid item xs={12} style={{display:"flex", justifyContent:"flex-end"}}>
-                    <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize:"45px", position:"absolute"}} onClick={() => addTestClose()} />
+                       <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
+                           <CustomizedButtons variant={"text"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#024751", marginTop: "20px" }}>
+                               <Image src={Union} alt='union' width={"20vw"} height={"20vh"} />
+                               <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px" }} >
+                                   Test Orders
+                               </Typography>
+                           </CustomizedButtons>
+                           <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }} onClick={()=> alert("WIP")}>
+                               <Image src={Send} alt='send' width={"20vw"} height={"20vh"} />
+                               <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }} >
+                                   Send
+                               </Typography>
+                           </CustomizedButtons>
                        </Grid>
-                      </Grid>
-                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test result</DialogTitle>
-                    <DialogContent>
-                        <Grid container>
-                            <Grid item xs={12} >
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Test information</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
-                                          placeholder={"Patient first name"}
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            value={state.first_name}
-                                            onChange={(event) => setState({...state, first_name: event.target.value })}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
-                                            placeholder={"Patient last name"}
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            value={state.last_name}
-                                            onChange={(event) => setState({ ...state, last_name: event.target.value })}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
-                                            placeholder={"Location"}
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            value={state.location}
-                                            onChange={(event) => setState({...state, location: event.target.value })}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
-                                            placeholder={"Location test type "}
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            value={state.location_test_type}
-                                            onChange={(event) => setState({...state, location_test_type: event.target.value })}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
-                                            placeholder={"Ordering provider"}
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            value={state.ordering_provider}
-                                            onChange={(event) => setState({...state, ordering_provider: event.target.value })}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
-                                            placeholder={"Test lab"}
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            value={state.test_lab}
-                                            onChange={(event) => setState({...state, test_lab: event.target.value })}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <Typography style={{ fontFamily: "Montserrat-Bold", letterSpacing: "0.4px", fontSize: "14px", color: "#024751", lineHeight: "20px", }}>Signature</Typography>
-                                        <div style={{ width: 350, height: 150, border: "1px solid rgba(203, 205, 209, 1)", margin: '10px 0px', borderRadius: 5, backgroundColor: "#FBF7F4" }}>
-                                            <SignatureCanvas penColor='black'
-                                                canvasProps={{ width: 350, height: 150 }}
-                                                ref={signPad}
-                                            />
-                                        </div>
-                                        <CustomizedButtons style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", color: "#024751", }} onClick={() => signPad.current.clear()}>CLEAR</CustomizedButtons>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
-                                    <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
-                                        Cancel
-                                    </CustomizedButtons>
-                                    <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
-                                        Submit
-                                    </CustomizedButtons>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </DialogContent>
-                </Dialog>
-            </Grid>
+                       {/* <Grid item xs={12} sm={12} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
+                           <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                           <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
+                               <Select
+                                   value={state.results}
+                                   onChange={(e) => handleChange(e, "R")}
+                                   displayEmpty
+                                   inputProps={{ 'aria-label': 'Without label' }}
+                                   renderValue={
+                                       state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
+                                   }>
+                                   <MenuItem value={"All"}>All</MenuItem>
+                                   <MenuItem value={"Negative"}>Negative</MenuItem>
+                                   <MenuItem value={"Success"}>Success</MenuItem>
+                               </Select>
+                           </FormControl>
+                           <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
+                               <Select
+                                   value={state.testType}
+                                   onChange={(e) => handleChange(e, "T")}
+                                   displayEmpty
+                                   inputProps={{ 'aria-label': 'Without label' }}
+                                   renderValue={
+                                       state.testType !== "" ? undefined : () => <Placeholder>All Test Types</Placeholder>
+                                   }>
+                                   <MenuItem value={"All"}>All</MenuItem>
+                                   <MenuItem value={"Negative"}>Negative</MenuItem>
+                                   <MenuItem value={"Positive"}>Positive</MenuItem>
+                               </Select>
+                           </FormControl>
+                           <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
+                               <Select
+                                   value={state.allLocations}
+                                   onChange={(e) => handleChange(e, "L")}
+                                   displayEmpty
+                                   inputProps={{ 'aria-label': 'Without label' }}
+                                   renderValue={
+                                       state.allLocations !== "" ? undefined : () => <Placeholder>All Locations</Placeholder>
+                                   }>
+                                   <MenuItem value={"All"}>All</MenuItem>
+                                   <MenuItem value={"Adyar"}>Adyar</MenuItem>
+                                   <MenuItem value={"Velachery"}>Velachery</MenuItem>
+                               </Select>
+                           </FormControl>
+                           <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                               <Select
+                                   value={state.date}
+                                   onChange={(e) => handleChange(e, "D")}
+                                   displayEmpty
+                                   inputProps={{ 'aria-label': 'Without label' }}
+                                   renderValue={
+                                       state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
+                                   }>
+                               </Select>
+                           </FormControl>
+                       </Grid> */}
+                   </Grid>
+                </Grid>
+               <Grid item xs={12} style={{ marginTop: "15px" }}>
+                   <TableContainer component={Paper} >
+                       <Table>
+                           <TableHead>
+                               <TableRow >
+                                   <StyledTableCell align="center">
+                                       <Checkbox
+                                           checked={state.isClickCheckBox}
+                                           onClick={() => checkBoxAction()}
+                                       />
+                                   </StyledTableCell>
+                                   <StyledTableCell >Test ID</StyledTableCell>
+                                   <StyledTableCell >
+                                       <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                           <Typography style={{ fontSize: "14.5px", fontFamily: "Avenir-Black", color: "#000", fontWeight: 800 }}>Patient Name</Typography>
+                                           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
+                                               <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
+                                               <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />
+                                           </div>
+                                       </div>
+                                   </StyledTableCell>
+                                   <StyledTableCell >Test Type</StyledTableCell>
+                                   <StyledTableCell >Collection Date</StyledTableCell>
+                                   <StyledTableCell >Tube Number</StyledTableCell>
+                                   <StyledTableCell >Result</StyledTableCell>
+                                   <StyledTableCell >Analysis</StyledTableCell>
+                               </TableRow>
+                           </TableHead>
+                           {!!state.test && state.test.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((test, index) => (
+                               <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
+                                   <StyledTableRow >
+                                       <StyledTableCell align="center">
+                                           <Checkbox
+                                               checked={state.selectedresults.includes(test.id)}
+                                           //   onClick={() => singleSelectAction(test.id)} 
+                                           />
+                                       </StyledTableCell>
+                                       <StyledTableCell >{test.test_id}</StyledTableCell>
+                                       <StyledTableCell >{test.patient_name}</StyledTableCell>
+                                       <StyledTableCell >{test.test_type}</StyledTableCell>
+                                       <StyledTableCell >{test.collection_date}</StyledTableCell>
+                                       <StyledTableCell >{test.tube_number}</StyledTableCell>
+                                       <StyledTableCell >{test.result}</StyledTableCell>
+                                       <StyledTableCell >{test.analysis}</StyledTableCell>
+                                   </StyledTableRow>
+                               </TableBody>
+                           ))}
+                           <TableFooter>
+                               <TableRow>
+                                   <TablePagination
+                                       //rowsPerPageOptions={[10, 25]}
+                                       count={!!state.test && state.test.length}
+                                       page={state.page}
+                                       onPageChange={handleChangePage}
+                                       rowsPerPage={state.rowsPerPage}
+                                       onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)}
+                                       labelRowsPerPage={"No. of items per page : "}
+                                       sx={{ borderBottom: "1.43px solid #D5DBE1" }}
+                                   />
+                               </TableRow>
+                           </TableFooter>
+                       </Table>
+                   </TableContainer>
+               </Grid>
+               <Dialog open={state.addTestOpen} onClose={() => addTestClose()} maxWidth={'sm'} >
+                   <Grid container>
+                       <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
+                           <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => addTestClose()} />
+                       </Grid>
+                   </Grid>
+                   <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test result</DialogTitle>
+                   <DialogContent>
+                       <Grid container>
+                           <Grid item xs={12} >
+                               <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Test information</Typography>
+                           </Grid>
+                           <Grid item xs={12}>
+                               <Grid container spacing={2}>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Patient name"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.name}
+                                           onChange={(event) => setState({ ...state, name: event.target.value })}
+                                       />
+                                   </Grid>
+                                   {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Patient last name"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.last_name}
+                                           onChange={(event) => setState({ ...state, last_name: event.target.value })}
+                                       />
+                                   </Grid> */}
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Location"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.location}
+                                           onChange={(event) => setState({ ...state, location: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Location test type "}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.location_test_type}
+                                           onChange={(event) => setState({ ...state, location_test_type: event.target.value })}
+                                       />
+                                   </Grid>
+                                   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Ordering provider(Optional)"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.ordering_provider}
+                                           onChange={(event) => setState({ ...state, ordering_provider: event.target.value })}
+                                       />
+                                   </Grid>
+                                   {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <TextField size="small"
+                                           placeholder={"Test lab"}
+                                           fullWidth
+                                           inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                           value={state.test_lab}
+                                           onChange={(event) => setState({ ...state, test_lab: event.target.value })}
+                                       />
+                                   </Grid> */}
+                                   {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                       <Typography style={{ fontFamily: "Montserrat-Bold", letterSpacing: "0.4px", fontSize: "14px", color: "#024751", lineHeight: "20px", }}>Signature</Typography>
+                                       <div style={{ width: 350, height: 150, border: "1px solid rgba(203, 205, 209, 1)", margin: '10px 0px', borderRadius: 5, backgroundColor: "#FBF7F4" }}>
+                                           <SignatureCanvas penColor='black'
+                                               canvasProps={{ width: 350, height: 150 }}
+                                               ref={signPad}
+                                           />
+                                       </div>
+                                       <CustomizedButtons style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", color: "#024751", }} onClick={() => signPad.current.clear()}>CLEAR</CustomizedButtons>
+                                   </Grid> */}
+                               </Grid>
+                               <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
+                                   <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
+                                       Cancel
+                                   </CustomizedButtons>
+                                   <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
+                                       Submit
+                                   </CustomizedButtons>
+                               </Grid>
+                           </Grid>
+                       </Grid>
+                   </DialogContent>
+               </Dialog>
+           </Grid>
         </>
     )
 }

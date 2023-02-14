@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import {
     Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, RadioGroup, FormControlLabel,Radio, FormControl, Select, MenuItem
-} from '@mui/material';
+    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, RadioGroup, FormControlLabel,Radio, FormControl, Select, MenuItem,
+    TableContainer, Paper } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -202,6 +202,7 @@ console.log("======selectClientTestResults======"+state.selectClientTestResults)
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "15px" }}>
+                <TableContainer component={Paper} >
                     <Table>
                         <TableHead>
                             <TableRow >
@@ -261,6 +262,7 @@ console.log("======selectClientTestResults======"+state.selectClientTestResults)
                             </TableRow>
                         </TableFooter>
                     </Table>
+                    </TableContainer>
                 </Grid>
                 <Dialog open={state.addTestOpen} onClose={() => addTestClose()} maxWidth={'sm'}>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test result</DialogTitle>

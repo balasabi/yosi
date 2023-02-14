@@ -17,6 +17,12 @@ export const sideMenu = [
         pages: []
     },
     {
+        name: "Appointments"
+        , menuIcon: <Image src={UsersThree} alt={"Ellipse"} width={20} height={20} />,
+        url: '/appointments',
+        pages: []
+    },
+    {
         name: "Patients"
         , menuIcon: <Image src={UsersThree} alt={"Ellipse"} width={20} height={20} />,
         url: '/patients',
@@ -25,28 +31,34 @@ export const sideMenu = [
     {
         name: "Test",
         menuIcon: <Image src={BookOpen} alt={"Ellipse"} width={20} height={20} />,
-        pages: [{ title: "Test group", url: '/test', menuIcon: <Image src={BookOpen} alt={"Ellipse"} width={20} height={20} /> }]
+        url: '/test',
+        pages: []
+        // pages: [{ title: "Test group", url: '/test', menuIcon: <Image src={BookOpen} alt={"Ellipse"} width={20} height={20} /> }]
     },
-    {
-        name: "Location",
-        menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />,
-        pages: [{ title: "Test location", menuIcon: <Image src={Location} alt={"Ellipse"} width={18} height={21} />, url: '/locations' }]
-    },
-    {
-        name: "Clients",
-        menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />,
-        pages: [{ title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />}]
-    },
-    {
-        name: "Test kits",
-        menuIcon: <Image src={Folder} alt={"Ellipse"} width={20} height={20} />,
-        pages: [{ title: "Test kit", url: '/test-kits', menuIcon: <Image src={Folder} alt={"Ellipse"} width={20} height={20} />, }]
-    },
+    // {
+    //     name: "Location",
+    //     menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />,
+    //     url: '/locations',
+    //     pages: []
+        // pages: [{ title: "Test location", menuIcon: <Image src={Location} alt={"Ellipse"} width={18} height={21} />, url: '/locations' }]
+    // },
+    // {
+    //     name: "Clients",
+    //     menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />,
+    //     pages: [{ title: "Client location", url: '/clients', menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />}]
+    // },
+    // {
+    //     name: "Test kits",
+    //     menuIcon: <Image src={Folder} alt={"Ellipse"} width={20} height={20} />,
+    //     pages: [{ title: "Test kit", url: '/test-kits', menuIcon: <Image src={Folder} alt={"Ellipse"} width={20} height={20} />, }]
+    // },
     {
         name: "Configure",
         menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />,
-        url: '/',
-        pages: [{ title: "Configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' }]
+        url: '/configure',
+        pages: [{ title: "Country Configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
+        { title: "Test Configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
+        { title: "Location configure", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' }]
     },
     {
         name: "User management",
@@ -54,9 +66,10 @@ export const sideMenu = [
         url: '/users-management',
         pages: []
     },
-    {
-        name: "Custom reports",
-        menuIcon: <Image src={Notebook} alt={"Ellipse"} width={20} height={20} />,
-        // url: '/custom-report',
-        pages: []
-    }];
+    // {
+    //     name: "Custom reports",
+    //     menuIcon: <Image src={Notebook} alt={"Ellipse"} width={20} height={20} />,
+    //     // url: '/custom-report',
+    //     pages: []
+    // }
+];

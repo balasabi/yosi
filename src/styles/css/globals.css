@@ -73,7 +73,7 @@
   }
 }
 
-* {
+/* * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -98,7 +98,7 @@ body {
 a {
   color: inherit;
   text-decoration: none;
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   html {
@@ -106,28 +106,59 @@ a {
   }
 }
 
+/* @font-face {
+  font-family: "Avenir-Roman";
+  src: url('/fonts/Avenir-Roman.woff') format('woff');
+  font-display: swap;
+}  */
+
 @font-face {
   font-family: "Avenir-Black";
-  src: url('/fonts/Avenir-Black.woff') format('woff');
+  src: url('/fonts/Avenir-Black.woff2') format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: "Avenir-BlackOblique";
-  src: url('/fonts/Avenir-BlackOblique.woff') format('woff');
+  src: url('/fonts/Avenir-BlackOblique.woff2') format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: "Avenir-Book";
-  src: url('/fonts/Avenir-Book.woff') format('woff');
+  src: url('/fonts/Avenir-Book.woff2') format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: "Avenir-Heavy";
-  src: url('/fonts/Avenir-Heavy.woff') format('woff');
+  src: url('/fonts/Avenir-Heavy.woff2') format('woff2');
   font-display: swap;
 }
 @font-face {
   font-family: "Avenir-Roman";
-  src: url('/fonts/Avenir-Roman.woff') format('woff');
+  src: url('/fonts/Avenir-Roman.woff2') format('woff2');
   font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir-Bold";
+  src: url('/fonts/Avenir-Bold.woff2') format('woff2');
+  font-display: swap;
+}
+
+.subText {
+  font-size: 1em;
+  font-family: 'Avenir-Book';
+  line-height: '24px';
+}
+.header {
+  font-size: 1.4em;
+  font-family: 'Avenir-Bold';
+  line-height: '40px';
+  color: #313237;
+}
+
+.subHeading {
+  font-size: 1.15em;
+  font-family: 'Avenir-Bold';
+  line-height: '32px';
+  color: #313237;
 }

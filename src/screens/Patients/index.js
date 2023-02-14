@@ -9,12 +9,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       backgroundColor: "#E7E7E7",
       color: theme.palette.common.black,
       fontFamily: 'Avenir-Black',
-      padding: "3px"
+      padding: "12px"
   },
   [`&.${tableCellClasses.body}`]: {
       fontSize: 16,
       fontFamily: 'Avenir',
-      padding: "2px"
+      padding: "10px"
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -97,13 +97,13 @@ class Patients extends Component {
           <Table aria-label="simple table" size='small'>
             <TableHead style={{ backgroundColor: '#E7E7E7' }}>
               <TableRow>
-                <StyledTableCell align='right'>
+                {/* <StyledTableCell align='right'>
                   <Checkbox 
                   style={{display:"flex",justifyContent:"flex-start"}}
                   checked={this.state.isClickCheckBox}
                     onClick={() => this.checkBoxAction()}
                   />
-                </StyledTableCell>
+                </StyledTableCell> */}
                 <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Name<Button onClick={this.sortedData()}><Image src={vector} alt="vector" /></Button>
                 </StyledTableCell>
                 <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Email ID</StyledTableCell>
@@ -118,13 +118,13 @@ class Patients extends Component {
                   key={index}
                   style={{ background: (index % 2) == 0 ? 'white' : '#F2F2F2' }}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <StyledTableCell align='right'>
+                  {/* <StyledTableCell align='right'>
                     <Checkbox
                      style={{display:"flex",justifyContent:"flex-start"}}
                       checked={this.state.selectedPatients.includes(row.id)}
                       onClick={() => this.singleSelectAction(row.id)}
                     />
-                  </StyledTableCell>
+                  </StyledTableCell> */}
                   <StyledTableCell align="left">{row.name}</StyledTableCell>
                   <StyledTableCell align="left">{row.email}</StyledTableCell>
                   <StyledTableCell align="left">{row.phone}</StyledTableCell>

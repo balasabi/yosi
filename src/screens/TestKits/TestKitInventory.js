@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, TablePagination, TableFooter
+    tableRowClasses, TablePagination, TableFooter, TableContainer, Paper
 } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import { useDispatch } from 'react-redux';
@@ -114,6 +114,7 @@ function TestKitInventory(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "15px" }}>
+                <TableContainer component={Paper} >
                     <Table>
                         <TableHead>
                             <TableRow >
@@ -155,6 +156,7 @@ function TestKitInventory(props) {
                             </TableRow>
                         </TableFooter>
                     </Table>
+                    </TableContainer>
                 </Grid>
             </Grid>
         </>

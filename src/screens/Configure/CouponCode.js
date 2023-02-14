@@ -23,7 +23,8 @@ function CouponCode() {
         code: "",
         name: "",
         price: "",
-        status: ""
+        status: "",
+        mode:"ADD"
     })
     const couponCodeClose = () => {
         setState({ ...state, couponCodeOpen: false })
@@ -45,6 +46,13 @@ function CouponCode() {
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
     };
+    const addAction= () =>{
+        setState({ ...state, couponCodeOpen: true, mode:"ADD" })
+    }
+    const editAction = () =>{
+        setState({ ...state, couponCodeOpen: true, mode:"EDIT" })
+    }
+
     return (
         <>
             <Grid container>
@@ -52,7 +60,7 @@ function CouponCode() {
                 <Grid item xs={12} display={"flex"} flexDirection={'row'}>
                     <Grid container>
                         <Grid item xs={6}>
-                            <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => setState({ ...state, couponCodeOpen: true })}>
+                            <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={plus} alt='union' width={"20vw"} height={"20vh"} />
                                 <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", marginLeft: "5px" }}>
                                     Create Coupon Code
@@ -134,7 +142,7 @@ function CouponCode() {
                                             <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textAlign: "center", marginLeft: "10px" }}>{item.Status}</Typography>
                                         </Grid>
                                         <Grid item xs={2} >
-                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }}>
+                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() =>editAction()}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -152,7 +160,7 @@ function CouponCode() {
                             <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
                         </Grid>
                     </Grid>
-                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add coupon code</DialogTitle>
+                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode==="ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
@@ -196,7 +204,7 @@ function CouponCode() {
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
                                             renderValue={
-                                                state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>
+                                                state.status !== "" ? undefined : () => <Placeholder ><Typography style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4", color:"#998E8A"} }>Status</Typography></Placeholder>
                                             }>
                                             <MenuItem value={"All"}>All</MenuItem>
                                             <MenuItem value={"Active"}>Active</MenuItem>

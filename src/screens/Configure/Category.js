@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem
+    tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem, TableContainer, Paper,
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
-import Edit from '../../../public/Images/editIcon.png';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -26,10 +24,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
     },
     '&:nth-of-type(odd)': {
+
     },
 }));
 
-function Classification(props) {
+function Category(props) {
     const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
@@ -37,90 +36,102 @@ function Classification(props) {
         results:"",
         status:"",
         date:"",
-        classification: [
+        category: [
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
             {
-                name: "COVID/Influenza Test ",
-                code: "PCR",
-                test_type: "7",
-                test_groups: "1",
+                name: "Respiratory Panels",
+                code: "BRP",
+                short_code: "BRP",
+                sequence_number: "1",
                 status: "Active",
+                description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
             },
         ]
     })
@@ -154,7 +165,7 @@ function Classification(props) {
             <Grid container>
                 <Grid item xs={12} >
                     <Grid container >
-                        <Grid item xs={4} sm={4} md={4} lg={4} xl={4} >
+                        <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
                                 placeholder='Search test upload name, tube number, file name'
                                 onChange={(name) => alert("WIP")}
@@ -172,8 +183,8 @@ function Classification(props) {
                                     state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
                                   }>
                                 <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Active"}>Negative</MenuItem>
-                                <MenuItem value={"Inactive"}>Positive</MenuItem>
+                                <MenuItem value={"Negative"}>Negative</MenuItem>
+                                <MenuItem value={"Positive"}>Positive</MenuItem>
                             </Select>
                         </FormControl>
                         <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
@@ -205,38 +216,34 @@ function Classification(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "15px" }}>
+                <TableContainer component={Paper} >
                     <Table>
                         <TableHead>
                             <TableRow >
-                                <StyledTableCell style={{ width: "210px" }}>Name</StyledTableCell>
-                                <StyledTableCell style={{ width: "130px" }}>Code</StyledTableCell>
-                                <StyledTableCell >Test Type</StyledTableCell>
-                                <StyledTableCell >Test Groups</StyledTableCell>
-                                <StyledTableCell >Status</StyledTableCell>
-                                <StyledTableCell >Action</StyledTableCell>
+                                <StyledTableCell style={{ width: "150px" }}>Name</StyledTableCell>
+                                <StyledTableCell style={{ width: "80px" }}>Code</StyledTableCell>
+                                <StyledTableCell style={{ width: "80px" }}>Short Code</StyledTableCell>
+                                <StyledTableCell style={{ width: "130px" }}>Sequence Number</StyledTableCell>
+                                <StyledTableCell style={{ width: "70px" }}>Status</StyledTableCell>
+                                <StyledTableCell >Description</StyledTableCell>
                             </TableRow>
                         </TableHead>
-                        {!!state.classification && state.classification.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((classification, index) => (
+                        {!!state.category && state.category.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((category, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow >
-                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.name}</StyledTableCell>
-                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.code}</StyledTableCell>
-                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.test_type}</StyledTableCell>
-                                    <StyledTableCell style={{fontSize:"14px"}}>{classification.test_groups}</StyledTableCell>
-                                    <StyledTableCell style={{ color: "#3FA455" }}>{classification.status}</StyledTableCell>
-                                    <StyledTableCell >
-                                        <div style={{ display: "flex", flexDirection: "row" }}>
-                                            <Image src={Edit} alt='edit' width={18} height={18} />
-                                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }}>Edit</Typography>
-                                        </div>
-                                    </StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.name}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.code}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.short_code}</StyledTableCell>
+                                    <StyledTableCell style={{fontSize:"14px"}}>{category.sequence_number}</StyledTableCell>
+                                    <StyledTableCell style={{ color: "#3FA455",fontSize:"14px" }}>{category.status}</StyledTableCell>
+                                    <StyledTableCell style={{ wordBreak: "break-word",fontSize:"14px"}}>{category.description}</StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
                         ))}
                         <TableFooter>
                             <TableRow>
                                 <TablePagination
-                                    count={!!state.classification && state.classification.length}
+                                    count={!!state.category && state.category.length}
                                     page={state.page}
                                     onPageChange={handleChangePage}
                                     rowsPerPage={state.rowsPerPage}
@@ -247,9 +254,10 @@ function Classification(props) {
                             </TableRow>
                         </TableFooter>
                     </Table>
+                    </TableContainer>
                 </Grid>
             </Grid>
         </>
     )
 }
-export default Classification;
+export default Category;

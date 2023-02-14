@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
-    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter
+    tableRowClasses, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, TableContainer, Paper
 } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
@@ -75,6 +75,7 @@ function Partners(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "15px" }}>
+                <TableContainer component={Paper} >
                     <Table>
                         <TableHead>
                             <TableRow >
@@ -118,6 +119,7 @@ function Partners(props) {
                             </TableRow>
                         </TableFooter>
                     </Table>
+                    </TableContainer>
                 </Grid>
                 <Dialog open={state.addTestOpen} onClose={() => addTestClose()} maxWidth={'sm'}>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test result</DialogTitle>

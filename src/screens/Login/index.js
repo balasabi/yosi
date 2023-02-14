@@ -25,7 +25,8 @@ function Login(props) {
         router.push({ pathname: '/sign-up' })
     };
 
-    const loginAction = () => {
+    function loginAction(e){
+        e.preventDefault()
         let isError = false;
 
         if(state.email === null || state.email === ""){
@@ -57,6 +58,7 @@ function Login(props) {
                         <Grid item xs={8}>
                             <Typography variant="h2" style={{ fontWeight: 600, fontSize: "22px", lineHeight: "40px" }}>Login to your account</Typography>
                         </Grid>
+                       
                         <Grid item xs={8}>
                             <TextField variant='standard'
                                 fullWidth
@@ -68,6 +70,7 @@ function Login(props) {
                                 value={state.email} />
                         </Grid>
                         <Grid item xs={8}>
+                        <form onSubmit={loginAction}>
                             <TextField variant='standard'
                                 fullWidth
                                 size="small"
@@ -87,9 +90,11 @@ function Login(props) {
                                 </IconButton>
                                 </InputAdornment>
                             }}/>
+                              </form>
                         </Grid>
+                      
                         <Grid item xs={8}>
-                            <CustomizedButtons variant="contained" fullWidth onClick={() => loginAction()}>Login</CustomizedButtons>
+                            <CustomizedButtons variant="contained" fullWidth onClick={loginAction} >Login</CustomizedButtons>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} justifyContent='center' alignItems='center'>
