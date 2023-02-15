@@ -62,13 +62,13 @@ function CouponCode() {
                         <Grid item xs={6}>
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={plus} alt='union' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", marginLeft: "5px" }}>
-                                    Create Coupon Code
+                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", textTransform: "none", marginLeft: "5px" }}>
+                                    Create new code
                                 </Typography>
                             </CustomizedButtons>
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
                                 <Select
                                     value={state.priceFilter}
@@ -102,22 +102,22 @@ function CouponCode() {
                 </Grid>
                 <Grid item xs={12} >
                     <Grid container>
-                        <Grid item xs={12} style={{ marginTop: "15px", padding: "12px", backgroundColor: "#E7E7E7", display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+                        <Grid item xs={12} style={{ marginTop: "15px", padding: "12px", backgroundColor: "#E7E7E7" }}>
                             <Grid container>
                                 <Grid item xs={3}>
-                                    <Typography style={{ fontSize: "18px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textAlign: "center" }}>Name</Typography>
+                                    <Typography align='center' className='subHeading' >Name</Typography>
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <Typography style={{ fontSize: "18px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textAlign: "center" }} >Code</Typography>
+                                    <Typography align='center' className='subHeading'>Code</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography style={{ fontSize: "18px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textAlign: "center" }}>Price</Typography>
+                                    <Typography align='center' className='subHeading'>Price</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography style={{ fontSize: "18px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textAlign: "center" }}>Status</Typography>
+                                    <Typography align='center' className='subHeading'>Status</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography style={{ fontSize: "18px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textAlign: "center" }}>Action</Typography>
+                                    <Typography align='center' className='subHeading'>Action</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -130,16 +130,16 @@ function CouponCode() {
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
                                     <Grid container>
                                         <Grid item xs={3}>
-                                            <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textAlign: "center", marginLeft: "10px" }}>{item.Name}</Typography>
+                                            <Typography className='subText' align='center' style={{ marginLeft: "10px" }}>{item.Name}</Typography>
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textAlign: "center", marginLeft: "45px" }} >{item.Code}</Typography>
+                                            <Typography className='subText' align='center' style={{ marginLeft: "45px" }} >{item.Code}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textAlign: "center" }}>{item.Price}</Typography>
+                                            <Typography className='subText' align='center'>{item.Price}</Typography>
                                         </Grid>
-                                        <Grid item xs={2} >
-                                            <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textAlign: "center", marginLeft: "10px" }}>{item.Status}</Typography>
+                                        <Grid item xs={2}>
+                                            <Typography className='subText' align='center' style={{ marginLeft: "10px" }}>{item.Status}</Typography>
                                         </Grid>
                                         <Grid item xs={2} >
                                             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() =>editAction()}>
@@ -164,7 +164,7 @@ function CouponCode() {
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
+                                <Typography style={{  color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>

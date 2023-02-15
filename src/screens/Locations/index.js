@@ -31,7 +31,7 @@ function Locations(props) {
         openLocation: false,
         type: [
             {
-                name: "Avadale (AVD)",
+                name: "Avondale (AVD)",
                 status: "Active",
                 display_name: "Saguaro bloom,",
                 description: "4165 N Craftsman Ct., Scottsdale, AZ United States of America-85251",
@@ -55,7 +55,7 @@ function Locations(props) {
                 description: "4165 N Craftsman Ct., Scottsdale, AZ United States of America-85251",
             },
             {
-                name: "Cameback (GCK)",
+                name: "Camelback (GCK)",
                 status: "Active",
                 display_name: "Saguaro bloom,",
                 description: "4165 N Craftsman Ct., Scottsdale, AZ United States of America-85251",

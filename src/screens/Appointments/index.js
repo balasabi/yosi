@@ -6,7 +6,7 @@ import CalenderAppointments from'./CalenderAppointments'
 function Appointments(props) {
 
     const [state, setState] = useState({
-        selectedTab: "T"
+        selectedTab: "C"
     })
 
     const buttonAction = (param) => {
@@ -22,12 +22,12 @@ function Appointments(props) {
                         Appointments
                     </Typography>
                 </Grid>
-                <Grid item xs={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 50, borderRadius: "8px", backgroundColor: "#88C2FC" }} >
-                    <Grid item xs={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: state.selectedTab === "T" ? "#0283F7" : "#88C2FC", height: 48, borderRadius: "8px" }} onClick={() => buttonAction("T")}>
-                        <Typography style={{ color: "#fff" }}  >Today</Typography>
+                <Grid item xs={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 50, borderRadius: "8px", backgroundColor: "#35E5A5" }} >
+                    <Grid item xs={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: state.selectedTab === "T" ? "#0D4751" : "#35E5A5", height: 48, borderRadius: "8px" }} onClick={() => buttonAction("T")}>
+                        <Typography style={{ color: "#fff", fontFamily:"Avenir-Black", fontSize:"20px" }}  >Today</Typography>
                     </Grid>
-                    <Grid item xs={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: state.selectedTab === "C" ? "#0283F7" : "#88C2FC", height: 48, borderRadius: "8px" }} onClick={() => buttonAction("C")}>
-                        <Typography style={{ color: "#fff" }} onClick={() => buttonAction("C")}> Calendar </Typography>
+                    <Grid item xs={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: state.selectedTab === "C" ? "#0D4751" : "#35E5A5", height: 48, borderRadius: "8px" }} onClick={() => buttonAction("C")}>
+                        <Typography style={{ color: "#fff", fontFamily:"Avenir-Black", fontSize:"20px" }} onClick={() => buttonAction("C")}> Calendar </Typography>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>

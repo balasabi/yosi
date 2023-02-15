@@ -56,12 +56,12 @@ export const sideMenu = [
         name: "Configure",
         menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />,
         url: '/configure',
-        pages: [{ title: "Country Configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
-        { title: "Test Configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
+        pages: [{ title: "Country configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
+        { title: "Test configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
         { title: "Location configure", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' }]
     },
     {
-        name: "User management",
+        name: "Employee database",
         menuIcon: <Image src={IdentificationBadge} alt={"Ellipse"} width={20} height={20} />,
         url: '/users-management',
         pages: []

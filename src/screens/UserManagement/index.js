@@ -22,14 +22,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         borderBottom: '1px solid #E7E7E7',
         color: theme.palette.common.black,
         padding: "2px",
-        fontFamily: 'Avenir',
+        fontFamily: 'Avenir-Heavy',
         fontSize: '16px',
         fontStyle: "normal"
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: "16px",
         padding: "1px",
-        fontFamily: "Avenir",
+        fontFamily: "Avenir-Book",
         fontStyle: "normal",
         fontSize: '16px',
     },
@@ -45,7 +45,7 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
         fontSize: 16,
         padding: "4px",
         fontFamily: [
-            'Avenir'
+            'Avenir-Book'
         ].join(","),
         "&:focus": {
             border: 0,
@@ -89,21 +89,30 @@ function UsersManagement(props) {
         sort: false,
         isClickCheckBox: false,
         selectedUser: [],
-        mode:"ADD"
+        mode: "ADD"
     })
 
     function compare(a, b) {
         console.log("&&&&&")
-        if (state.sort === false) {
+        if (state.sort) {
             if (a.name < b.name) {
                 return -1
             }
-        } if (state.sort === true) {
+        } else {
             if (a.name > b.name) {
                 return 1
             }
         }
-        return 0
+        // if (state.sort === false) {
+        //     if (a.name < b.name) {
+        //         return -1
+        //     }
+        // } if (state.sort === true) {
+        //     if (a.name > b.name) {
+        //         return 1
+        //     }
+        // }
+        // return 0
     };
 
     const sorting = () => {
@@ -131,10 +140,11 @@ function UsersManagement(props) {
     };
 
     const addUser = () => {
-        setState({ ...state, addUserOpen: true, mode:"ADD" })
+        setState({ ...state, addUserOpen: true, mode: "ADD" })
     };
+
     const editUser = () => {
-        setState({ ...state, addUserOpen: true, mode:"EDIT" })
+        setState({ ...state, addUserOpen: true, mode: "EDIT" })
     };
 
     const handleClose = () => {
@@ -170,24 +180,25 @@ function UsersManagement(props) {
     }
 
     const Placeholder = ({ children }) => {
-        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
-      };
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+    };
 
     const handleChange = (e, param) => {
-        if(param === "R"){
-        setState({ ...state, roles: e.target.value })
-    }else if(param === "S"){
-        setState({ ...state, status: e.target.value })
+        if (param === "R") {
+            setState({ ...state, roles: e.target.value })
+        } else if (param === "S") {
+            setState({ ...state, status: e.target.value })
+        }
+    };
+
+    const buttonAction = (param) => {
+        setState({ userManagementMode: param })
     }
-}
-const buttonAction = (param) => {
-    setState({ userManagementMode: param })
-}
     return (
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography style={{ fontWeight: '800', fontSize: '18px', fontFamily: 'Avenir' }}>Users Management</Typography>
+                    <Typography className='header'>Users Management</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ borderBottom: '1px solid #C8C8C8' }}>
                     <Grid container>
@@ -195,7 +206,7 @@ const buttonAction = (param) => {
                             <Grid container>
                                 {state.isActive === false ?
                                     <Grid item xs={6} sm={3} lg={3} style={{ borderBottom: '4px solid #024751' }}>
-                                        <CustomizedButtons variant="text" onClick={() => handleUser()}><Typography align='center' style={{ fontWeight: "bold" }}>Users</Typography></CustomizedButtons>
+                                        <CustomizedButtons variant="text" onClick={() => handleUser()}><Typography align='center' className='subText' >Users</Typography></CustomizedButtons>
                                     </Grid> :
                                     <Grid item xs={6} sm={4} lg={3}>
                                         <CustomizedButtons variant="text" onClick={() => handleUser()}>Users</CustomizedButtons>
@@ -203,7 +214,7 @@ const buttonAction = (param) => {
                                 }
                                 {state.isActive === true ?
                                     <Grid item xs={6} sm={8} lg={9} style={{ borderBottom: '4px solid #024751 ' }}>
-                                        <CustomizedButtons variant="text" onClick={() => handlePermission()}><Typography style={{ fontWeight: "bold" }}>Roles and Permission</Typography></CustomizedButtons>
+                                        <CustomizedButtons variant="text" onClick={() => handlePermission()}><Typography className='subText'>Roles and Permission</Typography></CustomizedButtons>
                                     </Grid>
                                     :
                                     <Grid item xs={6} sm={8} lg={9}>
@@ -226,85 +237,85 @@ const buttonAction = (param) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-end" alignItems="center">
-                                    <Typography>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
-                            <Select
-                                value={state.roles}
-                                onChange={(e)=>handleChange(e,"PR")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.roles !== "" ? undefined : () => <Placeholder>All Roles</Placeholder>
-                                  }>
-                                <MenuItem value={"Admin"}>Admin</MenuItem>
-                                <MenuItem value={"Doctor"}>Doctor</MenuItem>
-                                <MenuItem value={"Lab Technician"}>Lab Technician</MenuItem>
-                            </Select>
-                        </FormControl>
-                                <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
-                            <Select
-                                value={state.status}
-                                onChange={(e)=>handleChange(e,"PR")}
-                                displayEmpty
-                                inputProps={{ 'aria-label': 'Without label' }}
-                                renderValue={
-                                    state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
-                                  }>
-                                <MenuItem value={"Active"}>Active</MenuItem>
-                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
-                            </Select>
-                        </FormControl>
+                                <Typography>Filter by</Typography>
+                                <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
+                                    <Select
+                                        value={state.roles}
+                                        onChange={(e) => handleChange(e, "PR")}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                        renderValue={
+                                            state.roles !== "" ? undefined : () => <Placeholder>All Roles</Placeholder>
+                                        }>
+                                        <MenuItem value={"Admin"}>Admin</MenuItem>
+                                        <MenuItem value={"Doctor"}>Doctor</MenuItem>
+                                        <MenuItem value={"Lab Technician"}>Lab Technician</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                                    <Select
+                                        value={state.status}
+                                        onChange={(e) => handleChange(e, "PR")}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                        renderValue={
+                                            state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
+                                        }>
+                                        <MenuItem value={"Active"}>Active</MenuItem>
+                                        <MenuItem value={"Inactive"}>Inactive</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                <TableContainer component={Paper} >
-                    <Table >
-                        <TableHead>
-                            <StyledTableRow>
-                                <StyledTableCell><Checkbox
-                                    checked={state.isClickCheckBox}
-                                    onClick={() => checkBoxAction()} /></StyledTableCell>
-                                <StyledTableCell>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography style={{ fontWeight: "bold" }}>Name</Typography>
-                                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sorting()} />
-                                            <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} /></div>
-                                    </div>
-                                </StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Email ID</StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Phone</StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Role</StyledTableCell>
-                                <StyledTableCell>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography style={{ fontWeight: "bold" }}>Status</Typography>
-                                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                                            <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
-                                    </div>
-                                </StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Action</StyledTableCell>
-                            </StyledTableRow>
-                        </TableHead>
-                        <TableBody>
-                            {state.users !== undefined && state.users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
-                                <StyledTableRow key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
+                    <TableContainer component={Paper} >
+                        <Table >
+                            <TableHead>
+                                <StyledTableRow>
+                                    <StyledTableCell><Checkbox
+                                        checked={state.isClickCheckBox}
+                                        onClick={() => checkBoxAction()} /></StyledTableCell>
                                     <StyledTableCell>
-                                        <Checkbox
-                                            checked={state.selectedUser.includes(item.id)}
-                                            onClick={() => singleSelectAction(item.id)}
-                                        /></StyledTableCell>
-                                    <StyledTableCell>{item.name}</StyledTableCell>
-                                    <StyledTableCell>{item.email}</StyledTableCell>
-                                    <StyledTableCell>{item.phone}</StyledTableCell>
-                                    <StyledTableCell>{item.role}</StyledTableCell>
-                                    <StyledTableCell>{item.status}</StyledTableCell>
-                                    <StyledTableCell><Button style={{ textTransform: "none", color: "#000" }} onClick={()=>editUser()} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <Typography style={{ fontWeight: "bold" }}>Name</Typography>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sorting()} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} /></div>
+                                        </div>
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ fontWeight: "bold" }}>Email ID</StyledTableCell>
+                                    <StyledTableCell style={{ fontWeight: "bold" }}>Phone</StyledTableCell>
+                                    <StyledTableCell style={{ fontWeight: "bold" }}>Role</StyledTableCell>
+                                    <StyledTableCell>
+                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                            <Typography style={{ fontWeight: "bold" }}>Status</Typography>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                                        </div>
+                                    </StyledTableCell>
+                                    <StyledTableCell style={{ fontWeight: "bold" }}>Action</StyledTableCell>
                                 </StyledTableRow>
-                            )}
-                        </TableBody>
+                            </TableHead>
+                            <TableBody>
+                                {state.users !== undefined && state.users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
+                                    <StyledTableRow key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
+                                        <StyledTableCell>
+                                            <Checkbox
+                                                checked={state.selectedUser.includes(item.id)}
+                                                onClick={() => singleSelectAction(item.id)}
+                                            /></StyledTableCell>
+                                        <StyledTableCell>{item.name}</StyledTableCell>
+                                        <StyledTableCell>{item.email}</StyledTableCell>
+                                        <StyledTableCell>{item.phone}</StyledTableCell>
+                                        <StyledTableCell>{item.role}</StyledTableCell>
+                                        <StyledTableCell>{item.status}</StyledTableCell>
+                                        <StyledTableCell><Button style={{ textTransform: "none", color: "#000" }} onClick={() => editUser()} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
+                                    </StyledTableRow>
+                                )}
+                            </TableBody>
                         </Table>
-                        </TableContainer>
+                    </TableContainer>
                     <TablePagination component="div"
                         rowsPerPageOptions={[10, 25]}
                         count={state.users.length}
@@ -313,12 +324,12 @@ const buttonAction = (param) => {
                         labelRowsPerPage="No. of items per page"
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)} />
-                      
+
                 </Grid>
 
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>
                     <DialogTitle>
-                        <Typography style={{ paddingBottom: '10px', fontWeight: "bold" }}><span style={{ color: '#024751' }}>{state.mode==="ADD" ? "Add" : "Edit"}</span> New User</Typography>
+                        <Typography style={{ paddingBottom: '10px', fontWeight: "bold" }}><span style={{ color: '#024751' }}>{state.mode === "ADD" ? "Add" : "Edit"}</span> New User</Typography>
                         <div style={{ background: '#E8E8E8', height: 1 }}></div>
                     </DialogTitle>
                     <DialogContent>

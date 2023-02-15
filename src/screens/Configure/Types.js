@@ -73,20 +73,20 @@ function Type(props) {
         ],
         status: "",
         result: "",
-        date:""
+        date: ""
     })
 
     const Placeholder = ({ children }) => {
-        return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
-      };
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+    };
 
     const handleChange = (event, param) => {
         if (param === "S") {
             setState({ ...state, status: event.target.value });
         } else if (param === "R") {
             setState({ ...state, result: event.target.value });
-        } else if ( param === "D"){
-            setState({...state, date:e.target.value});
+        } else if (param === "D") {
+            setState({ ...state, date: e.target.value });
         }
     };
 
@@ -102,16 +102,16 @@ function Type(props) {
                             />
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='minText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
                                 <Select
                                     value={state.result}
                                     onChange={(e) => handleChange(e, "R")}
                                     displayEmpty
                                     renderValue={state.result !== "" ? undefined : () => <Placeholder>All Results</Placeholder>} >
-                                <MenuItem value={"All"}>All</MenuItem>
-                                <MenuItem value={"Negative"}>Negative</MenuItem>
-                                <MenuItem value={"Positive"}>Positive</MenuItem>
+                                    <MenuItem value={"All"}>All</MenuItem>
+                                    <MenuItem value={"Negative"}>Negative</MenuItem>
+                                    <MenuItem value={"Positive"}>Positive</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
@@ -140,8 +140,8 @@ function Type(props) {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12}  >
-                    <Grid container >
+                <Grid item xs={12}>
+                    <Grid container>
                         {!!state.type && state.type.map((type, index) =>
                             <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={index.toString()}>
                                 <Table>
@@ -150,12 +150,7 @@ function Type(props) {
                                             <StyledTableCell style={{ border: "none" }}>
                                                 <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', borderRadius: "8px", padding: "10px" }}>
                                                     <Grid item xs={12} >
-                                                        <Typography style={{
-                                                            letterSpacing: "0.4px", fontWeight: 800, fontSize: "20px", lineHeight: "32px", fontFamily: "Avenir-Black",
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
-                                                        }} color={"#000000"}>{type.name} </Typography>
+                                                        <Typography className='subHeading'>{type.name} </Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
                                                         <Typography style={{
@@ -202,13 +197,8 @@ function Type(props) {
                                                     </Grid>
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: "pointer" }}>
-                                                        <Typography style={{
-                                                            letterSpacing: "0.4px", fontWeight: 900, fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
-                                                        }} color={"#313237"}>Show Details</Typography>
-                                                        <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} onClick={()=> alert("WIP")} />
+                                                        <Typography className='miniHeading'>Show Details</Typography>
+                                                        <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} onClick={() => alert("WIP")} />
                                                     </Grid>
                                                 </Grid>
                                             </StyledTableCell>

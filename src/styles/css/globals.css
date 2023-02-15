@@ -148,7 +148,9 @@ a {
   font-size: 1em;
   font-family: 'Avenir-Book';
   line-height: '24px';
+  color:#1C1C1C;
 }
+
 .header {
   font-size: 1.4em;
   font-family: 'Avenir-Bold';
@@ -161,4 +163,18 @@ a {
   font-family: 'Avenir-Bold';
   line-height: '32px';
   color: #313237;
+}
+
+.miniHeading {
+  font-size: 0.9em;
+  font-family: 'Avenir-Bold';
+  line-height: '32px';
+  color: #313237;
+}
+
+.miniText {
+  font-size: 0.9em;
+  font-family: 'Avenir-Book';
+  line-height: '24px';
+  color: #474747;
 }

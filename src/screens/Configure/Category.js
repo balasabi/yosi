@@ -10,13 +10,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
-        fontFamily: 'Avenir-Black',
+        fontFamily: 'Avenir-Bold',
         padding: "12px",
-        fontWeight:800
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 17,
-        fontFamily: 'Avenir',
+        fontSize: '1em',
+        fontFamily: 'Avenir-Book',
         padding: "10px"
     },
 }));
@@ -172,7 +171,7 @@ function Category(props) {
                             />
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight:10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight:"2px solid #E8E8E8", borderRadius:0 } }} size="small">
                             <Select
                                 value={state.results}

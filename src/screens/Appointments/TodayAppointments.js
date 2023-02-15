@@ -68,12 +68,11 @@ function TodayAppointments(props) {
         const timer = setInterval(() => { // Creates an interval which will update the current data every minute
             // This will trigger a rerender every component that uses the useDate hook.
             setDate(new Date());
-        }, 1000);
+        },1000);
         return () => {
             clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
         }
     }, []);
-
 
     return (
         <>
@@ -83,8 +82,8 @@ function TodayAppointments(props) {
                         <Grid item xs={12} sm={6} md={4} lg={3} xl={2} >
                             <Grid container style={{ display: "flex", flexDirection: "column", backgroundColor: "#024751", padding: "5px", borderRadius: "5px", justifyContent: "center" }}>
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", backgroundColor: "#024751", borderRadius: "5px", justifyContent: "center" }}>
-                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff" }}> Date : </Typography>
-                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(today).format("DD/MM/YYYY hh:mm:ss a")} </Typography>
+                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff" }}> </Typography>
+                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(today).format("DD/MM/YYYY hh:mm:ss A")} </Typography>
                                 </Grid>
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", backgroundColor: "#024751", borderRadius: "5px", justifyContent: "center" }}>
                                     <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff" }}>Appointments :  </Typography>

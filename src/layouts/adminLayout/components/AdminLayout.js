@@ -28,7 +28,7 @@ const closedMixin = (theme) => ({
     overflowX: 'hidden',
     width: `calc(${theme.spacing(8)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
-        width: `calc(${theme.spacing(15)} + 1px)`,
+        width: `calc(${theme.spacing(16)} + 1px)`,
     },
 });
 
@@ -68,7 +68,7 @@ export default function AdminLayout(props) {
             <main style={{
                 padding: "0px 25px",
                 paddingTop: 75,
-                marginLeft: open === true ? "250px" : "120px"
+                marginLeft: open === true ? "250px" : "125px"
             }}>
                 {props.children}
             </main>
