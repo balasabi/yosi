@@ -66,7 +66,7 @@ export default function Sidebar(props) {
     return (
         <>
             <List>
-                <Grid container spacing={4} justifyContent='center' alignItems='center'>
+                <Grid container spacing={5} justifyContent='center' alignItems='center'>
                     <Grid item xs={12}>
                         {sideMenu.map((item, index) =>
                             item.pages.length > 0 ?
@@ -80,7 +80,7 @@ export default function Sidebar(props) {
                                             </ListItemButton>
                                             :
                                             <Grid item xs={12}>
-                                                <ListItemButton style={{ padding: '3px 8px 3px 0px' }}>
+                                                <ListItemButton style={{ padding: '3px 0px 3px 0px' }} onClick={() => handleInitialUrl(item.url)} >
                                                     <Grid container textAlign='center'>
                                                         <Grid item xs={12}>
                                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
@@ -166,8 +166,8 @@ export default function Sidebar(props) {
                                     <ListItemButton style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ListItemIcon><Avatar fontSize='10' sx={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
                                         <Grid item xs={12}>
-                                            <Typography style={{ fontSize: '12px', overflowWrap: 'break-word' }} >Gowtam Ramanujam</Typography>
-                                            <Typography style={{ fontSize: "10px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751" }}>(ADMINISTRATOR)</Typography>
+                                            <Typography className='subText' align='center' style={{ whiteSpace:'break-spaces' }} >Gowtam Ramanujam</Typography>
+                                            <Typography style={{ fontSize: "10px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#024751" }}>(ADMINISTRATOR)</Typography>
                                         </Grid>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')} style={{ display: 'flex', flexDirection: 'column' }}>

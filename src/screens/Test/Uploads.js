@@ -14,14 +14,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
-        fontFamily: 'Avenir-Black',
-        padding: "12px",
-        fontWeight: 800
+        fontFamily: 'Avenir-Heavy',
+        padding: "13px",
+        fontSize:'1.1em'
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 17,
-        fontFamily: 'Avenir',
-        padding: "10px"
+        padding: "13px"
     },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -197,7 +195,7 @@ function Uploads(props) {
                             />
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
                                 <Select
                                     value={state.result}
@@ -246,8 +244,8 @@ function Uploads(props) {
                         <Table>
                             <TableHead>
                                 <TableRow >
-                                    <StyledTableCell >Test Upload Name</StyledTableCell>
-                                    <StyledTableCell >Tube Number</StyledTableCell>
+                                    <StyledTableCell>Test Upload Name</StyledTableCell>
+                                    <StyledTableCell>Tube Number</StyledTableCell>
                                     <StyledTableCell >Result</StyledTableCell>
                                     <StyledTableCell >File Name</StyledTableCell>
                                     <StyledTableCell >Created By</StyledTableCell>
@@ -258,13 +256,13 @@ function Uploads(props) {
                             {!!state.upload && state.upload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow >
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.test_upload_name}</StyledTableCell>
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.tube_number}</StyledTableCell>
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.result}</StyledTableCell>
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.file_name}</StyledTableCell>
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.created_by}</StyledTableCell>
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.created_date}</StyledTableCell>
-                                        <StyledTableCell style={{ fontSize: "14px" }}>{upload.status}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.test_upload_name}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.tube_number}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.result}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.file_name}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.created_by}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.created_date}</StyledTableCell>
+                                        <StyledTableCell className='tableContent'>{upload.status}</StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
                             ))}

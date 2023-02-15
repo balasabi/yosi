@@ -133,8 +133,8 @@ a {
   font-display: swap;
 }
 @font-face {
-  font-family: "Avenir-Roman";
-  src: url('/fonts/Avenir-Roman.woff2') format('woff2');
+  font-family: "Avenir-Medium";
+  src: url('/fonts/Avenir-Medium.woff2') format('woff2');
   font-display: swap;
 }
 
@@ -152,7 +152,7 @@ a {
 }
 
 .header {
-  font-size: 1.4em;
+  font-size: 1.5em;
   font-family: 'Avenir-Bold';
   line-height: '40px';
   color: #313237;
@@ -177,4 +177,23 @@ a {
   font-family: 'Avenir-Book';
   line-height: '24px';
   color: #474747;
+}
+.tableHeader{
+  font-size: 1.1em;
+  font-family: 'Avenir-Heavy';
+  line-height: '24px';
+  color: #2E2E2E;
+}
+
+.tableContent{
+  font-size: 0.9em;
+  font-family: 'Avenir-Medium';
+  line-height: '24px';
+  color: #2E2E2E;
+}
+.iconButton{
+  font-size: 0.85em;
+  font-family: 'Avenir-Medium';
+  line-height: '24px';
+  color: #101010;
 }

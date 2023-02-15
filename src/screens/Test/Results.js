@@ -20,14 +20,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#E7E7E7",
         color: theme.palette.common.black,
-        fontFamily: 'Avenir-Black',
+        fontFamily: 'Avenir-Heavy',
         padding: "3px",
-        fontWeight:800
+        fontSize:'1.1em'
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 17,
-        fontFamily: 'Avenir',
-        padding: "2px"
+        padding: "7px"
     },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -176,7 +174,7 @@ function Result(props) {
             },
         ],
         isClickCheckBox: false,
-        selectedresults: []
+        selectedResults: []
     })
 
     const router = useRouter();
@@ -194,32 +192,33 @@ function Result(props) {
 
     const addTestClose = () => {
         setState({ ...state, addTestOpen: false })
-    }
+    };
+
     const checkBoxAction = () => {
         setState(
             {
                 ...state,
                 isClickCheckBox: !state.isClickCheckBox,
-                selectedresults: !state.isClickCheckBox === true ? _.pluck(state.test, 'id') : []
+                selectedResults: !state.isClickCheckBox === true ? _.pluck(state.test, 'id') : []
             }
         )
-    }
+    };
 
     const singleSelectAction = (param) => {
-        if (state.selectedresults.length > 0 && state.selectedresults.includes(param)) {
+        if (state.selectedResults.length > 0 && state.selectedResults.includes(param)) {
             setState({
                 ...state,
-                selectedresults: state.selectedresults.filter((item) => item != param)
+                selectedResults: state.selectedResults.filter((item) => item != param)
             })
         }
         else {
-            let result = state.selectedresults
+            let result = state.selectedResults
             result.push(param)
             setState({
-                selectedresults: result
+                selectedResults: result
             })
         }
-    }
+    };
 
     const submit = async () => {
         // await setState({
@@ -238,11 +237,11 @@ function Result(props) {
         dispatch(addTestResultAction(data))
         setState({ ...state, addTestOpen: false })
         console.log("******submit******" + JSON.stringify(data))
-    }
+    };
 
     const cancel = () => {
         setState({ ...state, addTestOpen: false })
-    }
+    };
 
     const Placeholder = ({ children }) => {
         return <div style={{color:"#101010", fontWeight:900, fontSize:"14px", fontFamily:"Avenir", fontStyle:"normal"}}>{children}</div>;
@@ -258,7 +257,7 @@ function Result(props) {
     }else if(param === "D"){
         setState({ ...state, date: e.target.value })
     }
-}
+};
 
    return (
         <>
@@ -268,13 +267,13 @@ function Result(props) {
                        <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
                            <CustomizedButtons variant={"text"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#024751", marginTop: "20px" }}>
                                <Image src={Union} alt='union' width={"20vw"} height={"20vh"} />
-                               <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px" }} >
+                               <Typography className='iconButton' style={{ color: "#fff", marginLeft: "5px" }} >
                                    Test Orders
                                </Typography>
                            </CustomizedButtons>
                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }} onClick={()=> alert("WIP")}>
                                <Image src={Send} alt='send' width={"20vw"} height={"20vh"} />
-                               <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }} >
+                               <Typography className='iconButton' style={{ color: "#000", marginLeft: "5px" }} >
                                    Send
                                </Typography>
                            </CustomizedButtons>
@@ -343,7 +342,7 @@ function Result(props) {
                            <TableHead>
                                <TableRow >
                                    <StyledTableCell align="center">
-                                       <Checkbox
+                                       <Checkbox inputProps= {{ 'aria-label': 'Checkbox' }}
                                            checked={state.isClickCheckBox}
                                            onClick={() => checkBoxAction()}
                                        />
@@ -351,7 +350,7 @@ function Result(props) {
                                    <StyledTableCell >Test ID</StyledTableCell>
                                    <StyledTableCell >
                                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                                           <Typography style={{ fontSize: "14.5px", fontFamily: "Avenir-Black", color: "#000", fontWeight: 800 }}>Patient Name</Typography>
+                                           <Typography className='tableHeader'>Patient Name</Typography>
                                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />
@@ -369,18 +368,18 @@ function Result(props) {
                                <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                    <StyledTableRow >
                                        <StyledTableCell align="center">
-                                           <Checkbox
-                                               checked={state.selectedresults.includes(test.id)}
+                                           <Checkbox inputProps= {{ 'aria-label': 'Checkbox' }}
+                                               checked={state.selectedResults.includes(test.id)}
                                            //   onClick={() => singleSelectAction(test.id)} 
                                            />
                                        </StyledTableCell>
-                                       <StyledTableCell >{test.test_id}</StyledTableCell>
-                                       <StyledTableCell >{test.patient_name}</StyledTableCell>
-                                       <StyledTableCell >{test.test_type}</StyledTableCell>
-                                       <StyledTableCell >{test.collection_date}</StyledTableCell>
-                                       <StyledTableCell >{test.tube_number}</StyledTableCell>
-                                       <StyledTableCell >{test.result}</StyledTableCell>
-                                       <StyledTableCell >{test.analysis}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.test_id}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.patient_name}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.test_type}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.collection_date}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.tube_number}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.result}</StyledTableCell>
+                                       <StyledTableCell className='tableContent'>{test.analysis}</StyledTableCell>
                                    </StyledTableRow>
                                </TableBody>
                            ))}

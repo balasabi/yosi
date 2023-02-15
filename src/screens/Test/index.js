@@ -11,23 +11,23 @@ function Test(props) {
 
     const buttonAction = (param) => {
         setState({ testMode: param })
-    }
+    };
 
     return (
         <>
             <Grid container>
                 <Grid item xs={12} >
-                    <Typography style={{ fontSize: "24px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "40px", marginBottom:"10px" }}>
+                    <Typography className='header' style={{ marginBottom: "10px" }}>
                         Tests
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={10} lg={7} style={{ marginLeft: "12px" }}>
                     <Grid container>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "R" ? "#024751" : "#474747", borderBottom: state.testMode === "R" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("R")}>Results</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.testMode === "R" ? "#024751" : "#474747", borderBottom: state.testMode === "R" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("R")}>Results</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: state.testMode === "U" ? "#024751" : "#474747", borderBottom: state.testMode === "U" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("U")}>Uploads</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.testMode === "U" ? "#024751" : "#474747", borderBottom: state.testMode === "U" ? "4px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("U")}>Uploads</CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -24,14 +24,13 @@ function TopBar(props) {
                                         aria-label="open drawer"
                                         onClick={() => props.handleDrawerOpen()}
                                         edge="start">
-                                        <Image src={menu} alt="menu" width={20} height={17} />
+                                        <Image src={menu} alt="menu" width={24} height={18} />
                                     </IconButton>
-                                    <Image src={yosiTop} alt="YOSI LAB" style={{ paddingLeft: "20px" }} width={100} height={30} />
+                                    <Image src={yosiTop} alt="YOSI LAB" style={{ paddingLeft: "20px" }} width={128} height={34} />
                                 </Grid>
                                 <Grid item xs={3} sm={1} textAlign="left">
-                                    <IconButton><Image src={back} alt="back" width={20} height={20} /></IconButton>
-                                    <IconButton><AiOutlineArrowRight style={{ width: 20, height: 20 }} color="#446F75" /></IconButton>
-
+                                    <IconButton aria-label="left arrow"><Image src={back} alt="back" width={20} height={20} /></IconButton>
+                                    <IconButton aria-label="right arrow"><AiOutlineArrowRight style={{ width: 20, height: 20 }} color="#446F75" /></IconButton>
                                 </Grid>
                                 <Grid item xs={4} sm={6} textAlign='left'>
                                     <TextField
@@ -40,7 +39,7 @@ function TopBar(props) {
                                         InputProps={{
                                             sx: { width: "600px", background: "#366369", color: "#FFF", borderRadius: "8px" },
                                             startAdornment: (
-                                                <IconButton>
+                                                <IconButton  aria-label="search">
                                                     <AiOutlineSearch style={{ width: 20, height: 20 }} color="#fff" />
                                                 </IconButton>
                                             ),
@@ -51,7 +50,7 @@ function TopBar(props) {
                                 </Grid>
 
                                 <Grid item xs={2} textAlign="right">
-                                    <Image src={bell} alt="YOSI LAB" width={22} height={25} />
+                                    <Image src={bell} alt="YOSI LAB" width={21} height={26} />
                                 </Grid>
                             </Grid>
                         </Grid>
