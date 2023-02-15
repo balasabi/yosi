@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Dialog, DialogContent, Grid, Typography, DialogTitle, TableContainer, Table, TableBody, TableCell, styled, Paper, TableRow, TableHead, tableCellClasses, tableRowClasses } from '@mui/material';
+import {
+  Dialog, DialogContent, Grid, Typography, DialogTitle, TableContainer, Table, TableBody, TableCell,
+  styled, TableRow, TableHead, tableCellClasses, tableRowClasses, Button
+} from '@mui/material';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -10,16 +13,17 @@ const localizer = momentLocalizer(moment)
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#E7E7E7",
-    color: theme.palette.common.black,
+    backgroundColor: "#D2EAE2",
+    color: "#024751",
     fontFamily: 'Avenir-Black',
-    padding: "3px",
+    padding: "4px",
     fontWeight: 800
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 17,
+    fontSize: 14,
     fontFamily: 'Avenir',
-    padding: "2px"
+    //backgroundColor: "#D2EAE2",
+    padding: "3px"
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -38,19 +42,20 @@ function CalenderAppointments(props) {
         patient_name: "Kavi",
         test_name: "Heart Test",
         timing: "09:00 AM",
-        'start': new Date("02/02/2023"),
-        'end': new Date("02/02/2023")
+        'start': new Date("02/17/2023"),
+        'end': new Date("02/17/2023")
       },
       {
         id: "PID0002",
         patient_name: "Arun",
         test_name: "Full CheckUp",
         timing: "10:00 AM",
-        'start': new Date("02/03/2023"),
-        'end': new Date("02/03/2023")
+        'start': new Date("02/18/2023"),
+        'end': new Date("02/17/2023")
       },
     ],
     patientAppointmentDetailsOpen: false,
+    date: null
   })
 
   const goToBack = (onNavigate) => {
@@ -61,19 +66,21 @@ function CalenderAppointments(props) {
   };
 
   const CalendarToolbar = ({ onView, label, views, onNavigate }) => (
-    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "flex-start", marginBottom: "10px" }}>
-      <button onClick={() => goToBack(onNavigate)}>Back</button>
-      {label}
-      <button onClick={() => goToNext(onNavigate)}>Next</button>
+    <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "flex-start", marginBottom: "15px" }}>
+      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#024751", backgroundColor: "#D2EAE2" }} onClick={() => goToBack(onNavigate)}>Back</Button>
+      <Typography style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "20px", fontFamily: "Avenir-Black", color: "#000", marginTop: "5px" }}>
+        {label}
+      </Typography>
+      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#024751", backgroundColor: "#D2EAE2" }} onClick={() => goToNext(onNavigate)}>Next</Button>
     </div>
   );
-  const handleEventClick = () => {
-    setState({ ...state, patientAppointmentDetailsOpen: true })
-    console.log('event clicked!')
+  const handleEventClick = (param) => {
+    setState({ ...state, patientAppointmentDetailsOpen: true, date: param.start })
   };
   const addTestClose = () => {
     setState({ ...state, patientAppointmentDetailsOpen: false })
   }
+
   return (
     <>
       <Grid item xs={12} style={{ display: "flex", marginTop: "20px" }}>
@@ -85,7 +92,7 @@ function CalenderAppointments(props) {
           views={['month']}
           components={{ toolbar: CalendarToolbar }}
           style={{ height: 500, width: 1200 }}
-          onSelectEvent={event => handleEventClick()}
+          onSelectEvent={(event) => handleEventClick(event)}
           titleAccessor={(e) => { return state.events.length > 1 ? `Appointments : ${state.events.length}` : `Appointment : ${state.events.length}`; }}
           // onSelectSlot={handleEventClick()}
           selectable
@@ -100,7 +107,7 @@ function CalenderAppointments(props) {
             <Grid container style={{ paddingBottom: "3px", display: "flex", flexDirection: "row", justifyContent: "space-between", backgroundColor: "#024751", borderRadius: "5px", padding: "8px" }}>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", color: "#fff" }}> Date : </Typography>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(today).format("DD/MM/YYYY")} </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(state.date).format("DD/MM/YYYY")} </Typography>
               </Grid>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", color: "#fff" }}>Appointments :  </Typography>

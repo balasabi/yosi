@@ -6,7 +6,7 @@ import CalenderAppointments from'./CalenderAppointments'
 function Appointments(props) {
 
     const [state, setState] = useState({
-        selectedTab: "C"
+        selectedTab: "T"
     })
 
     const buttonAction = (param) => {
