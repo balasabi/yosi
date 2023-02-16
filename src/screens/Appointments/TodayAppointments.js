@@ -74,10 +74,10 @@ function TodayAppointments(props) {
                 <Grid item xs={12}   >
                     {times.map((time, index) => (
                         <Grid container key={index} style={{ display: "flex", flexDirection: "row" }}>
-                            <Grid item xs={1} style={{}}>
-                                <Typography style={{ fontFamily: "Avenir", fontSize: "14px", color: "grey", marginTop: -8 }}>{time}</Typography>
+                            <Grid item xs={1} >
+                                <Typography style={{ fontFamily: "Avenir", fontSize: "14px", color: "grey",  }}>{time}</Typography>
                             </Grid>
-                            <Grid item xs={12} style={{ borderLeft: "1px solid #DADCE0", borderTop: "1px solid #DADCE0", padding: "20px" }}>
+                            <Grid item xs={11} style={{ borderLeft: "1px solid #DADCE0", borderTop: "1px solid #DADCE0", padding: "20px" }}>
                                 <Grid container>
                                     {state.patients.filter((i) => i.timing === time).map((value) =>
                                         <Grid item xs={state.patients.filter((i) => i.timing === time).length === 1 ? 12 : 6} key={index}  style={{ borderRadius: "5px", padding: "5px", backgroundColor: "#024751", textAlign:"center" }}>
