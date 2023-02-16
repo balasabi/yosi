@@ -5,7 +5,7 @@ import Topbar from "./TopBar";
 import Sidebar from "./SideBar";
 
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const openedMixin = (theme) => ({
     width: drawerWidth,

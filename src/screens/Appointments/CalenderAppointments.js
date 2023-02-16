@@ -61,25 +61,28 @@ function CalenderAppointments(props) {
   const goToBack = (onNavigate) => {
     onNavigate("PREV");
   };
+
   const goToNext = (onNavigate) => {
     onNavigate("NEXT");
   };
 
   const CalendarToolbar = ({ onView, label, views, onNavigate }) => (
     <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "flex-start", marginBottom: "15px" }}>
-      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#024751", backgroundColor: "#D2EAE2" }} onClick={() => goToBack(onNavigate)}>Back</Button>
+      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#FFF", backgroundColor: "#024751" }} onClick={() => goToBack(onNavigate)}>Back</Button>
       <Typography style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "20px", fontFamily: "Avenir-Black", color: "#000", marginTop: "5px" }}>
         {label}
       </Typography>
-      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#024751", backgroundColor: "#D2EAE2" }} onClick={() => goToNext(onNavigate)}>Next</Button>
+      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#FFF", backgroundColor: "#024751" }} onClick={() => goToNext(onNavigate)}>Next</Button>
     </div>
   );
+
   const handleEventClick = (param) => {
     setState({ ...state, patientAppointmentDetailsOpen: true, date: param.start })
   };
+
   const addTestClose = () => {
     setState({ ...state, patientAppointmentDetailsOpen: false })
-  }
+  };
 
   return (
     <>
@@ -95,6 +98,10 @@ function CalenderAppointments(props) {
           onSelectEvent={(event) => handleEventClick(event)}
           titleAccessor={(e) => { return state.events.length > 1 ? `Appointments : ${state.events.length}` : `Appointment : ${state.events.length}`; }}
           // onSelectSlot={handleEventClick()}
+          eventPropGetter={(event) => {
+            const backgroundColor = '#024751';
+            return { style: { backgroundColor } }
+          }}
           selectable
         />
         <Dialog open={state.patientAppointmentDetailsOpen} maxWidth={'lg'} >

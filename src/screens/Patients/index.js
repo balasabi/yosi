@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import { Checkbox, Table, TableBody, TableCell, TableContainer, TableHead,styled, tableCellClasses,tableRowClasses, TableRow, Paper, Grid, Button, TablePagination } from '@mui/material';
+import { Checkbox, Table, TableBody, TableCell, TableContainer, TableHead, styled, tableCellClasses, tableRowClasses, TableRow, Paper, Grid, Button, TablePagination, Typography } from '@mui/material';
 import vector from '../../../public/Images/vector.png';
 import Image from 'next/image';
 import _ from 'underscore';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-      backgroundColor: "#E7E7E7",
-      color: theme.palette.common.black,
-      fontFamily: 'Avenir-Black',
-      padding: "12px"
+    backgroundColor: "#E7E7E7",
+    color: '#2E2E2E',
+    fontFamily: 'Avenir-Heavy',
+    padding: "12px",
+    fontSize: '1em',
+    lineHeight: '27px'
   },
   [`&.${tableCellClasses.body}`]: {
-      fontSize: 16,
-      fontFamily: 'Avenir',
-      padding: "10px"
+    fontSize: '0.9em',
+    fontFamily: 'Avenir-Book',
+    padding: "10px",
+    lineHeight: '24px'
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -55,14 +60,15 @@ class Patients extends Component {
         return -1
       }
     })
-  }
+  };
 
   checkBoxAction = () => {
     this.setState({
       isClickCheckBox: !this.state.isClickCheckBox,
       selectedPatients: !this.state.isClickCheckBox === true ? _.pluck(this.state.rows, 'id') : []
     })
-  }
+  };
+
   singleSelectAction = (param) => {
     if (this.state.selectedPatients.length > 0 && this.state.selectedPatients.includes(param)) {
       this.setState({
@@ -76,12 +82,12 @@ class Patients extends Component {
         selectedPatients: result
       })
     }
-  }
+  };
 
   handleChangePage = (event, newPage) => {
     this.setState({ page: newPage })
   };
-  
+
   handleChangeRowsPerPage = (event) => {
     this.setState({
       rowsPerPage: (parseInt(event.target.value)),
@@ -91,60 +97,69 @@ class Patients extends Component {
 
   render() {
     return (
-      <div>
-        <Grid item xs={12} style={{ fontSize: "24px", fontFamily: 'Avenir-Black', fontStyle: "normal", fontWeight: 800, lineHeight: "40px", marginBottom:"10px"}}>Patients</Grid>
-        <TableContainer component={Paper} style={{ marginTop: '20px' }}>
-          <Table aria-label="simple table" size='small'>
-            <TableHead style={{ backgroundColor: '#E7E7E7' }}>
-              <TableRow>
-                {/* <StyledTableCell align='right'>
-                  <Checkbox 
-                  style={{display:"flex",justifyContent:"flex-start"}}
-                  checked={this.state.isClickCheckBox}
-                    onClick={() => this.checkBoxAction()}
-                  />
-                </StyledTableCell> */}
-                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Name<Button onClick={this.sortedData()}><Image src={vector} alt="vector" /></Button>
-                </StyledTableCell>
-                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Email ID</StyledTableCell>
-                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>Phone</StyledTableCell>
-                <StyledTableCell align="left" style={{ fontWeight: 'bold', fontSize: '18px' }}>DOB<Button><Image src={vector} alt="vector" /></Button>
-                </StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) => (
-                <TableRow
-                  key={index}
-                  style={{ background: (index % 2) == 0 ? 'white' : '#F2F2F2' }}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  {/* <StyledTableCell align='right'>
+      <>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography className='header'>Patients</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TableContainer component={Paper}>
+              <Table aria-label="simple table" size='small'>
+                <TableHead style={{ backgroundColor: '#E7E7E7' }}>
+                  <StyledTableRow>
+                    <StyledTableCell>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography className='tableHeader'>Name</Typography>
+                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
+                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                      </div>
+                    </StyledTableCell>
+                    <StyledTableCell align="left">Email ID</StyledTableCell>
+                    <StyledTableCell align="left">Phone</StyledTableCell>
+                    <StyledTableCell>
+                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography className='tableHeader'>DOB</Typography>
+                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
+                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                      </div>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                </TableHead>
+                <TableBody>
+                  {this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) =>
+                    <StyledTableRow
+                      key={index.toString()}
+                      style={{ background: (index % 2) == 0 ? 'white' : '#F2F2F2' }}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      {/* <StyledTableCell align='right'>
                     <Checkbox
                      style={{display:"flex",justifyContent:"flex-start"}}
                       checked={this.state.selectedPatients.includes(row.id)}
                       onClick={() => this.singleSelectAction(row.id)}
                     />
                   </StyledTableCell> */}
-                  <StyledTableCell align="left">{row.name}</StyledTableCell>
-                  <StyledTableCell align="left">{row.email}</StyledTableCell>
-                  <StyledTableCell align="left">{row.phone}</StyledTableCell>
-                  <StyledTableCell align="left">{row.dob}</StyledTableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            rowsPerPageOptions={[7, 12]}
-            component="div"
-            count={this.state.rows.length}
-            rowsPerPage={this.state.rowsPerPage}
-            page={this.state.page}
-            onPageChange={() => this.handleChangePage()}
-            onRowsPerPageChange={(e) => this.handleChangeRowsPerPage(e)}
-            labelRowsPerPage={'No. of item per page:'}
-          />
-        </TableContainer>
-      </div>
+                      <StyledTableCell align="left">{row.name}</StyledTableCell>
+                      <StyledTableCell align="left">{row.email}</StyledTableCell>
+                      <StyledTableCell align="left">{row.phone}</StyledTableCell>
+                      <StyledTableCell align="left">{row.dob}</StyledTableCell>
+                    </StyledTableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[7, 12]}
+              component="div"
+              count={this.state.rows.length}
+              rowsPerPage={this.state.rowsPerPage}
+              page={this.state.page}
+              onPageChange={() => this.handleChangePage()}
+              onRowsPerPageChange={(e) => this.handleChangeRowsPerPage(e)}
+              labelRowsPerPage={'No. of item per page:'}
+            />
+          </Grid>
+        </Grid>
+      </>
     )
   }
 }

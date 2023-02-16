@@ -10,7 +10,6 @@ function Appointments(props) {
     })
 
     const buttonAction = (param) => {
-        console.log("*************" + param)
         setState({ ...state, selectedTab: param })
     }
 
@@ -22,14 +21,17 @@ function Appointments(props) {
                         Appointments
                     </Typography>
                 </Grid>
-                <Grid item xs={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 50, borderRadius: "8px", backgroundColor: "#35E5A5" }} >
-                    <Grid item xs={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: state.selectedTab === "T" ? "#0D4751" : "#35E5A5", height: 48, borderRadius: "8px" }} onClick={() => buttonAction("T")}>
-                        <Typography style={{ color: "#fff", fontFamily:"Avenir-Black", fontSize:"20px" }}  >Today</Typography>
-                    </Grid>
-                    <Grid item xs={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: state.selectedTab === "C" ? "#0D4751" : "#35E5A5", height: 48, borderRadius: "8px" }} onClick={() => buttonAction("C")}>
-                        <Typography style={{ color: "#fff", fontFamily:"Avenir-Black", fontSize:"20px" }} onClick={() => buttonAction("C")}> Calendar </Typography>
+                <Grid item xs={7} style={{ marginLeft: "12px" }}>
+                    <Grid container>
+                        <Grid item xs={3}>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "T" ? "#024751" : "#474747", borderBottom: state.selectedTab === "T" ? "5px solid #024751" : "none", borderRadius: "0px" }}  onClick={() => buttonAction("T")}>Today</CustomizedButtons>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "C" ? "#024751" : "#474747", borderBottom: state.selectedTab === "C" ? "5px solid #024751" : "none", borderRadius: "0px" }}  onClick={() => buttonAction("C")}>Months</CustomizedButtons>
+                        </Grid>
                     </Grid>
                 </Grid>
+                <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
                 <Grid item xs={12}>
                     {state.selectedTab === "T" &&
                         <TodayAppointments />

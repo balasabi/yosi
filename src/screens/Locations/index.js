@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, FormControl, Select, MenuItem, IconButton } from '@mui/material';
-import CustomizedButtons from '../../components/CustomButton';
 import Image from 'next/image';
-import DownArrow from '../../../public/Images/downArrow.png';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import RightArrow from '../../../public/Images/go.png';
 import { useRouter } from 'next/router';
@@ -87,7 +85,8 @@ function Locations(props) {
         <>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography className='header'>Lab Locations</Typography>
+                    <Typography className='header'>
+                        Lab Locations</Typography>
                 </Grid>
                 <Grid item xs={12} marginBottom={"20px"}>
                     <Grid container>
@@ -98,7 +97,7 @@ function Locations(props) {
                             />
                         </Grid>
                         <Grid item xs={7} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography style={{ fontSize: "1em", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Bold", textTransform: "none", color: "#474747", marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
                                 <Select
                                     value={state.status}
@@ -120,73 +119,46 @@ function Locations(props) {
                     <Grid container spacing={3} justifyContent='center'>
                         {!!state.type && state.type.map((item, index) =>
                             <Grid item xs={12} sm={4} key={index.toString()}>
-                                <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', borderRadius: "8px", padding: "10px" }}>
+                                <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 30%), 0px 1px 3px 4px rgb(0 0 0 / 10%)', borderRadius: "8px", padding: "10px", }}>
                                     <Grid item xs={12} >
                                         <Typography className='subHeading'>{item.name} </Typography>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
                                         <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
+                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book"
                                         }} color={"#718797"}>Status: </Typography>
                                         <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
+                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Medium",
                                             backgroundColor: "#EBF4F1", marginLeft: "5px", padding: "2px", borderRadius: "5px"
                                         }} color={"#024751"}> {item.status}</Typography>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
                                         <Grid item xs={6}>
                                             <Typography style={{
-                                                letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                overflow: 'hidden',
-                                                WebkitBoxOrient: 'vertical',
-                                                WebkitLineClamp: 3,
+                                                letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Medium",
                                                 fontWeight: '900',
                                             }} color={"rgba(16, 16, 16, 0.6)"} >Lab Name: {item.display_name}</Typography>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography style={{
-                                                letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                overflow: 'hidden',
-                                                WebkitBoxOrient: 'vertical',
-                                                WebkitLineClamp: 3,
+                                                letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book",
                                             }} color={"rgba(16, 16, 16, 0.6)"} >{"Lab Code: SGB"}</Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12} style={{ marginBottom: "5px" }} >
                                         <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
+                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book",
                                             fontWeight: 900
                                         }} color={"#313237"}>Address: </Typography>
+                                        <Typography className='miniLiteText' style={{ marginTop: "5px" }} color={"rgba(16, 16, 16, 0.6)"}> {item.description}</Typography>
                                         <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
-                                        }} color={"rgba(16, 16, 16, 0.6)"}> {item.description}</Typography>
-                                        <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
+                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book"
                                         }}></Typography>
                                     </Grid>
                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: 'pointer' }}>
                                         <Typography style={{
-                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", display: '-webkit-box',
-                                            overflow: 'hidden',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
-                                            fontWeight: 'bold'
+                                            letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", fontWeight: 'bold'
                                         }} color={"#313237"}>Show Details</Typography>
                                         <IconButton onClick={() => handleView()}>
                                             <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} />

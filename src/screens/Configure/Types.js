@@ -16,12 +16,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         border: "none",
         color: "#848991",
-        fontFamily: "Avenir",
+        fontFamily: "Avenir-Heavy",
     },
     [`&.${tableCellClasses.body}`]: {
         color: "#313233",
         border: "none",
-        fontFamily: "Avenir"
+        fontFamily: "Avenir-Book"
     }
 }));
 
@@ -93,7 +93,7 @@ function Type(props) {
     return (
         <>
             <Grid container>
-                <Grid item xs={12} marginBottom={"20px"} >
+                <Grid item xs={12}  >
                     <Grid container >
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
@@ -103,7 +103,7 @@ function Type(props) {
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                             <Typography className='minText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
                                 <Select
                                     value={state.result}
                                     onChange={(e) => handleChange(e, "R")}
@@ -114,7 +114,7 @@ function Type(props) {
                                     <MenuItem value={"Positive"}>Positive</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8" }}>
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
                                 <Select
                                     value={state.status}
                                     onChange={(e) => handleChange(e, "S")}
@@ -126,7 +126,7 @@ function Type(props) {
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} >
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, borderRadius: 0 }} size="small">
                                 <Select
                                     value={state.date}
                                     onChange={(e) => handleChange(e, "D")}
@@ -148,7 +148,7 @@ function Type(props) {
                                     <TableBody>
                                         <StyledTableRow>
                                             <StyledTableCell style={{ border: "none" }}>
-                                                <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)', borderRadius: "8px", padding: "10px" }}>
+                                                <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 30%), 0px 1px 3px 4px rgb(0 0 0 / 10%)', borderRadius: "8px", padding: "10px" }}>
                                                     <Grid item xs={12} >
                                                         <Typography className='subHeading'>{type.name} </Typography>
                                                     </Grid>

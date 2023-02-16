@@ -1,4 +1,4 @@
-:root {
+/* /* :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
@@ -145,55 +145,71 @@ a {
 }
 
 .subText {
-  font-size: 1em;
-  font-family: 'Avenir-Book';
-  line-height: '24px';
-  color:#1C1C1C;
+  font-size: 1em !important;
+  font-family: 'Avenir-Book' !important;
+  line-height: '24px' !important;
+  color:#1C1C1C !important;
 }
 
 .header {
-  font-size: 1.5em;
-  font-family: 'Avenir-Bold';
-  line-height: '40px';
-  color: #313237;
+  font-size: 1.5em !important;
+  font-family: 'Avenir-Bold' !important;
+  line-height: '40px' !important;
+  color: #1C1C1C !important;
 }
 
 .subHeading {
-  font-size: 1.15em;
-  font-family: 'Avenir-Bold';
-  line-height: '32px';
-  color: #313237;
+  font-size: 1.15em !important;
+  font-family: 'Avenir-Bold' !important;
+  line-height: '32px' !important;
+  color: #313237 !important;
+}
+
+.switchHeading {
+  font-size: 1em !important;
+  font-family: 'Avenir-Heavy' !important;
+  line-height: '24px' !important;
+  /* color: #313237 !important; */
 }
 
 .miniHeading {
-  font-size: 0.9em;
-  font-family: 'Avenir-Bold';
-  line-height: '32px';
-  color: #313237;
+  font-size: 0.9em !important;
+  font-family: 'Avenir-Bold'!important;
+  line-height: '32px'!important;
+  color: #313237 !important;
 }
 
 .miniText {
-  font-size: 0.9em;
-  font-family: 'Avenir-Book';
-  line-height: '24px';
-  color: #474747;
+  font-size: 0.9em!important;
+  font-family: 'Avenir-Medium'!important;
+  line-height: '24px'!important;
+  color: #474747 !important;
 }
+
+.miniLiteText {
+  font-size: 0.85em!important;
+  font-family: 'Avenir-Medium'!important;
+  line-height: '24px'!important;
+  color: rgba(71, 71, 71, 0.6) !important;
+}
+
 .tableHeader{
-  font-size: 1.1em;
-  font-family: 'Avenir-Heavy';
-  line-height: '24px';
-  color: #2E2E2E;
+  font-size: 1.1em!important;
+  font-family: 'Avenir-Heavy'!important;
+  line-height: '24px'!important;
+  color: #2E2E2E !important;
 }
 
 .tableContent{
-  font-size: 0.9em;
-  font-family: 'Avenir-Medium';
-  line-height: '24px';
-  color: #2E2E2E;
+  font-size: 0.9em!important;
+  font-family: 'Avenir-Book'!important;
+  line-height: '24px'!important;
+  color: #2E2E2E !important;
 }
+
 .iconButton{
-  font-size: 0.85em;
-  font-family: 'Avenir-Medium';
-  line-height: '24px';
-  color: #101010;
-}
+  font-size: 0.95em!important;
+  font-family: 'Avenir-Book'!important;
+  line-height: '24px'!important;
+  color: #101010 !important;
+} 

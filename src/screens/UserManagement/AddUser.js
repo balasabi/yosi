@@ -21,9 +21,10 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
         "&:focus": {
             border: 0,
             backgroundColor: "#FBF7F4",
+            border: "2px solid #024751",
         },
         "&:active": {
-            // borderBottom: "1px solid #024751",
+            border: "2px solid #024751",
             backgroundColor: "#FBF7F4"
         }
     }

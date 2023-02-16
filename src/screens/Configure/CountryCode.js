@@ -13,16 +13,17 @@ import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultR
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#E7E7E7",
-        color: theme.palette.common.black,
-        fontFamily: 'Avenir-Bold',
+        color: '#2E2E2E',
+        fontFamily: 'Avenir-Heavy',
         padding: "12px",
-        fontSize: "18px",
+        fontSize: "1.1em",
         lineHeight: '27px'
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: '14px',
+        fontSize: '0.9em',
         fontFamily: 'Avenir-Book',
         padding: "10px",
+        color: '#2E2E2E',
         lineHeight: '24px'
     },
 }));
@@ -100,7 +101,7 @@ function CountryCode() {
                         <Grid item xs={6}>
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={plus} alt='union' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", textTransform: "none", marginLeft: "5px" }}>
+                                <Typography style={{ fontSize: "14px", lineHeight: "24px", fontFamily: "Avenir-Book", textTransform: "none", marginLeft: "5px" }}>
                                     Add country code
                                 </Typography>
                             </CustomizedButtons>

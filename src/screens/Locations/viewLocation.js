@@ -17,17 +17,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: 'rgba(2, 55, 81, 0.05)',
         borderBottom: '1px solid #E7E7E7',
-        color: theme.palette.common.black,
+        color: '#2E2E2E',
         padding: "2px",
         fontFamily: 'Avenir-Heavy',
         fontSize: '1em',
-        fontStyle: "normal"
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: "1em",
         padding: "1px",
         fontFamily: 'Avenir-Book',
-        fontStyle: "normal",
         fontSize: '1em',
     },
 }))
@@ -90,9 +88,6 @@ function ViewLocation(props) {
                     <Table>
                         <TableHead>
                             <StyledTableRow>
-                                <StyledTableCell>
-                                    <Checkbox
-                                    /></StyledTableCell>
                                 <StyledTableCell style={{ fontWeight: "bold" }}>Lab name</StyledTableCell>
                                 <StyledTableCell style={{ fontWeight: "bold" }}>Lab code</StyledTableCell>
                                 <StyledTableCell style={{ fontWeight: "bold" }}>Lab manager</StyledTableCell>
@@ -103,9 +98,6 @@ function ViewLocation(props) {
                         </TableHead>
                         <TableBody>
                             <StyledTableRow>
-                                <StyledTableCell>
-                                    <Checkbox
-                                    /></StyledTableCell>
                                 <StyledTableCell>Lab name</StyledTableCell>
                                 <StyledTableCell>Lab manager</StyledTableCell>
                                 <StyledTableCell>DSP</StyledTableCell>

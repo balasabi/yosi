@@ -26,16 +26,20 @@ function CouponCode() {
         status: "",
         mode:"ADD"
     })
+
     const couponCodeClose = () => {
         setState({ ...state, couponCodeOpen: false })
-    }
+    };
+
     const submit = async () => {
         alert("WIP")
         setState({ ...state, couponCodeOpen: false })
-    }
+    };
+
     const cancel = () => {
         setState({ ...state, couponCodeOpen: false })
-    }
+    };
+
     const handleChange = (event, param) => {
         if (param === "S") {
             setState({ ...state, statusFilter: event.target.value });
@@ -43,21 +47,24 @@ function CouponCode() {
             setState({ ...state, priceFilter: event.target.value });
         }
     };
+    
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
     };
+
     const addAction= () =>{
         setState({ ...state, couponCodeOpen: true, mode:"ADD" })
-    }
+    };
+
     const editAction = () =>{
         setState({ ...state, couponCodeOpen: true, mode:"EDIT" })
-    }
+    };
 
     return (
         <>
             <Grid container>
                 <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
-                <Grid item xs={12} display={"flex"} flexDirection={'row'}>
+                <Grid item xs={12} style={{display:'flex', flexDirection:'row'}}>
                     <Grid container>
                         <Grid item xs={6}>
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
@@ -105,46 +112,46 @@ function CouponCode() {
                         <Grid item xs={12} style={{ marginTop: "15px", padding: "12px", backgroundColor: "#E7E7E7" }}>
                             <Grid container>
                                 <Grid item xs={3}>
-                                    <Typography align='center' className='subHeading' >Name</Typography>
+                                    <Typography align='center' className='tableHeader'>Name</Typography>
                                 </Grid>
                                 <Grid item xs={3}>
-                                    <Typography align='center' className='subHeading'>Code</Typography>
+                                    <Typography align='center' className='tableHeader'>Code</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography align='center' className='subHeading'>Price</Typography>
+                                    <Typography align='center' className='tableHeader'>Price</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography align='center' className='subHeading'>Status</Typography>
+                                    <Typography align='center' className='tableHeader'>Status</Typography>
                                 </Grid>
                                 <Grid item xs={2}>
-                                    <Typography align='center' className='subHeading'>Action</Typography>
+                                    <Typography align='center' className='tableHeader'>Action</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                     {!!state.rows && state.rows.map((item, index) => (
-                        <Grid container  >
+                        <Grid container key={index.toString()}>
                             <Grid item xs={12} style={{ marginTop: "30px", border: "2px dashed #D9D9D9", padding: "10px", borderBottom: 0, width: "50vw" }} />
-                            <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
+                            <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                 <div style={{ marginLeft: -20, border: "2px dashed #D9D9D9", borderRadius: "50px", width: 50, height: 50, borderLeft: 0, borderTop: 0, borderBottom: 0 }} />
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
                                     <Grid container>
                                         <Grid item xs={3}>
-                                            <Typography className='subText' align='center' style={{ marginLeft: "10px" }}>{item.Name}</Typography>
+                                            <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.Name}</Typography>
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <Typography className='subText' align='center' style={{ marginLeft: "45px" }} >{item.Code}</Typography>
+                                            <Typography className='tableContent' align='center' style={{ marginLeft: "45px" }} >{item.Code}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Typography className='subText' align='center'>{item.Price}</Typography>
+                                            <Typography className='tableContent' align='center'>{item.Price}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Typography className='subText' align='center' style={{ marginLeft: "10px" }}>{item.Status}</Typography>
+                                            <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.Status}</Typography>
                                         </Grid>
                                         <Grid item xs={2} >
                                             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() =>editAction()}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
-                                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#000", marginLeft: "5px" }}>Edit</Typography>
+                                                <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
                                         </Grid>
                                     </Grid>
@@ -152,7 +159,8 @@ function CouponCode() {
                                 <div style={{ marginRight: -20, border: "2px dashed #D9D9D9", borderRadius: "50px", width: 50, height: 50, borderRight: 0, borderTop: 0, borderBottom: 0 }} />
                             </Grid>
                             <Grid item xs={12} style={{ border: "2px dashed #D9D9D9", padding: "10px", borderTop: 0 }} />
-                        </Grid>))}
+                        </Grid>
+                        ))}
                 </Grid>
                 <Dialog open={state.couponCodeOpen} onClose={() => couponCodeClose()} maxWidth={'sm'} >
                     <Grid container>
@@ -213,10 +221,10 @@ function CouponCode() {
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
-                                    <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
+                                    <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
                                         Cancel
                                     </CustomizedButtons>
-                                    <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
+                                    <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
                                         Submit
                                     </CustomizedButtons>
                                 </Grid>

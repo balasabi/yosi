@@ -20,14 +20,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: 'rgba(2, 55, 81, 0.05)',
         borderBottom: '1px solid #E7E7E7',
-        color: theme.palette.common.black,
+        color: '#2E2E2E',
         padding: "2px",
         fontFamily: 'Avenir-Heavy',
-        fontSize: '16px',
-        fontStyle: "normal"
+        fontSize: '1.1em',
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: "16px",
+        color: '#2E2E2E',
+        fontSize: "1em",
         padding: "1px",
         fontFamily: "Avenir-Book",
         fontStyle: "normal",
@@ -198,7 +198,7 @@ function UsersManagement(props) {
         <>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography className='header'>Users Management</Typography>
+                    <Typography className='header'>Employee Management</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ borderBottom: '1px solid #C8C8C8' }}>
                     <Grid container>
@@ -206,10 +206,10 @@ function UsersManagement(props) {
                             <Grid container>
                                 {state.isActive === false ?
                                     <Grid item xs={6} sm={3} lg={3} style={{ borderBottom: '4px solid #024751' }}>
-                                        <CustomizedButtons variant="text" onClick={() => handleUser()}><Typography align='center' className='subText' >Users</Typography></CustomizedButtons>
+                                        <CustomizedButtons variant="text" onClick={() => handleUser()}><Typography align='center' className='subText'>Users</Typography></CustomizedButtons>
                                     </Grid> :
                                     <Grid item xs={6} sm={4} lg={3}>
-                                        <CustomizedButtons variant="text" onClick={() => handleUser()}>Users</CustomizedButtons>
+                                        <CustomizedButtons variant="text" className='subText' onClick={() => handleUser()}>Users</CustomizedButtons>
                                     </Grid>
                                 }
                                 {state.isActive === true ?
@@ -218,7 +218,7 @@ function UsersManagement(props) {
                                     </Grid>
                                     :
                                     <Grid item xs={6} sm={8} lg={9}>
-                                        <CustomizedButtons variant="text" onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
+                                        <CustomizedButtons variant="text" className='subText' onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
                                     </Grid>
                                 }
                             </Grid>
@@ -237,7 +237,7 @@ function UsersManagement(props) {
                         </Grid>
                         <Grid item xs={6}>
                             <Grid container justifyContent="flex-end" alignItems="center">
-                                <Typography>Filter by</Typography>
+                                <Typography className='miniLiteText'>Filter by</Typography>
                                 <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
                                     <Select
                                         value={state.roles}
@@ -279,22 +279,22 @@ function UsersManagement(props) {
                                         onClick={() => checkBoxAction()} /></StyledTableCell>
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <Typography style={{ fontWeight: "bold" }}>Name</Typography>
+                                            <Typography className='tableHeader'>Name</Typography>
                                             <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sorting()} />
                                                 <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} /></div>
                                         </div>
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ fontWeight: "bold" }}>Email ID</StyledTableCell>
-                                    <StyledTableCell style={{ fontWeight: "bold" }}>Phone</StyledTableCell>
-                                    <StyledTableCell style={{ fontWeight: "bold" }}>Role</StyledTableCell>
+                                    <StyledTableCell>Email ID</StyledTableCell>
+                                    <StyledTableCell>Phone</StyledTableCell>
+                                    <StyledTableCell>Role</StyledTableCell>
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <Typography style={{ fontWeight: "bold" }}>Status</Typography>
+                                            <Typography className='tableHeader'>Status</Typography>
                                             <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
                                                 <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
                                         </div>
                                     </StyledTableCell>
-                                    <StyledTableCell style={{ fontWeight: "bold" }}>Action</StyledTableCell>
+                                    <StyledTableCell>Action</StyledTableCell>
                                 </StyledTableRow>
                             </TableHead>
                             <TableBody>
@@ -310,7 +310,7 @@ function UsersManagement(props) {
                                         <StyledTableCell>{item.phone}</StyledTableCell>
                                         <StyledTableCell>{item.role}</StyledTableCell>
                                         <StyledTableCell>{item.status}</StyledTableCell>
-                                        <StyledTableCell><Button style={{ textTransform: "none", color: "#000" }} onClick={() => editUser()} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
+                                        <StyledTableCell className='tableContent'><Button style={{ textTransform: "none", color: "#000" }} onClick={() => editUser()} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
                                     </StyledTableRow>
                                 )}
                             </TableBody>

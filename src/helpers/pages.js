@@ -61,7 +61,7 @@ export const sideMenu = [
         { title: "Location configure", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' }]
     },
     {
-        name: "Employee database",
+        name: "Employee management",
         menuIcon: <Image src={IdentificationBadge} alt={"Ellipse"} width={20} height={20} />,
         url: '/users-management',
         pages: []

@@ -11,15 +11,18 @@ import Edit from '../../../public/Images/editIcon.png';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#E7E7E7",
-        color: theme.palette.common.black,
-        fontFamily: 'Avenir-Black',
+        color: '#2E2E2E',
+        fontFamily: 'Avenir-Heavy',
+        fontSize: '1.1em',
         padding: "12px",
-        fontSize: '18px',
+        lineHeight: '27px'
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: '14px',
+        fontSize: '0.9em',
         fontFamily: 'Avenir-Book',
-        padding: "10px"
+        padding: "10px",
+        lineHeight: '24px',
+        color: '#2E2E2E',
     },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -136,7 +139,7 @@ function Classification(props) {
     };
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (e, param) => {
@@ -211,10 +214,10 @@ function Classification(props) {
                                 <TableRow >
                                     <StyledTableCell style={{ width: "210px" }}>Name</StyledTableCell>
                                     <StyledTableCell style={{ width: "130px" }}>Code</StyledTableCell>
-                                    <StyledTableCell >Test Type</StyledTableCell>
-                                    <StyledTableCell >Test Groups</StyledTableCell>
-                                    <StyledTableCell >Status</StyledTableCell>
-                                    <StyledTableCell >Action</StyledTableCell>
+                                    <StyledTableCell>Test Type</StyledTableCell>
+                                    <StyledTableCell>Test Groups</StyledTableCell>
+                                    <StyledTableCell>Status</StyledTableCell>
+                                    <StyledTableCell>Action</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             {!!state.classification && state.classification.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((classification, index) => (
@@ -228,7 +231,7 @@ function Classification(props) {
                                         <StyledTableCell >
                                             <div style={{ display: "flex", flexDirection: "row" }}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
-                                                <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>                                        </div>
+                                                <Typography className="tableContent" style={{ marginLeft: "5px" }}>Edit</Typography>                                        </div>
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>

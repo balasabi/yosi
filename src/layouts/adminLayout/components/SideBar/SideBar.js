@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { AccordionDetails, Grid, ListItemButton, Avatar, Typography, ListItemIcon, ListItemText } from '@mui/material';
+import { AccordionDetails, Grid, ListItemButton, Avatar, Typography, ListItemIcon, ListItemText, IconButton } from '@mui/material';
 import { sideMenu } from '../../../../helpers/pages';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -74,13 +74,13 @@ export default function Sidebar(props) {
                                     onChange={() => { setExpanded(expanded !== index ? index : false) }}>
                                     <AccordionSummary style={{ padding: '0px 5px 0px 0px' }} expandIcon={<ArrowForwardIosIcon fontSize='10' />}>
                                         {props.isOpen === true ?
-                                            <ListItemButton style={{ padding: '6px 0px 6px 20px' }} onClick={() => handleInitialUrl(item.url)}>
-                                                <ListItemIcon>{item.menuIcon}</ListItemIcon>
+                                            <ListItemButton style={{ padding: '0px 0px 0px 20px' }} onClick={() => handleInitialUrl(item.url)}>
+                                                <IconButton>{item.menuIcon}</IconButton>
                                                 <Typography className='subText'>{item.name}</Typography>
                                             </ListItemButton>
                                             :
                                             <Grid item xs={12}>
-                                                <ListItemButton style={{ padding: '3px 0px 3px 0px' }} onClick={() => handleInitialUrl(item.url)} >
+                                                <ListItemButton style={{ padding: '3px 15px 3px 0px' }} onClick={() => handleInitialUrl(item.url)} >
                                                     <Grid container textAlign='center'>
                                                         <Grid item xs={12}>
                                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
@@ -97,8 +97,8 @@ export default function Sidebar(props) {
                                         <AccordionDetails style={{ padding: '0px 5px 0px 10px' }} key={index.toString()}>
                                             {props.isOpen === true ?
                                                 <StyledButton onClick={() => handleSubUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#D2EAE2" : "#fff", borderRadius: '8px', margin: '0px 5px' }}>
-                                                    <ListItemIcon>{item.menuIcon}</ListItemIcon>
-                                                    <Typography className='subText' style={{ marginLeft: -8 }}>{item.title}</Typography>
+                                                    <IconButton>{item.menuIcon}</IconButton>
+                                                    <Typography className='subText'>{item.title}</Typography>
                                                 </StyledButton>
                                                 :
                                                 <Grid item xs={12}>
@@ -123,8 +123,8 @@ export default function Sidebar(props) {
                                         <Grid container>
                                             <Grid item xs={12}>
                                                 <StyledButton onClick={() => item.url !== undefined && handleUrl(item.url)} style={{ padding: '15px 16px', backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#D2EAE2" : "#fff", borderRadius: '8px', margin: '0px 5px' }}>
-                                                    <ListItemIcon>{item.menuIcon}</ListItemIcon>
-                                                    <Typography className='subText'>{item.name}</Typography>
+                                                    <IconButton>{item.menuIcon}</IconButton>
+                                                    <Typography className='subText' >{item.name}</Typography>
                                                 </StyledButton>
                                             </Grid>
                                         </Grid>
@@ -151,9 +151,9 @@ export default function Sidebar(props) {
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton>
                                         <ListItemIcon><Avatar fontSize='10' style={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
-                                        <Grid item xs={12} >
+                                        <Grid item xs={12}>
                                             <Typography className='subText'>Gowtam Ramanujam</Typography>
-                                            <Typography style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textAlign: "center", color: "#024751" }}>(ADMINISTRATOR)</Typography>
+                                            <Typography align='left' style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751" }}>ADMIN</Typography>
                                         </Grid>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')}>
@@ -166,8 +166,8 @@ export default function Sidebar(props) {
                                     <ListItemButton style={{ display: 'flex', flexDirection: 'column' }}>
                                         <ListItemIcon><Avatar fontSize='10' sx={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
                                         <Grid item xs={12}>
-                                            <Typography className='subText' align='center' style={{ whiteSpace:'break-spaces' }} >Gowtam Ramanujam</Typography>
-                                            <Typography style={{ fontSize: "10px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#024751" }}>(ADMINISTRATOR)</Typography>
+                                            <Typography className='subText' align='center' style={{ whiteSpace: 'break-spaces' }} >Gowtam Ramanujam</Typography>
+                                            <Typography align='center' style={{ fontSize: "11px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#024751" }}>ADMIN</Typography>
                                         </Grid>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')} style={{ display: 'flex', flexDirection: 'column' }}>
