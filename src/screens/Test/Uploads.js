@@ -12,7 +12,7 @@ import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultR
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: "#E7E7E7",
+        backgroundColor: "#F2F5F6",
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Heavy',
         padding: "13px",

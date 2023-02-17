@@ -8,7 +8,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#E7E7E7",
+    backgroundColor: "#F2F5F6",
     color: '#2E2E2E',
     fontFamily: 'Avenir-Heavy',
     padding: "12px",
@@ -129,7 +129,7 @@ class Patients extends Component {
                   {this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) =>
                     <StyledTableRow
                       key={index.toString()}
-                      style={{ background: (index % 2) == 0 ? 'white' : '#F2F2F2' }}
+                      style={{ background: (index % 2) == 0 ? 'white' : '#FCFCFC' }}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                       {/* <StyledTableCell align='right'>
                     <Checkbox

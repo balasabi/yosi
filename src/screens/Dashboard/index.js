@@ -156,7 +156,7 @@ function Dashboard(props) {
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <TextField size="small"
                                     select
-                                    label={<Typography style={{ fontSize: "14px", fontFamily: "Avenir-Book-Book", fontStyle: "normal", lineHeight: "24px", color: "#C8C8C8" }} >Select Lab</Typography>}
+                                    label={<Typography style={{ fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal", lineHeight: "24px", color: "#C8C8C8" }} >Select Lab</Typography>}
                                     fullWidth
                                     inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book-Book", backgroundColor: "#FBF7F4" } }}
                                     value={state.lab}

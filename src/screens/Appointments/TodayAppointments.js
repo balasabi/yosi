@@ -11,7 +11,8 @@ function TodayAppointments(props) {
                 title: "title1",
                 patient_name: "Kavi",
                 test_name: "Heart Test",
-                timing: "9 AM",
+                timing_start: "9:00 AM",
+                timing_end: "9:00 AM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             },
@@ -20,7 +21,8 @@ function TodayAppointments(props) {
                 title: "title2",
                 patient_name: "Arun",
                 test_name: "Full CheckUp",
-                timing: "10 AM",
+                timing_start: "10:00 AM",
+                timing_end: "10:30 AM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             },
@@ -29,7 +31,8 @@ function TodayAppointments(props) {
                 title: "title3",
                 patient_name: "Veni",
                 test_name: "Blood Test",
-                timing: "3 AM",
+                timing_start: "12:00 PM",
+                timing_end: "12:30 PM",
                 'start': new Date("02/17/2023"),
                 'end': new Date("02/17/2023")
             },
@@ -38,7 +41,8 @@ function TodayAppointments(props) {
                 title: "title4",
                 patient_name: "Pavi",
                 test_name: "Heart Test",
-                timing: "2 AM",
+                timing_start: "2:00 PM",
+                timing_end: "3:00 PM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             },
@@ -47,7 +51,8 @@ function TodayAppointments(props) {
                 title: "title5",
                 patient_name: "Siva",
                 test_name: "Blood Test",
-                timing: "2 AM",
+                timing_start: "2:00 PM",
+                timing_end: "2:00 PM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             }
@@ -59,28 +64,29 @@ function TodayAppointments(props) {
     const d = state.date;
     let day = days[d.getDay()];
 
-    const times = ["12 AM", "1 AM", "2 AM", "3 AM", "4 AM", "5 AM", "6 AM", "7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM",
-        "1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM", "7 PM", "8 PM", "9 PM", "10 PM", "11 PM"];
-
+    const times = ["12:00 AM","12:30 AM", "1:00 AM","1:30 AM", "2:00 AM","2:30 AM", "3:00 AM","3:30 AM", "4:00 AM","4:30 AM", "5:00 AM","5:30 AM",
+     "6:00 AM","6:30 AM", "7:00 AM", "7:30 AM","8:00 AM","8:30 AM", "9:00 AM","9:30 AM", "10:00 AM","10:30 AM", "11:00 AM","11:30 AM", "12:00 PM", "12:30 PM",
+        "1:00 PM", "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM","4:30 PM", "5:00 PM","5:30 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"];
+// const seconds =[ ,    "6:30 PM", "7:30 PM", "8:30 PM", "9:30 PM", "10:30 PM", "11:30 PM"]
     return (
         <>
-            <Grid container >
+            <Grid container spacing={1}>
                 <Grid item xs={12} style={{ display: "flex", flexDirection: "column", marginTop: "20px", marginLeft: "85px", marginBottom: "10px" }} >
                     <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#024751", marginLeft: "10px" }}>{day}</Typography>
                     <div style={{ display: "flex", justifyContent: "center", backgroundColor: "#024751", width: "4vw", height: "4vw", borderRadius: "50px" }}>
                         <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#fff", textAlign: "center", alignSelf: "center" }}>{moment(state.date).format("DD")}</Typography>
                     </div>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{marginBottom:"10px"}}>
                     {times.map((time, index) => (
                         <Grid container key={index} style={{ display: "flex", flexDirection: "row" }}>
-                            <Grid item xs={1} style={{}}>
+                            <Grid item xs={1} >
                                 <Typography style={{ fontFamily: "Avenir", fontSize: "14px", color: "grey", marginTop: -8 }}>{time}</Typography>
                             </Grid>
-                            <Grid item xs={11} style={{ borderLeft: "1px solid #DADCE0", borderTop: "1px solid #DADCE0", padding: "20px" }}>
-                                <Grid container >
-                                    {state.patients.filter((i) => i.timing === time).map((value) =>
-                                        <Grid item key={index} xs={state.patients.filter((i) => i.timing === time).length === 1 ? 12 : 5} style={{ display: "flex", flexDirection: "column", borderRadius: "5px", padding: "5px", backgroundColor: "#024751", marginRight: "5px" }}>
+                            <Grid item xs={11} style={{ borderLeft: "1px solid #DADCE0", borderTop: "1px solid #DADCE0", padding: state.patients.filter((i) => i.timing_start && i.timing_end === time).length>0 ? "5px" : "20px" }}>
+                                <Grid container  >
+                                    {state.patients.filter((i) => i.timing_start && i.timing_end === time).map((value) =>
+                                        <Grid item key={index} xs={state.patients.filter((i) => i.timing_start && i.timing_end === time).length === 1 ? 12 : 6}  style={{ display: "flex", flexDirection: "column", borderRadius: "5px", padding:"5px", backgroundColor: "#024751"}}>
                                             <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}>{value.test_name} </Typography>
                                             <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}> {value.patient_name}</Typography>
                                         </Grid>)}

@@ -18,7 +18,7 @@ import _ from 'underscore';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: "#E7E7E7",
+        backgroundColor: "#F2F5F6",
         color: '#2E2E2E',
         fontFamily: 'Avenir-Heavy',
         padding: "3px",

@@ -109,7 +109,7 @@ function CouponCode() {
                 </Grid>
                 <Grid item xs={12} >
                     <Grid container>
-                        <Grid item xs={12} style={{ marginTop: "15px", padding: "12px", backgroundColor: "#E7E7E7" }}>
+                        <Grid item xs={12} style={{ marginTop: "15px", padding: "12px", backgroundColor: "#F2F5F6" }}>
                             <Grid container>
                                 <Grid item xs={3}>
                                     <Typography align='center' className='tableHeader'>Name</Typography>
