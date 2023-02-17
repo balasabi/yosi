@@ -11,7 +11,7 @@ function TodayAppointments(props) {
                 title: "title1",
                 patient_name: "Kavi",
                 test_name: "Heart Test",
-                timing: "2 AM",
+                timing: "9 AM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             },
@@ -20,7 +20,7 @@ function TodayAppointments(props) {
                 title: "title2",
                 patient_name: "Arun",
                 test_name: "Full CheckUp",
-                timing: "4 AM",
+                timing: "10 AM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             },
@@ -29,7 +29,7 @@ function TodayAppointments(props) {
                 title: "title3",
                 patient_name: "Veni",
                 test_name: "Blood Test",
-                timing: "11 AM",
+                timing: "3 AM",
                 'start': new Date("02/17/2023"),
                 'end': new Date("02/17/2023")
             },
@@ -47,7 +47,7 @@ function TodayAppointments(props) {
                 title: "title5",
                 patient_name: "Siva",
                 test_name: "Blood Test",
-                timing: "3 AM",
+                timing: "2 AM",
                 'start': new Date("02/16/2023"),
                 'end': new Date("02/16/2023")
             }
@@ -71,19 +71,18 @@ function TodayAppointments(props) {
                         <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#fff", textAlign: "center", alignSelf: "center" }}>{moment(state.date).format("DD")}</Typography>
                     </div>
                 </Grid>
-                <Grid item xs={12}   >
+                <Grid item xs={12}>
                     {times.map((time, index) => (
                         <Grid container key={index} style={{ display: "flex", flexDirection: "row" }}>
-                            <Grid item xs={1} >
-                                <Typography style={{ fontFamily: "Avenir", fontSize: "14px", color: "grey",  }}>{time}</Typography>
+                            <Grid item xs={1} style={{}}>
+                                <Typography style={{ fontFamily: "Avenir", fontSize: "14px", color: "grey", marginTop: -8 }}>{time}</Typography>
                             </Grid>
                             <Grid item xs={11} style={{ borderLeft: "1px solid #DADCE0", borderTop: "1px solid #DADCE0", padding: "20px" }}>
-                                <Grid container>
+                                <Grid container >
                                     {state.patients.filter((i) => i.timing === time).map((value) =>
-                                        <Grid item xs={state.patients.filter((i) => i.timing === time).length === 1 ? 12 : 6} key={index}  style={{ borderRadius: "5px", padding: "5px", backgroundColor: "#024751", textAlign:"center" }}>
-                                            
-                                            <Typography style={{ fontFamily: "Avenir-Black", fontSize: "12px", color: "#fff" }}>{value.test_name} </Typography>
-                                            <Typography style={{ fontFamily: "Avenir-Black", fontSize: "12px", color: "#fff" }}> {value.patient_name}</Typography>
+                                        <Grid item key={index} xs={state.patients.filter((i) => i.timing === time).length === 1 ? 12 : 5} style={{ display: "flex", flexDirection: "column", borderRadius: "5px", padding: "5px", backgroundColor: "#024751", marginRight: "5px" }}>
+                                            <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}>{value.test_name} </Typography>
+                                            <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}> {value.patient_name}</Typography>
                                         </Grid>)}
                                 </Grid>
                             </Grid>

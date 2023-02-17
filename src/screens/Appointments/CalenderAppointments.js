@@ -13,17 +13,19 @@ const localizer = momentLocalizer(moment)
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#D2EAE2",
-    color: "#024751",
-    fontFamily: 'Avenir-Black',
+     backgroundColor: "#E7E7E7",
+    color: '#2E2E2E',
+    fontFamily: 'Avenir-Heavy',
     padding: "4px",
-    fontWeight: 800
+    fontSize: '1em',
+    lineHeight: '27px'
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    fontFamily: 'Avenir',
-    //backgroundColor: "#D2EAE2",
-    padding: "3px"
+    fontFamily: 'Avenir-Book',
+    color: '#2E2E2E',
+    lineHeight: '24px',
+     padding: "3px"
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -109,23 +111,23 @@ function CalenderAppointments(props) {
             <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
               <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "35px", position: "absolute" }} onClick={() => addTestClose()} />
             </Grid>
-          </Grid>
-          <DialogTitle style={{ marginTop: "25px" }}>
-            <Grid container style={{ paddingBottom: "3px", display: "flex", flexDirection: "row", justifyContent: "space-between", backgroundColor: "#024751", borderRadius: "5px", padding: "8px" }}>
+          </Grid>          
+          <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" , marginTop:10, marginBottom:10}}>
+            <Grid container style={{ paddingBottom: "3px", display: "flex", flexDirection: "row", justifyContent: "space-between",  borderRadius: "5px", padding: "4px" }}>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", color: "#fff" }}> Date : </Typography>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {moment(state.date).format("DD/MM/YYYY")} </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", }}> Date : </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", marginLeft: "5px" }}> {moment(state.date).format("DD/MM/YYYY")} </Typography>
               </Grid>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", color: "#fff" }}>Appointments :  </Typography>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#fff", marginLeft: "5px" }}> {state.events.length} </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black",  }}>Appointments :  </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir",  marginLeft: "5px" }}> {state.events.length} </Typography>
               </Grid>
             </Grid>
           </DialogTitle>
-          <DialogContent>
+          <DialogContent >
             <TableContainer >
               <Table>
-                <TableHead>
+                <TableHead >
                   <TableRow >
                     <StyledTableCell align={"center"} style={{ width: "12vw" }}>Patient Name</StyledTableCell>
                     <StyledTableCell align={"center"} style={{ width: "12vw" }}>Test Name</StyledTableCell>
