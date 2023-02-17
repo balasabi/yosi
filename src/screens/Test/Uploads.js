@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, tableRowClasses,
-    TablePagination, TableFooter, FormControl, Select, MenuItem, TableContainer, Paper, Dialog, DialogTitle, DialogContent
+    TablePagination, FormControl, Select, MenuItem, TableContainer, Paper, Dialog, DialogTitle, DialogContent
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomSearchInput from '../../components/CustomSearchInput';
@@ -16,7 +16,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         color: theme.palette.common.black,
         fontFamily: 'Avenir-Heavy',
         padding: "13px",
-        fontSize:'1.1em'
+        fontSize: '1.1em'
     },
     [`&.${tableCellClasses.body}`]: {
         padding: "13px"
@@ -161,6 +161,7 @@ function Uploads(props) {
     const handleChangePage = (event, newPage) => {
         setState({ ...state, page: newPage });
     };
+
     const handleChangeRowsPerPage = (event) => {
         setState({ ...state, rowsPerPage: event.target.value, page: 0 });
     };
@@ -179,22 +180,24 @@ function Uploads(props) {
         else if (param === "D") {
             setState({ ...state, date: e.target.value })
         }
-    }
+    };
+
     const uploadTestClose = () => {
         setState({ ...state, uploadTestOpen: false })
-    }
+    };
+
     return (
         <>
             <Grid container>
-                <Grid item xs={12} >
-                    <Grid container >
+                <Grid item xs={12}>
+                    <Grid container>
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
                                 placeholder='Search test upload name, tube number, file name'
                                 onChange={(name) => alert("WIP")}
                             />
                         </Grid>
-                        <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
+                        <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px", alignItems: 'center' }}>
                             <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
                                 <Select
@@ -235,7 +238,7 @@ function Uploads(props) {
                                     }>
                                 </Select>
                             </FormControl>
-                            <Image src={Upload} alt='upload' width={24} height={22} style={{ marginTop: "15px" }} onClick={() => setState({ ...state, uploadTestOpen: true })} />
+                            <Image src={Upload} alt='upload' width={24} height={22} onClick={() => setState({ ...state, uploadTestOpen: true })} />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -266,21 +269,17 @@ function Uploads(props) {
                                     </StyledTableRow>
                                 </TableBody>
                             ))}
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        count={!!state.upload && state.upload.length}
-                                        page={state.page}
-                                        onPageChange={handleChangePage}
-                                        rowsPerPage={state.rowsPerPage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        labelRowsPerPage={"No. of items per page : "}
-                                        sx={{ borderBottom: "1.43px solid #D5DBE1" }}
-                                    />
-                                </TableRow>
-                            </TableFooter>
                         </Table>
                     </TableContainer>
+                    <TablePagination
+                        count={!!state.upload && state.upload.length}
+                        page={state.page}
+                        onPageChange={handleChangePage}
+                        rowsPerPage={state.rowsPerPage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        labelRowsPerPage={"No. of items per page : "}
+                        sx={{ borderBottom: "1.43px solid #D5DBE1" }}
+                    />
                 </Grid>
 
                 <Dialog open={state.uploadTestOpen} onClose={() => uploadTestClose()} maxWidth={'sm'} >

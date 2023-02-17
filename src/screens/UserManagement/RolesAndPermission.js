@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Grid, Checkbox, Table, TableBody, TableContainer, TableCell, TableHead, TableRow, tableCellClasses, IconButton, Paper } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Grid, Table, TableBody, TableContainer, TableCell, TableHead, TableRow, tableCellClasses, IconButton, Paper, Select, MenuItem, FormControl, OutlinedInput } from '@mui/material';
 import Image from 'next/image';
 import dialogClose from '../../../public/Images/dialogClose.png';
 import { styled } from '@mui/material';
+import { ControlPointDuplicate } from '@mui/icons-material';
+import { height } from '@mui/system';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -12,16 +14,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         padding: "15px",
         fontFamily: 'Avenir-Regular',
         fontSize: '16px',
-        // lineHeight: "24px",
         fontStyle: "normal"
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: "16px",
         padding: "8px",
         fontFamily: 'Avenir-Regular',
-        // fontStyle: "normal",
         fontSize: '16px',
-        // lineHeight: "24px"
     },
 }))
 
@@ -37,44 +36,140 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function RolesAndPermission(props) {
     const [state, setState] = useState({
-
+        personName: [],
+        rolesAndPermission:[]
     });
 
-    const roles = ["Admin", "Lab technician", "System admin", "Developer", "Data analyst", "Location Manager", "PSR tech", "Lab executive", "Client Manager", "Client operator", "Client physician"];
-    const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test upload results", "Location", "Location Test Type", "Test Group", "User and Access"]
+    const [role ,setRole] = useState([]);
 
+    const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System admin", "Lab executive", "PSR tech", "Logistics", "Client Manager", "Client physician", "DB"];
+    const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test upload results", "Location", "Location Test Type", "Test Group", "User and Access"]
+   const access = [
+         'View',
+        'Edit',
+        'Delete',
+        'NoAccess'
+    ];
+
+
+    useEffect(() => {
+    //   let screenArray = []       
+    //   for(let a of sideBar){           
+    //          let data = {}           
+    //           data.screen = a   
+    //           let permissionArray = []
+    //           let screen = undefined   
+    //           for(let b of roles){                     
+    //               let sideData = {}      
+    //                sideData.permission = {'view': true,'add':true, 'edit': false , 'delete':false , 'noAccess':false}
+    //                permissionArray.push(sideData)
+    //             }
+    //           data.screenAccess = permissionArray
+    //           screenArray.push(data)  
+            
+    //     }
+
+    //     setRole(screenArray)
+
+        
+        
+       
+
+        let dummyArray = [];
+
+        for (let x of sideBar) {
+            let data = {};
+            data['screen'] = x;
+            data['roles'] = [];
+            // console.log("####roles#####"+JSON.stringify(data));
+
+            for (let y of roles) {
+                let obj = {};
+                obj[y] = [];
+
+                for (let z of access) {
+                    let obj2 = {};
+                    const [key, value] = Object.entries(z)[0];
+                    obj2[value] = true;
+                    obj[y].push(obj2);
+                }
+                data['roles'].push(obj);
+            }
+            dummyArray.push(data);
+        }
+        setState({ personName: [...dummyArray] });
+    }, []);
+
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+
+    const handleChange = (event) => {
+        const { target: { value } } = event;
+        setState({
+            ...state,
+            personName: typeof value === 'string' ? value.split(',') : value,
+        }
+        );
+    };
+
+     
     return (
         <>
-            <Grid container alignItems='center'>
+            <Grid container  style={{height:"100%"}}  >
                 <Grid item xs={12}>
                     <IconButton onClick={props.dialogClose}><Image src={dialogClose} alt={'close'} width={25} height={25} /></IconButton>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid  item xs={12}  justifyContent ={"center"} alignItems={"center"} sx={{ width: "90vw" }}>
                     <TableContainer component={Paper}>
-                        <Table sx={{ width: "95vw" }}>
+                        <Table>
                             <TableHead>
                                 <StyledTableRow>
                                     <StyledTableCell style={{ fontWeight: "bold" }}>Pages</StyledTableCell>
                                     {roles.map((item, index) =>
-                                        <StyledTableCell align="center" style={{ fontWeight: "bold" }} key={index.toString()}> {item}</StyledTableCell>
+                                        <StyledTableCell align="center" style={{ fontWeight: "bold" }} key={index.toString()}>{item}</StyledTableCell>
                                     )}
                                 </StyledTableRow>
                             </TableHead>
                             <TableBody>
-                                {sideBar.map((item, index) =>
-                                    <StyledTableRow  key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
-                                        <StyledTableCell>{item}</StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
-                                        <StyledTableCell align="center"><Checkbox /></StyledTableCell>
+                                {state.personName.map((personNameItem, personNameIndex) =>
+                                     <StyledTableRow key={personNameIndex.toString()} style={{ background: (personNameIndex % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
+                                        <StyledTableCell>{personNameItem.screen}</StyledTableCell>                                       
+                                        {personNameItem.roles.map ((item) =>
+                                            <StyledTableCell align="center">                                             
+                                                <FormControl sx={{ m: 1, width: 100, mt: 3 }}>
+                                                    <Select
+                                                        size='small'
+                                                        multiple
+                                                        displayEmpty
+                                                        value={state.personName}
+                                                        onChange={handleChange}
+                                                        input={<OutlinedInput />}
+                                                        MenuProps={MenuProps}
+                                                        inputProps={{ 'aria-label': 'Without label' }}
+                                                    >
+                                                        <MenuItem disabled value="">
+                                                            <em>Placeholder</em>
+                                                        </MenuItem>
+                                                        {access.map((name) => (
+                                                            <MenuItem
+                                                                key={name}
+                                                                value={name}
+                                                            >
+                                                                {name}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </StyledTableCell>
+                                        )} 
                                     </StyledTableRow>
                                 )}
                             </TableBody>

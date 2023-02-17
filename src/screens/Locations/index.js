@@ -19,6 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.body}`]: {
         color: "#313233",
         border: "none",
+        padding:'3px',
         fontFamily: "Avenir-Book"
     }
 }));
@@ -135,8 +136,8 @@ function Locations(props) {
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
                                         <Grid item xs={6}>
                                             <Typography style={{
-                                                letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Medium",
-                                                fontWeight: '900',
+                                                letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px",
+                                                fontFamily: "Avenir-Medium", fontWeight: '900'
                                             }} color={"rgba(16, 16, 16, 0.6)"} >Lab Name: {item.display_name}</Typography>
                                         </Grid>
                                         <Grid item xs={6}>

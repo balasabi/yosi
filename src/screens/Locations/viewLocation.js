@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Typography, Grid, Button, TableRow, Table, TableHead, TableBody, Checkbox, tableCellClasses, tableRowClasses, styled, TableCell, Dialog, DialogContent, DialogActions, DialogTitle } from '@mui/material';
+import { Typography, Grid, Button, TableRow, Table, TableHead, TableBody, tableCellClasses, tableRowClasses, styled, TableCell, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import Plus from '../../../public/Images/plus.png';
 import editIcon from '../../../public/Images/editIcon.png';
 import Image from 'next/image';
-import InputBase from "@mui/material/InputBase";
-import style from '../../pages/_app';
+import AddLocations from './AddLocation';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
@@ -18,55 +17,28 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         backgroundColor: 'rgba(2, 55, 81, 0.05)',
         borderBottom: '1px solid #E7E7E7',
         color: '#2E2E2E',
-        padding: "2px",
+        padding: "10px",
         fontFamily: 'Avenir-Heavy',
         fontSize: '1em',
+        lineHeight: '27px'
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: "1em",
         padding: "1px",
+        padding: '4px',
         fontFamily: 'Avenir-Book',
         fontSize: '1em',
+        lineHeight: '24px'
     },
 }))
-
-const CustomInput = styled(InputBase)(({ theme }) => ({
-    "label + &": {
-        marginTop: theme.spacing(3)
-    },
-    "& .MuiInputBase-input": {
-        position: "relative",
-        backgroundColor: theme.palette.background.paper,
-        fontSize: 16,
-        padding: "4px",
-        backgroundColor: "#FBF7F4",
-        fontFamily: [
-            'Avenir-Book'
-        ].join(","),
-        "&:focus": {
-            border: 0,
-            backgroundColor: "#FBF7F4",
-        },
-        "&:active": {
-            border: 0,
-            backgroundColor: "#FBF7F4"
-        }
-    }
-}));
 
 function ViewLocation(props) {
     const [state, setState] = useState({
         isAdd: false,
         mode: "Add",
-        locationCode: "",
-        manager: '',
-        status: '',
-        address: '',
-        name: '',
     })
 
     const handleAddLocation = (param) => {
-        console.log("PAram" + JSON.stringify(param))
         setState({ ...state, mode: param, isAdd: true })
     };
 
@@ -76,24 +48,27 @@ function ViewLocation(props) {
 
     return (
         <>
-            <Grid container>
-                <Grid item xs={12}>
-                    <Typography>View Location</Typography>
+            <Grid container spacing={2}>
+                <Grid item xs={12} style={{ padding: '30px', background: '#EBF4F1', borderBottomRightRadius: '60px' }}>
+                    <Typography color='#02513B' style={{ fontSize: '36px', fontFamily: 'Avenir-Bold' }}>Avandale (AVD)</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <CustomizedButtons variant="contained" onClick={() => handleAddLocation("Add")}><div>
-                        <Image src={Plus} alt={"plus"} width={14} height={15} /> Add location</div></CustomizedButtons>
+                    <Typography className='header'>Available test types in Avandale</Typography>
+                </Grid>
+                <Grid item xs={12} style={{ display: 'flex', alignItems: 'center' }}>
+                    <CustomizedButtons variant="contained" onClick={() => handleAddLocation("Add")} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", }}>
+                        <Image src={Plus} alt={"plus"} width={14} height={15} /> <Typography style={{ marginLeft: "5px" }}>Add location</Typography></CustomizedButtons>
                 </Grid>
                 <Grid item xs={12}>
                     <Table>
                         <TableHead>
                             <StyledTableRow>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Lab name</StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Lab code</StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Lab manager</StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Address </StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Status</StyledTableCell>
-                                <StyledTableCell style={{ fontWeight: "bold" }}>Action</StyledTableCell>
+                                <StyledTableCell>Lab name</StyledTableCell>
+                                <StyledTableCell>Lab code</StyledTableCell>
+                                <StyledTableCell>Lab manager</StyledTableCell>
+                                <StyledTableCell>Address </StyledTableCell>
+                                <StyledTableCell>Status</StyledTableCell>
+                                <StyledTableCell>Action</StyledTableCell>
                             </StyledTableRow>
                         </TableHead>
                         <TableBody>
@@ -110,46 +85,12 @@ function ViewLocation(props) {
 
                     <Dialog open={state.isAdd} onClose={() => handleCloseLocation()}>
                         <DialogTitle>
-                            <Typography>{state.mode === "Add" ? "Add Location" : "Edit location"}</Typography>
+                            <Typography style={{ paddingBottom: '10px', fontWeight: "bold", fontFamily: 'Avenir-Heavy' }}>{state.mode === "Add" ? "Add Location" : "Edit location"}</Typography>
+                            <div style={{ background: '#E8E8E8', height: 1 }}></div>
                         </DialogTitle>
                         <DialogContent>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={6}>
-                                            <CustomInput value={state.locationCode}
-                                                size='small' fullWidth />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <CustomInput value={state.name} size='small' fullWidth />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <CustomInput value={state.manager} fullWidth size='small' />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <CustomInput value={state.address} fullWidth size='small' />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <CustomInput value={state.status} fullWidth size='small' />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
+                            <AddLocations close={handleCloseLocation} mode={state.mode} />
                         </DialogContent>
-                        <DialogActions>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container>
-                                        <Grid item xs={6}>
-                                            <CustomizedButtons variant='contained' onClick={() => handleCloseLocation()}>Cancel</CustomizedButtons>
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <CustomizedButtons variant='contained' >Submit</CustomizedButtons>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </DialogActions>
                     </Dialog>
                 </Grid>
             </Grid>

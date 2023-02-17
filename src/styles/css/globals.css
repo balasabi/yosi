@@ -144,13 +144,6 @@ a {
   font-display: swap;
 }
 
-.subText {
-  font-size: 1em !important;
-  font-family: 'Avenir-Book' !important;
-  line-height: '24px' !important;
-  color:#1C1C1C !important;
-}
-
 .header {
   font-size: 1.5em !important;
   font-family: 'Avenir-Bold' !important;
@@ -170,6 +163,13 @@ a {
   font-family: 'Avenir-Heavy' !important;
   line-height: '24px' !important;
   /* color: #313237 !important; */
+}
+
+.subText {
+  font-size: 1em !important;
+  font-family: 'Avenir-Book' !important;
+  line-height: '24px' !important;
+  color:#1C1C1C !important;
 }
 
 .miniHeading {

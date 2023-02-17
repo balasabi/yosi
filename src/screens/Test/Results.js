@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import {
-    Typography, Grid, TextField, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, TableContainer, Paper,
+    Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, TableContainer, Paper,
     tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, FormControl, Select, MenuItem, Autocomplete
 } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -15,6 +15,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import _ from 'underscore';
+import InputBase from "@mui/material/InputBase";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,6 +39,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
     '&:nth-of-type(odd)': {
     },
+}));
+
+const CustomInput = styled(InputBase)(({ theme }) => ({
+    "label + &": {
+        marginTop: theme.spacing(3)
+    },
+    "& .MuiInputBase-input": {
+        position: "relative",
+        backgroundColor: theme.palette.background.paper,
+        fontSize: 16,
+        padding: "4px",
+        backgroundColor: "#FBF7F4",
+        fontFamily: [
+            'Avenir-Book'
+        ].join(","),
+        "&:focus": {
+            border: "2px solid #024751",
+            backgroundColor: "#FBF7F4",
+            borderRadius: '4px'
+        },
+        "&:active": {
+            border: "2px solid #024751",
+            backgroundColor: "#FBF7F4",
+            backgroundColor: "#FBF7F4"
+        }
+    }
 }));
 
 function Result(props) {
@@ -420,7 +447,7 @@ function Result(props) {
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Patient name"}
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
@@ -429,7 +456,7 @@ function Result(props) {
                                         />
                                     </Grid>
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                       <TextField size="small"
+                                       <CustomInput size="small"
                                            placeholder={"Patient last name"}
                                            fullWidth
                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
@@ -438,7 +465,7 @@ function Result(props) {
                                        />
                                    </Grid> */}
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Location"}
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
@@ -447,16 +474,16 @@ function Result(props) {
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Location test type "}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4", border: 'none' } }}
                                             value={state.location_test_type}
                                             onChange={(event) => setState({ ...state, location_test_type: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Ordering provider(Optional)"}
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
@@ -465,7 +492,7 @@ function Result(props) {
                                         />
                                     </Grid>
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                       <TextField size="small"
+                                       <CustomInput size="small"
                                            placeholder={"Test lab"}
                                            fullWidth
                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
@@ -485,10 +512,10 @@ function Result(props) {
                                    </Grid> */}
                                 </Grid>
                                 <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
-                                    <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
+                                    <CustomizedButtons variant={"text"} onClick={() => cancel()}>
                                         Cancel
                                     </CustomizedButtons>
-                                    <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
+                                    <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
                                         Submit
                                     </CustomizedButtons>
                                 </Grid>

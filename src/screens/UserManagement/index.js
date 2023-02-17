@@ -213,7 +213,7 @@ function UsersManagement(props) {
                                     </Grid>
                                 }
                                 {state.isActive === true ?
-                                    <Grid item xs={6} sm={8} lg={9} style={{ borderBottom: '4px solid #024751 ' }}>
+                                    <Grid item xs={6} sm={8} lg={9} style={{ borderBottom: '4px solid #024751' }}>
                                         <CustomizedButtons variant="text" onClick={() => handlePermission()}><Typography className='subText'>Roles and Permission</Typography></CustomizedButtons>
                                     </Grid>
                                     :
@@ -230,7 +230,7 @@ function UsersManagement(props) {
                         <Grid item xs={12} sm={6} textAlign="flex-start">
                             <CustomizedButtons variant="contained" onClick={() => addUser()} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", }}>
                                 <Image src={plus} alt="+" width={14} height={15} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", marginLeft: "5px" }}>
+                                <Typography style={{ marginLeft: "3px" }}>
                                     New User
                                 </Typography>
                             </CustomizedButtons>
@@ -280,8 +280,8 @@ function UsersManagement(props) {
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Name</Typography>
-                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sorting()} />
-                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} /></div>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sorting()} />
+                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} /></div>
                                         </div>
                                     </StyledTableCell>
                                     <StyledTableCell>Email ID</StyledTableCell>
@@ -290,8 +290,8 @@ function UsersManagement(props) {
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Status</Typography>
-                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
+                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
                                         </div>
                                     </StyledTableCell>
                                     <StyledTableCell>Action</StyledTableCell>
@@ -324,7 +324,6 @@ function UsersManagement(props) {
                         labelRowsPerPage="No. of items per page"
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)} />
-
                 </Grid>
 
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>

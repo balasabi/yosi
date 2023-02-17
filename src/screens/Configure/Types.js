@@ -77,7 +77,7 @@ function Type(props) {
     })
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 800, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (event, param) => {
@@ -102,7 +102,7 @@ function Type(props) {
                             />
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography className='minText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
                                 <Select
                                     value={state.result}
@@ -154,46 +154,23 @@ function Type(props) {
                                                     </Grid>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
+                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book",
                                                         }} color={"#718797"}>Status: </Typography>
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
+                                                            letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book",
                                                             backgroundColor: "#EBF4F1", marginLeft: "5px", padding: "2px"
                                                         }} color={"#024751"}> {type.status}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
-                                                        <Typography style={{
-                                                            letterSpacing: "0.4px", fontWeight: 900, color: "#10101099", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
-                                                        }} colo={"rgba(16, 16, 16, 0.6)"} >Display Name: {type.display_name} </Typography>
+                                                        <Typography className='miniText' color='"rgba(16, 16, 16, 0.6)"'>Display Name: {type.display_name} </Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ marginBottom: "5px" }} >
                                                         <Typography style={{
-                                                            letterSpacing: "0.4px", fontWeight: 900, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
-                                                        }} color={"#313237"}>Description: </Typography>
-                                                        <Typography style={{
-                                                            letterSpacing: "0.4px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
-                                                        }} color={"rgba(16, 16, 16, 0.6)"}> {type.description_1}</Typography>
-                                                        <Typography style={{
-                                                            letterSpacing: "0.4px", fontWeight: 400, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir", display: '-webkit-box',
-                                                            overflow: 'hidden',
-                                                            WebkitBoxOrient: 'vertical',
-                                                            WebkitLineClamp: 3,
-                                                        }} color={"rgba(16, 16, 16, 0.6)"}> {type.description_2}</Typography>
+                                                            letterSpacing: "0.4px", fontWeight: 700, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book"
+                                                        }} color={"#313237"}>
+                                                            Description: </Typography>
+                                                        <Typography className='miniLiteText'>{type.description_1}</Typography>
+                                                        <Typography className='miniLiteText'>{type.description_2}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: "pointer" }}>

@@ -70,7 +70,7 @@ function AddUser(props) {
             setState(ref => ({ ...ref, emailError: true }))
             isError = true;
         }
-        if (isError === false && props.mode==="ADD" ) {
+        if (isError === false && props.mode === "ADD") {
             let data = {};
             data.email = email;
             data.first_name = firstName;
@@ -146,15 +146,15 @@ function AddUser(props) {
                         <Grid item xs={12}>
                             <Grid container justifyContent={"flex-end"} >
                                 <Grid item xs={6}>
-                                    <Grid container textAlign={"right"}>
-                                        <Grid item xs={6} >
-                                            <CustomizedButtons variant="contained" onClick={props.close}>
+                                    <Grid container textAlign='right'>
+                                        <Grid item xs={6}>
+                                            <CustomizedButtons variant="text" onClick={props.close}>
                                                 Cancel
                                             </CustomizedButtons>
                                         </Grid>
-                                        <Grid item xs={6} textAlign='center'>
+                                        <Grid item xs={6}>
                                             <CustomizedButtons variant="contained" onClick={() => handleSubmit()}>
-                                               {props.mode==="ADD" ? "Submit" : "Update"}
+                                                {props.mode === "ADD" ? "Submit" : "Update"}
                                             </CustomizedButtons>
                                         </Grid>
                                     </Grid>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Grid, Dialog, DialogTitle, DialogContent, TextField, MenuItem, Select, FormControl } from '@mui/material';
+import { Typography, Grid, Dialog, DialogTitle, DialogContent, TextField, MenuItem, Select, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import plus from "../../../public/Images/plus.png";
 import Image from 'next/image';
@@ -24,7 +24,7 @@ function CouponCode() {
         name: "",
         price: "",
         status: "",
-        mode:"ADD"
+        mode: "ADD"
     })
 
     const couponCodeClose = () => {
@@ -47,29 +47,29 @@ function CouponCode() {
             setState({ ...state, priceFilter: event.target.value });
         }
     };
-    
+
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
     };
 
-    const addAction= () =>{
-        setState({ ...state, couponCodeOpen: true, mode:"ADD" })
+    const addAction = () => {
+        setState({ ...state, couponCodeOpen: true, mode: "ADD" })
     };
 
-    const editAction = () =>{
-        setState({ ...state, couponCodeOpen: true, mode:"EDIT" })
+    const editAction = () => {
+        setState({ ...state, couponCodeOpen: true, mode: "EDIT" })
     };
 
     return (
         <>
             <Grid container>
                 <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
-                <Grid item xs={12} style={{display:'flex', flexDirection:'row'}}>
+                <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row' }}>
                     <Grid container>
                         <Grid item xs={6}>
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
-                                <Image src={plus} alt='union' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", textTransform: "none", marginLeft: "5px" }}>
+                                <Image src={plus} alt='union' width={14} height={15} />
+                                <Typography style={{ marginLeft: "5px" }}>
                                     Create new code
                                 </Typography>
                             </CustomizedButtons>
@@ -148,8 +148,8 @@ function CouponCode() {
                                         <Grid item xs={2}>
                                             <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.Status}</Typography>
                                         </Grid>
-                                        <Grid item xs={2} >
-                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() =>editAction()}>
+                                        <Grid item xs={2}>
+                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() => editAction()}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -160,7 +160,7 @@ function CouponCode() {
                             </Grid>
                             <Grid item xs={12} style={{ border: "2px dashed #D9D9D9", padding: "10px", borderTop: 0 }} />
                         </Grid>
-                        ))}
+                    ))}
                 </Grid>
                 <Dialog open={state.couponCodeOpen} onClose={() => couponCodeClose()} maxWidth={'sm'} >
                     <Grid container>
@@ -168,15 +168,15 @@ function CouponCode() {
                             <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
                         </Grid>
                     </Grid>
-                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode==="ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>
+                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{  color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
+                                <Typography style={{ color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    <Grid item xs={12} sm={6}>
                                         <TextField size="small"
                                             placeholder={"Name"}
                                             fullWidth
@@ -185,7 +185,7 @@ function CouponCode() {
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
                                     </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    <Grid item xs={12} sm={6}>
                                         <TextField size="small"
                                             placeholder={"Code"}
                                             fullWidth
@@ -194,7 +194,7 @@ function CouponCode() {
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
                                     </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    <Grid item xs={12} sm={6}>
                                         <TextField size="small"
                                             placeholder={"Price"}
                                             fullWidth
@@ -203,28 +203,19 @@ function CouponCode() {
                                             onChange={(event) => setState({ ...state, price: event.target.value })}
                                         />
                                     </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <Select
-                                            size="small"
-                                            value={state.status}
-                                            onChange={(event) => setState({ ...state, status: event.target.value })}
-                                            displayEmpty
-                                            fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                            renderValue={
-                                                state.status !== "" ? undefined : () => <Placeholder ><Typography style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4", color:"#998E8A"} }>Status</Typography></Placeholder>
-                                            }>
-                                            <MenuItem value={"All"}>All</MenuItem>
-                                            <MenuItem value={"Active"}>Active</MenuItem>
-                                            <MenuItem value={"Inactive"}>Inactive</MenuItem>
-                                        </Select>
+                                    <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
+                                        <Typography style={{ fontFamily:'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
+                                        <RadioGroup defaultValue="Active" row>
+                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Active" />
+                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Inactive" />
+                                        </RadioGroup>
                                     </Grid>
                                 </Grid>
                                 <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
-                                    <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
+                                    <CustomizedButtons variant={"text"} onClick={() => cancel()} >
                                         Cancel
                                     </CustomizedButtons>
-                                    <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
+                                    <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
                                         Submit
                                     </CustomizedButtons>
                                 </Grid>
@@ -237,4 +228,4 @@ function CouponCode() {
     )
 }
 
-export default CouponCode
+export default CouponCode;

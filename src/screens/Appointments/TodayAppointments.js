@@ -64,8 +64,9 @@ function TodayAppointments(props) {
     const d = state.date;
     let day = days[d.getDay()];
 
-    const times = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-        "1:00 PM", "2:00 PM", "3:00 PM",  "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"];
+    const times = ["12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM",
+     "6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+        "1:00 PM", "2:00 PM", "3:00 PM",  "4:00 PM", "5:00 PM","6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"];
 // const seconds =[ ,    "6:30 PM", "7:30 PM", "8:30 PM", "9:30 PM", "10:30 PM", "11:30 PM"]
     return (
         <>
@@ -86,8 +87,8 @@ function TodayAppointments(props) {
                                 <Grid container  >
                                     {state.patients.filter((i) => i.timing_start && i.timing_end === time).map((value) =>
                                         <Grid item key={index} xs={state.patients.filter((i) => i.timing_start && i.timing_end === time).length === 1 ? 12 : 6}  style={{ display: "flex", flexDirection: "column", borderRadius: "5px", padding:"5px", backgroundColor: "#024751"}}>
-                                            <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}>{value.test_name} </Typography>
                                             <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}> {value.patient_name}</Typography>
+                                            <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign:"center" }}>{value.test_name} </Typography>
                                         </Grid>)}
                                 </Grid>
                             </Grid>

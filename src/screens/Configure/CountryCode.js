@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-    Typography, Grid, Table, TableHead, TableRow, styled, TableCell, tableCellClasses,
+    Typography, Grid, Table, TableHead, TableRow, styled, TableCell, tableCellClasses, FormControlLabel, RadioGroup, Radio,
     tableRowClasses, TableBody, TablePagination, TableFooter, Select, MenuItem, FormControl, Dialog, DialogTitle, DialogContent, TextField,
     TableContainer, Paper
 } from '@mui/material';
@@ -100,14 +100,14 @@ function CountryCode() {
                     <Grid container>
                         <Grid item xs={6}>
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
-                                <Image src={plus} alt='union' width={"20vw"} height={"20vh"} />
-                                <Typography style={{ fontSize: "14px", lineHeight: "24px", fontFamily: "Avenir-Book", textTransform: "none", marginLeft: "5px" }}>
+                                <Image src={plus} alt='union' width={14} height={15} />
+                                <Typography style={{ marginLeft: "5px" }}>
                                     Add country code
                                 </Typography>
                             </CustomizedButtons>
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
-                            <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
+                            <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
                                 <Select
                                     value={state.statusFilter}
@@ -154,7 +154,7 @@ function CountryCode() {
                                 </TableBody>
                             ))}
                             <TableFooter>
-                                <TableRow>
+                                <TableRow align='left'>
                                     <TablePagination
                                         count={!!state.countryCode && state.countryCode.length}
                                         page={state.page}
@@ -178,7 +178,7 @@ function CountryCode() {
                         <DialogContent>
                             <Grid container>
                                 <Grid item xs={12} >
-                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Country information</Typography>
+                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Country information</Typography>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Grid container spacing={2}>
@@ -186,7 +186,7 @@ function CountryCode() {
                                             <TextField size="small"
                                                 placeholder={"Code"}
                                                 fullWidth
-                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                                 value={state.code}
                                                 onChange={(event) => setState({ ...state, code: event.target.value })}
                                             />
@@ -195,7 +195,7 @@ function CountryCode() {
                                             <TextField size="small"
                                                 placeholder={"Name"}
                                                 fullWidth
-                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                                 value={state.name}
                                                 onChange={(event) => setState({ ...state, name: event.target.value })}
                                             />
@@ -204,33 +204,24 @@ function CountryCode() {
                                             <TextField size="small"
                                                 placeholder={"ISO"}
                                                 fullWidth
-                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                                 value={state.iso}
                                                 onChange={(event) => setState({ ...state, iso: event.target.value })}
                                             />
                                         </Grid>
-                                        <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                            <Select
-                                                size="small"
-                                                value={state.status}
-                                                onChange={(event) => setState({ ...state, status: event.target.value })}
-                                                displayEmpty
-                                                fullWidth
-                                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
-                                                renderValue={
-                                                    state.status !== "" ? undefined : () => <Placeholder><Typography style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4", color: "#998E8A" }}>Status</Typography></Placeholder>
-                                                }>
-                                                <MenuItem value={"All"}>All</MenuItem>
-                                                <MenuItem value={"Active"}>Active</MenuItem>
-                                                <MenuItem value={"Inactive"}>Inactive</MenuItem>
-                                            </Select>
+                                        <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
+                                            <Typography style={{ fontFamily:'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
+                                            <RadioGroup defaultValue="Active" row>
+                                                <FormControlLabel value="Active" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Active" />
+                                                <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Inactive" />
+                                            </RadioGroup>
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
-                                        <CustomizedButtons variant={"text"} style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#024751", marginLeft: "5px" }} onClick={() => cancel()} >
+                                        <CustomizedButtons variant={"text"} onClick={() => cancel()} >
                                             Cancel
                                         </CustomizedButtons>
-                                        <CustomizedButtons variant={"text"} style={{ padding: "4px 10px 4px 10px", backgroundColor: "#024751", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", color: "#fff", marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
+                                        <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
                                             Submit
                                         </CustomizedButtons>
                                     </Grid>
@@ -244,4 +235,4 @@ function CountryCode() {
     )
 }
 
-export default CountryCode
+export default CountryCode;
