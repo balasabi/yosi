@@ -49,8 +49,9 @@ function TopBar(props) {
 
                                 </Grid>
 
-                                <Grid item xs={2} textAlign="right">
-                                    <Image src={bell} alt="YOSI LAB" width={21} height={26} />
+                                <Grid item xs={2} style={{display:"flex", flexDirection:"row", justifyContent:"flex-end",alignItems:"center"}}>
+                                    <Image src={bell} alt="YOSI LAB" width={21} height={26} />  
+                                     <div style={{height:4,width:4,backgroundColor:"red", borderRadius:2, marginTop:-15, marginLeft:-5}}/>
                                 </Grid>
                             </Grid>
                         </Grid>
