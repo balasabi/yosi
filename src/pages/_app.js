@@ -18,9 +18,8 @@ export default function MyApp(props) {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />       
-        <link rel="logo" href="public/Images/logo.png" />
-        <link rel="manifest" href="/manifest.json" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo.png" />
         <title>YosiLabs</title>
       </Head>
       <Provider store={store}>

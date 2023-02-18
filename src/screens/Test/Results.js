@@ -307,7 +307,7 @@ function Result(props) {
                             <CustomizedButtons variant={"contained"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }}>
                                 <Image src={Union} alt='union' width={14} height={15} />
                                 <Typography style={{ marginLeft: "5px", }} >
-                                    Test Orders
+                                    Test Order
                                 </Typography>
                             </CustomizedButtons>
                             <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }} onClick={() => handleSend(state.selectedResults)}>

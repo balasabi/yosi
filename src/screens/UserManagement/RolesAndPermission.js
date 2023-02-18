@@ -88,9 +88,9 @@ function RolesAndPermission(props) {
                 obj[y] = [];
 
                 for (let z of access) {
+                    console.log("************z***********"+JSON.stringify(z))
                     let obj2 = {};
-                    const [key, value] = Object.entries(z)[0];
-                    obj2[value] = true;
+                    obj2[z] = z;
                     obj[y].push(obj2);
                 }
                 data['roles'].push(obj);
@@ -121,7 +121,7 @@ function RolesAndPermission(props) {
     };
 
   
-
+console.log("*****************personName*****************8"+JSON.stringify(state.personName))
      
     return (
         <>
