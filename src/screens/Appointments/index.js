@@ -110,7 +110,7 @@ function Appointments(props) {
                             <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => addAppointmentClose()} />
                         </Grid>
                     </Grid>
-                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", }}>Add Appointment</DialogTitle>
+                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", }}>Add appointment</DialogTitle>
                     <DialogContent>
                         <Grid item xs={12} style={{ borderTop: "1px solid #E8E8E8", paddingTop: "20px" }}>
                             <Grid container spacing={2}>
