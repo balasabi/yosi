@@ -19,7 +19,7 @@ function Configure() {
         <>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography className='header'>Configure</Typography>
+                    <Typography className='header'>Country</Typography>
                 </Grid>
                 <Grid item xs={7} style={{ marginLeft: "12px" }}>
                     <Grid container>

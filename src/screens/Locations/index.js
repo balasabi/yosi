@@ -5,25 +5,6 @@ import CustomSearchInput from '../../components/CustomSearchInput';
 import RightArrow from '../../../public/Images/go.png';
 import { useRouter } from 'next/router';
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    [`&.${tableRowClasses.root}`]: {
-        height: "14px"
-    }
-}));
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        border: "none",
-        color: "#848991",
-        fontFamily: "Avenir-Heavy",
-    },
-    [`&.${tableCellClasses.body}`]: {
-        color: "#313233",
-        border: "none",
-        padding:'3px',
-        fontFamily: "Avenir-Book"
-    }
-}));
-
 function Locations(props) {
     const [state, setState] = useState({
         status: "",
@@ -71,7 +52,7 @@ function Locations(props) {
     const router = useRouter();
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (e) => {
@@ -86,8 +67,7 @@ function Locations(props) {
         <>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography className='header'>
-                        Lab Locations</Typography>
+                    <Typography className='header'>Location</Typography>
                 </Grid>
                 <Grid item xs={12} marginBottom={"20px"}>
                     <Grid container>

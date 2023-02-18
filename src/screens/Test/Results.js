@@ -246,7 +246,7 @@ function Result(props) {
         else {
             let result = state.selectedResults
             result.push(param)
-            setState({
+            setState({...state,
                 selectedResults: result
             })
         }
@@ -276,7 +276,7 @@ function Result(props) {
     };
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (e, param) => {
@@ -291,21 +291,28 @@ function Result(props) {
         }
     };
 
+    const handleSend = (param) => {
+        // let ids = param.find((item) => item)
+        // state.test.map((item) => item.id === param.find((ele) => ele))
+        // dispatch()
+        alert("WIP")
+    };
+
     return (
         <>
             <Grid container>
                 <Grid item xs={12} >
                     <Grid container >
                         <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-                            <CustomizedButtons variant={"text"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }}>
-                                <Image src={Union} alt='union' width={20} height={20} />
-                                <Typography className='iconButton' style={{ marginLeft: "5px" }} >
+                            <CustomizedButtons variant={"contained"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }}>
+                                <Image src={Union} alt='union' width={14} height={15} />
+                                <Typography style={{ marginLeft: "5px", }} >
                                     Test Orders
                                 </Typography>
                             </CustomizedButtons>
-                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }} onClick={() => alert("WIP")}>
+                            <CustomizedButtons variant={"text"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", backgroundColor: "#FBF7F4", marginTop: "20px" }} onClick={() => handleSend(state.selectedResults)}>
                                 <Image src={Send} alt='send' width={"20vw"} height={"20vh"} />
-                                <Typography className='iconButton' style={{ color: "#000", marginLeft: "5px" }} >
+                                <Typography className='iconButton' style={{ marginLeft: "5px" }} >
                                     Send
                                 </Typography>
                             </CustomizedButtons>
@@ -393,7 +400,15 @@ function Result(props) {
                                     <StyledTableCell>Collection Date</StyledTableCell>
                                     <StyledTableCell>Tube Number</StyledTableCell>
                                     <StyledTableCell>Result</StyledTableCell>
-                                    <StyledTableCell>Analysis</StyledTableCell>
+                                    <StyledTableCell>
+                                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                                            <Typography className='tableHeader'>Status</Typography>
+                                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
+                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />
+                                            </div>
+                                        </div>
+                                    </StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             {!!state.test && state.test.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((test, index) => (
@@ -402,7 +417,7 @@ function Result(props) {
                                         <StyledTableCell align="center">
                                             <Checkbox inputProps={{ 'aria-label': 'Checkbox' }}
                                                 checked={state.selectedResults.includes(test.id)}
-                                            //   onClick={() => singleSelectAction(test.id)} 
+                                                onClick={() => singleSelectAction(test.id)}
                                             />
                                         </StyledTableCell>
                                         <StyledTableCell className='tableContent'>{test.test_id}</StyledTableCell>
@@ -442,7 +457,7 @@ function Result(props) {
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Test information</Typography>
+                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Test information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
@@ -450,7 +465,7 @@ function Result(props) {
                                         <CustomInput size="small"
                                             placeholder={"Patient name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -468,7 +483,7 @@ function Result(props) {
                                         <CustomInput size="small"
                                             placeholder={"Location"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.location}
                                             onChange={(event) => setState({ ...state, location: event.target.value })}
                                         />
@@ -477,7 +492,7 @@ function Result(props) {
                                         <CustomInput size="small"
                                             placeholder={"Location test type "}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4", border: 'none' } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4", border: 'none' } }}
                                             value={state.location_test_type}
                                             onChange={(event) => setState({ ...state, location_test_type: event.target.value })}
                                         />
@@ -486,7 +501,7 @@ function Result(props) {
                                         <CustomInput size="small"
                                             placeholder={"Ordering provider(Optional)"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.ordering_provider}
                                             onChange={(event) => setState({ ...state, ordering_provider: event.target.value })}
                                         />

@@ -49,7 +49,7 @@ function CouponCode() {
     };
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const addAction = () => {
@@ -180,7 +180,7 @@ function CouponCode() {
                                         <TextField size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -189,7 +189,7 @@ function CouponCode() {
                                         <TextField size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
@@ -198,7 +198,7 @@ function CouponCode() {
                                         <TextField size="small"
                                             placeholder={"Price"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.price}
                                             onChange={(event) => setState({ ...state, price: event.target.value })}
                                         />

@@ -29,7 +29,7 @@ export const sideMenu = [
         pages: []
     },
     {
-        name: "Test",
+        name: "Test orders",
         menuIcon: <Image src={BookOpen} alt={"Ellipse"} width={20} height={20} />,
         url: '/test',
         pages: []
@@ -53,12 +53,12 @@ export const sideMenu = [
     //     pages: [{ title: "Test kit", url: '/test-kits', menuIcon: <Image src={Folder} alt={"Ellipse"} width={20} height={20} />, }]
     // },
     {
-        name: "Configure",
+        name: "Configuration",
         menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />,
         url: '/configure',
-        pages: [{ title: "Country configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
-        { title: "Test configure", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
-        { title: "Location configure", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' }]
+        pages: [{ title: "Country", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
+        { title: "Test", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
+        { title: "Location", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' }]
     },
     {
         name: "Employee management",

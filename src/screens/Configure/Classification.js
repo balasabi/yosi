@@ -139,7 +139,7 @@ function Classification(props) {
     };
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 800, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (e, param) => {

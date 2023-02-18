@@ -167,7 +167,7 @@ function Uploads(props) {
     };
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (e, param) => {
@@ -296,14 +296,14 @@ function Uploads(props) {
                                     <input {...getInputProps()} />
                                     {
                                         !isDragActive &&
-                                        <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", textTransform: "none", marginLeft: "5px", textAlign: "center", padding: "10px 40px", borderRadius: "5px", cursor: "pointer" }} >
+                                        <Typography align='center' style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", textTransform: "none", marginLeft: "5px", padding: "10px 40px", borderRadius: "5px", cursor: "pointer" }} >
                                             Select Files
                                         </Typography>
                                     }
                                 </div>
                             </Grid>
                             <Grid item xs={12} style={{ marginTop: "20px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", marginLeft: "5px", }}>{files}</Typography>
+                                <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", marginLeft: "5px" }}>{files}</Typography>
                             </Grid>
                         </Grid>
                     </DialogContent>
