@@ -81,7 +81,7 @@ function Appointments(props) {
                     <CustomizedButtons variant={"contained"} style={{ padding: "2px 12px 2px 12px", marginLeft: "10px" }} onClick={() => setState({ ...state, addAppointmentOpen: true })}>
                         <Image src={plus} alt='union' width={14} height={15} />
                         <Typography style={{ marginLeft: "5px" }}>
-                            Add Appointments
+                            Add Appointment
                         </Typography>
                     </CustomizedButtons>
                 </Grid>
@@ -93,7 +93,7 @@ function Appointments(props) {
                         <Grid item xs={2} >
                             <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "C" ? "#024751" : "#474747", borderBottom: state.selectedTab === "C" ? "5px solid #024751" : "none", borderRadius: "0px" }} onClick={() => buttonAction("C")}>Months</CustomizedButtons>
                         </Grid>
-</Grid>
+                 </Grid>
                 </Grid>
                 <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
                 <Grid item xs={12}>
@@ -110,7 +110,7 @@ function Appointments(props) {
                             <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => addAppointmentClose()} />
                         </Grid>
                     </Grid>
-                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", }}>Add appointments</DialogTitle>
+                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", }}>Add Appointment</DialogTitle>
                     <DialogContent>
                         <Grid item xs={12} style={{ borderTop: "1px solid #E8E8E8", paddingTop: "20px" }}>
                             <Grid container spacing={2}>

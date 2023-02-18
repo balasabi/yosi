@@ -17,7 +17,7 @@ function Test(props) {
         <>
             <Grid container>
                 <Grid item xs={12} >
-                    <Typography className='header'>Test Orders</Typography>
+                    <Typography className='header'>Test Order</Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={10} lg={7} style={{ marginLeft: "12px" }}>
                     <Grid container>
