@@ -8,6 +8,7 @@ import _ from 'underscore';
 import Barcode from '../../../public/Images/barcode.png';
 import CustomizedButtons from '../../components/CustomButton';
 import Upload from '../../../public/Images/svg/upload.svg';
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: 'rgba(2, 55, 81, 0.05)',
