@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Grid, Typography, Select, FormControl, RadioGroup, FormControlLabel, Radio, MenuItem } from '@mui/material';
 import InputBase from "@mui/material/InputBase";
 import { styled } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import { useDispatch } from 'react-redux';
+import { createUserAction, updateUserAction } from '../../store/actions/userManagementAction';
 
 const CustomInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -16,15 +17,15 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
         padding: "10px",
         borderRadius: "8px",
         fontFamily: [
-            ' Sen-Regular'
+            'Avenir-Book'
         ].join(","),
         "&:focus": {
             border: 0,
             backgroundColor: "#FBF7F4",
-            border: "2px solid #024751",
+            border: "2px solid #4D1EC0",
         },
         "&:active": {
-            border: "2px solid #024751",
+            border: "2px solid #4D1EC0",
             backgroundColor: "#FBF7F4"
         }
     }
@@ -41,18 +42,19 @@ function AddUser(props) {
         firstNameError: false,
         emailError: false,
         phoneNumberError: false,
-        invalidEmailError: false
+        invalidEmailError: false,
+        id:null
     })
     const dispatch = useDispatch();
     const ref = useRef();
     const roles = ["Admin", "system Manager", "Text", "Location manager"]
 
-    const handleRoles = (e) => {
-        setState({ ...state, role: e.target.value })
-    };
+    useEffect(() => {
+        setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
+    }, [])
 
     const handleSubmit = () => {
-        const { email, phoneNumber, firstName, status, role, lastName } = state;
+        const { email, id, phoneNumber, firstName, status, role, lastName } = state;
         let isError = false;
         if (email === "" || email === undefined || email === null) {
             setState(ref => ({ ...ref, emailError: true }))
@@ -66,10 +68,6 @@ function AddUser(props) {
             setState(ref => ({ ...ref, phoneNumberError: true }))
             isError = true;
         }
-        if (email === "" || email === undefined || email === null) {
-            setState(ref => ({ ...ref, emailError: true }))
-            isError = true;
-        }
         if (isError === false && props.mode === "ADD") {
             let data = {};
             data.email = email;
@@ -78,9 +76,22 @@ function AddUser(props) {
             data.phone_number = phoneNumber;
             data.status = status;
             data.role = role;
-            dispatch(data)
+            dispatch(createUserAction(data, props.close))
+        }
+        if (isError === false && props.mode !== "ADD") {
+            let data = {};
+            data.email = email;
+            data.id = id;
+            data.first_name = firstName;
+            data.last_name = lastName;
+            data.phone_number = phoneNumber;
+            data.status = status;
+            data.role = role;
+            dispatch(updateUserAction(data, props.close))
         }
     };
+
+    console.log("param edit" + JSON.stringify(props.param))
 
     return (
         <>
@@ -95,9 +106,9 @@ function AddUser(props) {
                                 <Select size='small'
                                     value={state.role}
                                     input={<CustomInput />}
-                                    onChange={handleRoles}>
+                                    onChange={(e) => setState({ ...state, role: e.target.value })}>
                                     {roles.map((item, index) =>
-                                        <MenuItem key={index} value={item}>{item}</MenuItem>
+                                        <MenuItem key={index.toString()} value={item}>{item}</MenuItem>
                                     )}
                                 </Select>
                             </FormControl>
@@ -107,7 +118,7 @@ function AddUser(props) {
                                 fullWidth
                                 placeholder="Email ID"
                                 value={state.email}
-                                onChange={(e) => setState({ email: e.target.value, emailError: false })}
+                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
                                 error={state.emailError === true ? state.invalidEmailError : false}
                                 helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "please enter valid email" : ""} />
                         </Grid>
@@ -116,7 +127,7 @@ function AddUser(props) {
                                 fullWidth
                                 placeholder="First Name"
                                 value={state.firstName}
-                                onChange={(e) => setState({ firstName: e.target.value, firstNameError: false })}
+                                onChange={(e) => setState({ ...state, firstName: e.target.value, firstNameError: false })}
                                 error={state.firstNameError}
                                 helperText={state.firstNameError === true ? "Please enter first name" : ""} />
                         </Grid>
@@ -125,22 +136,22 @@ function AddUser(props) {
                                 fullWidth
                                 placeholder="Last Name"
                                 value={state.lastName}
-                                onChange={(e) => setState({ lastName: e.target.value })} />
+                                onChange={(e) => setState({ ...state, lastName: e.target.value })} />
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
                                 fullWidth
                                 placeholder="Phone Number"
                                 value={state.phoneNumber}
-                                onChange={(e) => setState({ phoneNumber: e.target.value, phoneNumberError: false })}
+                                onChange={(e) => setState({ ...state, phoneNumber: e.target.value, phoneNumberError: false })}
                                 error={state.phoneNumberError}
                                 helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} />
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
                             <Typography style={{ fontWeight: "bold", paddingRight: "7px" }}>Status</Typography>
                             <RadioGroup defaultValue="Active" row>
-                                <FormControlLabel value="Active" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Active" />
-                                <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Inactive" />
+                                <FormControlLabel value="Active" control={<Radio sx={{ color: '#4D1EC0', '&.Mui-checked': { color: '#4D1EC0' } }} />} label="Active" />
+                                <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#4D1EC0', '&.Mui-checked': { color: '#4D1EC0' } }} />} label="Inactive" />
                             </RadioGroup>
                         </Grid>
                         <Grid item xs={12}>
@@ -153,7 +164,7 @@ function AddUser(props) {
                                             </CustomizedButtons>
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <CustomizedButtons variant="contained" onClick={() => handleSubmit()}>
+                                            <CustomizedButtons variant="contained" onClick={() => handleSubmit(props.mode === "ADD" ? "S" : "U")}>
                                                 {props.mode === "ADD" ? "Submit" : "Update"}
                                             </CustomizedButtons>
                                         </Grid>

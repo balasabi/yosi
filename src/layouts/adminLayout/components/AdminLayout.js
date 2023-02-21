@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Topbar from "./TopBar";
 import Sidebar from "./SideBar";
+import { Snackbar } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const drawerWidth = 250;
@@ -54,6 +56,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function AdminLayout(props) {
     const [open, setOpen] = useState(true);
 
+    const dispatch = useDispatch();
+
     const handleDrawerOpen = () => {
         setOpen(!open);
     };
@@ -70,6 +74,17 @@ export default function AdminLayout(props) {
                 paddingTop: 75,
                 marginLeft: open === true ? "250px" : "125px"
             }}>
+                {/* {!!alertMessage &&
+                                        <Snackbar
+                                            open={openAlert}
+                                            onClose={() => props.dispatch(
+                                                displayAlert(false, 'success', '')
+                                            )}
+                                            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                                            autoHideDuration={8000}>
+                                            <Alert icon={false} variant="filled" severity={alertSeverity}>{alertMessage}</Alert>
+                                        </Snackbar>
+                                    } */}
                 {props.children}
             </main>
         </>

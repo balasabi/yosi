@@ -5,34 +5,52 @@ import plus from "../../../public/Images/plus.png";
 import Image from 'next/image';
 import Edit from '../../../public/Images/editIcon.png';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import { createCouponAction, updateCouponAction } from "../../store/actions/couponAction";
+import { useDispatch, useSelector } from 'react-redux';
 
 function CouponCode() {
 
     const [state, setState] = useState({
-        rows: [
-            { "Name": "YOS150%", "Code": "1st order deal", "Price": "50%", "Status": "Active", "Action": "Edit" },
-            { "Name": "YOS150%", "Code": "1st order deal", "Price": "50%", "Status": "Active", "Action": "Edit" },
-            { "Name": "YOS150%", "Code": "1st order deal", "Price": "50%", "Status": "Active", "Action": "Edit" },
-            { "Name": "YOS150%", "Code": "1st order deal", "Price": "50%", "Status": "Active", "Action": "Edit" },
-            { "Name": "YOS150%", "Code": "1st order deal", "Price": "50%", "Status": "Active", "Action": "Edit" },
-            { "Name": "YOS150%", "Code": "1st order deal", "Price": "50%", "Status": "Active", "Action": "Edit" },
-        ],
+        // rows: [
+        // { "name": "YOS150%", "Code": "1st order deal", "price": "50%", "status": "Active" },
+        // { "name": "YOS150%", "Code": "1st order deal", "price": "50%", "status": "Active" },
+        // { "name": "YOS150%", "Code": "1st order deal", "price": "50%", "status": "Active" },
+        // { "name": "YOS150%", "Code": "1st order deal", "price": "50%", "status": "Active" },
+        // { "name": "YOS150%", "Code": "1st order deal", "price": "50%", "status": "Active" },
+        // { "name": "YOS150%", "Code": "1st order deal", "price": "50%", "status": "Active" },
+        // ],
         statusFilter: "",
         priceFilter: "",
         couponCodeOpen: false,
+        id: null,
         code: "",
         name: "",
         price: "",
-        status: "",
+        status: "Active",
         mode: "ADD"
     })
+
+    const dispatch = useDispatch();
+    const coupons = useSelector(state => state.couponReducer.coupons);
 
     const couponCodeClose = () => {
         setState({ ...state, couponCodeOpen: false })
     };
 
     const submit = async () => {
-        alert("WIP")
+        // alert("WIP")
+        let { name, code, price, status } = state;
+        let data = {}
+        data.name = name;
+        data.code = code;
+        data.price = price;
+        data.status = status;
+        if (state.mode === "ADD") {
+            dispatch(createCouponAction(data))
+        }
+        else {
+            dispatch(updateCouponAction(data))
+        }
         setState({ ...state, couponCodeOpen: false })
     };
 
@@ -129,7 +147,7 @@ function CouponCode() {
                             </Grid>
                         </Grid>
                     </Grid>
-                    {!!state.rows && state.rows.map((item, index) => (
+                    {!!coupons && coupons.map((item, index) => (
                         <Grid container key={index.toString()}>
                             <Grid item xs={12} style={{ marginTop: "30px", border: "2px dashed #D9D9D9", padding: "10px", borderBottom: 0, width: "50vw" }} />
                             <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
@@ -137,16 +155,16 @@ function CouponCode() {
                                 <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
                                     <Grid container>
                                         <Grid item xs={3}>
-                                            <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.Name}</Typography>
+                                            <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.name}</Typography>
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <Typography className='tableContent' align='center' style={{ marginLeft: "45px" }} >{item.Code}</Typography>
+                                            <Typography className='tableContent' align='center' style={{ marginLeft: "45px" }} >{item.code}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Typography className='tableContent' align='center'>{item.Price}</Typography>
+                                            <Typography className='tableContent' align='center'>{item.price}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.Status}</Typography>
+                                            <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.status}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
                                             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() => editAction()}>
@@ -165,14 +183,14 @@ function CouponCode() {
                 <Dialog open={state.couponCodeOpen} onClose={() => couponCodeClose()} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{ color: "#024751", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
+                                <Typography style={{ color: "#3A1692", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
@@ -180,7 +198,7 @@ function CouponCode() {
                                         <TextField size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -189,7 +207,7 @@ function CouponCode() {
                                         <TextField size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
@@ -198,16 +216,16 @@ function CouponCode() {
                                         <TextField size="small"
                                             placeholder={"Price"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
+                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.price}
                                             onChange={(event) => setState({ ...state, price: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
-                                        <Typography style={{ fontFamily:'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
-                                        <RadioGroup defaultValue="Active" row>
-                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Active" />
-                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#024751', '&.Mui-checked': { color: '#024751' } }} />} label="Inactive" />
+                                        <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
+                                        <RadioGroup defaultValue="Active" row onChange={(event) => setState({ ...state, status: event.target.value })}>
+                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#3A1692', '&.Mui-checked': { color: '#3A1692' } }} />} label="Active" />
+                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#3A1692', '&.Mui-checked': { color: '#3A1692' } }} />} label="Inactive" />
                                         </RadioGroup>
                                     </Grid>
                                 </Grid>

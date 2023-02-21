@@ -15,6 +15,7 @@ import RolesAndPermission from './RolesAndPermission';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import _ from 'underscore';
+import { useDispatch, useSelector } from 'react-redux';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -89,9 +90,13 @@ function UsersManagement(props) {
         sort: false,
         isClickCheckBox: false,
         selectedUser: [],
-        mode: "ADD"
+        mode: "ADD",
+        editParam:'',
+        selectedTab:"U"
     })
 
+    const users = useSelector((state) => state.userManagementReducer.users)
+// console.log("users"+JSON.stringify(users))
     function compare(a, b) {
         console.log("&&&&&")
         if (state.sort) {
@@ -132,19 +137,20 @@ function UsersManagement(props) {
     };
 
     const handlePermission = () => {
-        setState({ ...state, isActive: !state.isActive, openPermission: true })
+        setState({ ...state, selectedTab: "P", openPermission: true })
     };
 
     const handleUser = () => {
-        setState({ ...state, isActive: state.isActive })
+        setState({ ...state, selectedTab: "P" })
     };
 
     const addUser = () => {
         setState({ ...state, addUserOpen: true, mode: "ADD" })
     };
 
-    const editUser = () => {
-        setState({ ...state, addUserOpen: true, mode: "EDIT" })
+    const editUser = (param) => {
+        // console.log("PARAM"+JSON.stringify(param))
+        setState({ ...state, addUserOpen: true, mode: "EDIT", editParam:param })
     };
 
     const handleClose = () => {
@@ -152,7 +158,7 @@ function UsersManagement(props) {
     };
 
     const permissionClose = () => {
-        setState({ ...state, openPermission: false, isActive: false })
+        setState({ ...state, openPermission: false, isActive: false,selectedTab:"U" })
     };
 
     const checkBoxAction = () => {
@@ -193,7 +199,8 @@ function UsersManagement(props) {
 
     const buttonAction = (param) => {
         setState({ userManagementMode: param })
-    }
+    };
+
     return (
         <>
             <Grid container spacing={2}>
@@ -204,23 +211,12 @@ function UsersManagement(props) {
                     <Grid container>
                         <Grid item xs={12} sm={3}>
                             <Grid container>
-                                {state.isActive === false ?
-                                    <Grid item xs={6} sm={3} lg={3} style={{ borderBottom: '4px solid #024751' }}>
-                                        <CustomizedButtons variant="text" onClick={() => handleUser()}><Typography align='center' className='subText'>Users</Typography></CustomizedButtons>
-                                    </Grid> :
-                                    <Grid item xs={6} sm={4} lg={3}>
-                                        <CustomizedButtons variant="text" className='subText' onClick={() => handleUser()}>Users</CustomizedButtons>
+                            <Grid item xs={6} sm={3} lg={3} >
+                                        <CustomizedButtons variant="text" className='switchHeading'  style={{ color: state.selectedTab === "U" ? "#4D1EC0" : "#474747", borderBottom: state.selectedTab === "U" ? "5px solid #4D1EC0" : "none", borderRadius: "0px" }}  onClick={() => handleUser()}>Users</CustomizedButtons>
                                     </Grid>
-                                }
-                                {state.isActive === true ?
-                                    <Grid item xs={6} sm={8} lg={9} style={{ borderBottom: '4px solid #024751' }}>
-                                        <CustomizedButtons variant="text" onClick={() => handlePermission()}><Typography className='subText'>Roles and Permission</Typography></CustomizedButtons>
-                                    </Grid>
-                                    :
-                                    <Grid item xs={6} sm={8} lg={9}>
-                                        <CustomizedButtons variant="text" className='subText' onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
-                                    </Grid>
-                                }
+                                     <Grid item xs={6} sm={8} lg={9} >
+                                        <CustomizedButtons variant="text" className='switchHeading' style={{ color: state.selectedTab === "P" ? "#4D1EC0" : "#474747", borderBottom: state.selectedTab === "P" ? "5px solid #4D1EC0" : "none", borderRadius: "0px" }}  onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
+                                  </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -298,19 +294,19 @@ function UsersManagement(props) {
                                 </StyledTableRow>
                             </TableHead>
                             <TableBody>
-                                {state.users !== undefined && state.users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
+                                {users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
                                     <StyledTableRow key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
                                         <StyledTableCell>
                                             <Checkbox
                                                 checked={state.selectedUser.includes(item.id)}
                                                 onClick={() => singleSelectAction(item.id)}
                                             /></StyledTableCell>
-                                        <StyledTableCell>{item.name}</StyledTableCell>
+                                        <StyledTableCell>{item.first_name}{item.last_name}</StyledTableCell>
                                         <StyledTableCell>{item.email}</StyledTableCell>
-                                        <StyledTableCell>{item.phone}</StyledTableCell>
+                                        <StyledTableCell>{item.phone_number}</StyledTableCell>
                                         <StyledTableCell>{item.role}</StyledTableCell>
                                         <StyledTableCell>{item.status}</StyledTableCell>
-                                        <StyledTableCell className='tableContent'><Button style={{ textTransform: "none", color: "#000" }} onClick={() => editUser()} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
+                                        <StyledTableCell className='tableContent'><Button style={{ textTransform: "none", color: "#000" }} onClick={() => editUser(item)} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
                                     </StyledTableRow>
                                 )}
                             </TableBody>
@@ -318,21 +314,20 @@ function UsersManagement(props) {
                     </TableContainer>
                     <TablePagination component="div"
                         rowsPerPageOptions={[10, 25]}
-                        count={state.users.length}
+                        count={users.length}
                         page={state.page}
                         rowsPerPage={state.rowsPerPage}
                         labelRowsPerPage="No. of items per page"
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)} />
                 </Grid>
-
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>
                     <DialogTitle>
                         <Typography style={{ paddingBottom: '10px', fontWeight: "bold" }}><span style={{ color: '#024751' }}>{state.mode === "ADD" ? "Add" : "Edit"}</span> New User</Typography>
                         <div style={{ background: '#E8E8E8', height: 1 }}></div>
                     </DialogTitle>
                     <DialogContent>
-                        <AddUser close={handleClose} mode={state.mode} />
+                        <AddUser close={handleClose} mode={state.mode} param = {state.editParam}  />
                     </DialogContent>
                 </Dialog>
                 <Drawer anchor={'right'} open={state.openPermission} PaperProps={{ sx: { marginTop: '75px' } }}>

@@ -5,7 +5,8 @@ import Plus from '../../../public/Images/plus.png';
 import editIcon from '../../../public/Images/editIcon.png';
 import Image from 'next/image';
 import AddLocations from './AddLocation';
-
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import { useDispatch, useSelector } from 'react-redux';
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
         height: "14px"
@@ -35,28 +36,39 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 function ViewLocation(props) {
     const [state, setState] = useState({
         isAdd: false,
-        mode: "Add",
+        mode: "ADD",
+        location: ''
     })
-
-    const handleAddLocation = (param) => {
-        setState({ ...state, mode: param, isAdd: true })
+    const location = useSelector(state => state.locationReducer.location);
+    // const handleAddLocation = (param) => {
+    //     setState({ ...state, mode: param, isAdd: true })
+    //     console.log("**mode******"+(state.mode))
+    //     console.log("**isAdd******"+(state.isAdd))
+    // };
+    const addAction = () => {
+        setState({ ...state, isAdd: true, mode: "ADD" })
+        console.log("**mode***1***" + (state.mode))
     };
 
+    const editAction = (param) => {
+        setState({ ...state, isAdd: true, mode: "EDIT", location: param })
+        console.log("**mode***2***" + (state.mode))
+    };
     const handleCloseLocation = () => {
         setState({ ...state, isAdd: false })
     };
-
+    // console.log("****location******"+JSON.stringify(location))
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={12} style={{ padding: '30px', background: '#EBF4F1', borderBottomRightRadius: '60px' }}>
-                    <Typography color='#02513B' style={{ fontSize: '36px', fontFamily: 'Avenir-Bold' }}>Avandale (AVD)</Typography>
+                <Grid item xs={12} style={{ padding: '30px', background: 'rgba(100, 37, 254, 0.1)', borderBottomRightRadius: '60px' }}>
+                    <Typography color='#4D1EC0' style={{ fontSize: '36px', fontFamily: 'Avenir-Bold' }}>Avandale (AVD)</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography className='header'>Available test types in Avandale</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ display: 'flex', alignItems: 'center' }}>
-                    <CustomizedButtons variant="contained" onClick={() => handleAddLocation("Add")} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", }}>
+                    <CustomizedButtons variant="contained" onClick={() => addAction()} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", }}>
                         <Image src={Plus} alt={"plus"} width={14} height={15} /> <Typography style={{ marginLeft: "5px" }}>Add location</Typography></CustomizedButtons>
                 </Grid>
                 <Grid item xs={12}>
@@ -71,25 +83,37 @@ function ViewLocation(props) {
                                 <StyledTableCell>Action</StyledTableCell>
                             </StyledTableRow>
                         </TableHead>
-                        <TableBody>
-                            <StyledTableRow>
-                                <StyledTableCell>Lab name</StyledTableCell>
-                                <StyledTableCell>Lab manager</StyledTableCell>
-                                <StyledTableCell>DSP</StyledTableCell>
-                                <StyledTableCell>Address </StyledTableCell>
-                                <StyledTableCell>Status</StyledTableCell>
-                                <StyledTableCell><Button style={{ textTransform: "none", color: "#000" }} onClick={() => handleAddLocation("Edit")} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
-                            </StyledTableRow>
-                        </TableBody>
+                        {!!location && location.map((item, index) => (
+                            <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
+                                <StyledTableRow>
+                                    <StyledTableCell>{item.name}</StyledTableCell>
+                                    <StyledTableCell>{item.location_code}</StyledTableCell>
+                                    <StyledTableCell>{item.manager}</StyledTableCell>
+                                    <StyledTableCell>{item.address}</StyledTableCell>
+                                    <StyledTableCell>{item.status} </StyledTableCell>
+                                    <StyledTableCell>
+                                        <Button style={{ textTransform: "none", color: "#000" }} onClick={() => editAction(item)} >
+                                            <Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} />
+                                            Edit
+                                        </Button>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                        ))}
                     </Table>
 
                     <Dialog open={state.isAdd} onClose={() => handleCloseLocation()}>
+                        <Grid container>
+                            <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
+                                <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => handleCloseLocation()} />
+                            </Grid>
+                        </Grid>
                         <DialogTitle>
-                            <Typography style={{ paddingBottom: '10px', fontWeight: "bold", fontFamily: 'Avenir-Heavy' }}>{state.mode === "Add" ? "Add Location" : "Edit location"}</Typography>
+                            <Typography style={{ fontSize: "20px", paddingBottom: '10px', fontWeight: "bold", fontFamily: 'Avenir-Black' }}>{state.mode === "ADD" ? "Add location" : "Edit location"}</Typography>
                             <div style={{ background: '#E8E8E8', height: 1 }}></div>
                         </DialogTitle>
                         <DialogContent>
-                            <AddLocations close={handleCloseLocation} mode={state.mode} />
+                            <AddLocations close={handleCloseLocation} mode={state.mode} data={state.location} />
                         </DialogContent>
                     </Dialog>
                 </Grid>

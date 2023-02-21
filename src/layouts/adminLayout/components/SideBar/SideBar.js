@@ -11,7 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const StyledButton = styled(ListItemButton)(({ theme }) => ({
     '&:focus': {
-        backgroundColor: '#C1E2D8',
+        backgroundColor: '#F0E9FF',
         borderRadius: '8px',
         margin: '0px 5px'
     },
@@ -80,13 +80,13 @@ export default function Sidebar(props) {
                                             </ListItemButton>
                                             :
                                             <Grid item xs={12}>
-                                                <ListItemButton style={{ padding: '3px 15px 3px 0px' }} onClick={() => handleInitialUrl(item.url)} >
-                                                    <Grid container textAlign='center'>
+                                                <ListItemButton style={{ padding: '3px 0px 3px 0px' }} onClick={() => handleInitialUrl(item.url)} >
+                                                    <Grid container textAlign={'center'}>
                                                         <Grid item xs={12}>
                                                             <ListItemIcon>{item.menuIcon}</ListItemIcon>
                                                         </Grid>
                                                         <Grid item xs={12}>
-                                                            <Typography className='subText'>{item.name}</Typography>
+                                                            <Typography align='right' className='subText'>{item.name}</Typography>
                                                         </Grid>
                                                     </Grid>
                                                 </ListItemButton>
@@ -96,13 +96,13 @@ export default function Sidebar(props) {
                                     {item.pages.length > 0 && item.pages.map((item, index) =>
                                         <AccordionDetails style={{ padding: '0px 5px 0px 10px' }} key={index.toString()}>
                                             {props.isOpen === true ?
-                                                <StyledButton onClick={() => handleSubUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#EBF4F1" : "#fff", borderRadius: '5px', margin: '0px 5px' }}>
+                                                <StyledButton onClick={() => handleSubUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#F0E9FF" : "#fff", borderRadius: '5px', margin: '0px 5px' }}>
                                                     <IconButton>{item.menuIcon}</IconButton>
                                                     <Typography className='subText'>{item.title}</Typography>
                                                 </StyledButton>
                                                 :
                                                 <Grid item xs={12}>
-                                                    <StyledButton onClick={() => handleSubUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#EBF4F1" : "#fff", borderRadius: '5px', }}>
+                                                    <StyledButton onClick={() => handleSubUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#F0E9FF" : "#fff", borderRadius: '5px', }}>
                                                         <Grid container justifyContent={'center'}>
                                                             <Grid item xs={12}>
                                                                 <ListItemIcon>{item.menuIcon}</ListItemIcon>
@@ -122,7 +122,7 @@ export default function Sidebar(props) {
                                     {props.isOpen === true ?
                                         <Grid container>
                                             <Grid item xs={12}>
-                                                <StyledButton onClick={() => item.url !== undefined && handleUrl(item.url)} style={{ padding: '15px 16px', backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#EBF4F1" : "#fff", borderRadius: '5px', margin: '0px 5px' }}>
+                                                <StyledButton onClick={() => item.url !== undefined && handleUrl(item.url)} style={{ padding: '15px 16px', backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#F0E9FF" : "#fff", borderRadius: '5px', margin: '0px 5px' }}>
                                                     <IconButton>{item.menuIcon}</IconButton>
                                                     <Typography className='subText' >{item.name}</Typography>
                                                 </StyledButton>
@@ -130,7 +130,7 @@ export default function Sidebar(props) {
                                         </Grid>
                                         :
                                         <Grid item xs={12}>
-                                            <StyledButton onClick={() => handleUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#EBF4F1" : "#fff", borderRadius: '5px', margin: '0px 5px' }}>
+                                            <StyledButton onClick={() => handleUrl(item.url)} style={{ backgroundColor: (router.pathname.split("/").splice(0, 3).join("/") === item.url) ? "#F0E9FF" : "#fff", borderRadius: '5px', margin: '0px 5px' }}>
                                                 <Grid container justifyContent={'center'}>
                                                     <Grid item xs={12}>
                                                         <ListItemIcon>{item.menuIcon}</ListItemIcon>
@@ -150,28 +150,28 @@ export default function Sidebar(props) {
                             {props.isOpen === true ?
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <ListItemButton>
-                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
+                                        <ListItemIcon><Avatar fontSize='10' style={{ color: '#fff', backgroundColor: '#4D1EC0' }} /></ListItemIcon>
                                         <Grid item xs={12}>
                                             <Typography className='subText'>Gowtam Ramanujam</Typography>
-                                            <Typography align='left' style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#024751" }}>ADMIN</Typography>
+                                            <Typography align='left' style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#4D1EC0" }}>ADMIN</Typography>
                                         </Grid>
                                     </ListItemButton>
                                     <ListItemButton onClick={() => router.push('/')}>
-                                        <ListItemIcon><LogoutIcon sx={{ color: "#024751", marginLeft: 1 }} /></ListItemIcon>
+                                        <ListItemIcon><LogoutIcon sx={{ color: "#4D1EC0", marginLeft: 1 }} /></ListItemIcon>
                                         <ListItemText style={{ color: 'red' }}>Log out</ListItemText>
                                     </ListItemButton>
                                 </Grid>
                                 :
                                 <Grid item xs={12} style={{ paddingBottom: '50px' }}>
                                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <ListItemIcon><Avatar fontSize='10' sx={{ color: '#fff', backgroundColor: '#024751' }} /></ListItemIcon>
+                                        <ListItemIcon><Avatar fontSize='10' sx={{ color: '#fff', backgroundColor: '#4D1EC0' }} /></ListItemIcon>
                                         <Grid item xs={12}>
-                                            <Typography className='subText' align='center' style={{ whiteSpace: 'break-spaces' }} >Gowtam Ramanujam</Typography>
-                                            <Typography align='center' style={{ fontSize: "11px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#024751" }}>ADMIN</Typography>
+                                            <Typography className='subText' align='center' style={{ whiteSpace: 'break-spaces' }}>Gowtam Ramanujam</Typography>
+                                            <Typography align='center' style={{ fontSize: "11px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#4D1EC0" }}>ADMIN</Typography>
                                         </Grid>
                                     </div>
                                     <ListItemButton onClick={() => router.push('/')} style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <ListItemIcon><LogoutIcon sx={{ color: '#024751' }} /></ListItemIcon>
+                                        <ListItemIcon><LogoutIcon sx={{ color: '#4D1EC0' }} /></ListItemIcon>
                                         <Typography style={{ color: 'red', fontSize: '12px' }}>Log out</Typography>
                                     </ListItemButton>
                                 </Grid>

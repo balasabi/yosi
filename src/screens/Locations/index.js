@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, FormControl, Select, MenuItem, IconButton } from '@mui/material';
 import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
-import RightArrow from '../../../public/Images/go.png';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useRouter } from 'next/router';
 
 function Locations(props) {
@@ -110,8 +110,8 @@ function Locations(props) {
                                         }} color={"#718797"}>Status: </Typography>
                                         <Typography style={{
                                             letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Medium",
-                                            backgroundColor: "#EBF4F1", marginLeft: "5px", padding: "2px", borderRadius: "5px"
-                                        }} color={"#024751"}> {item.status}</Typography>
+                                            backgroundColor: "#F0E9FF", marginLeft: "5px", padding: "2px", borderRadius: "5px"
+                                        }} color={"#6425FE"}> {item.status}</Typography>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
                                         <Grid item xs={6}>
@@ -142,7 +142,7 @@ function Locations(props) {
                                             letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", fontWeight: 'bold'
                                         }} color={"#313237"}>Show Details</Typography>
                                         <IconButton onClick={() => handleView()}>
-                                            <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} />
+                                        <ArrowForwardIcon width={"20vw"} height={"20vh"} style={{color:"#6425FE"}} />
                                         </IconButton>
                                     </Grid>
                                 </Grid>

@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import BookOpen from '../../public/Images/BookOpen.png';
-import Location from '../../public/Images/location.png';
-import Folder from '../../public/Images/FolderNotch.png';
-import Chart from '../../public/Images/ChartPieSlice(1).png';
-import Setting from '../../public/Images/setting.png';
-import Notebook from '../../public/Images/Notebook.png';
+import BookOpen from '../../public/Images/svg/BookOpen.svg';
+import Location from '../../public/Images/svg/Location.svg';
+// import Folder from '../../public/Images/FolderNotch.png';
+import Chart from '../../public/Images/svg/ChartPieSlice.svg';
+import Setting from '../../public/Images/svg/CarbonSettings.svg';
+// import Notebook from '../../public/Images/Notebook.png';
 import IdentificationBadge from '../../public/Images/IdentificationBadge.png';
-import UsersThree from '../../public/Images/UsersThree.png';
-import IdentificationCard from '../../public/Images/IdentificationCard.png';
+import UsersThree from '../../public/Images/svg/UsersThree.svg';
+import IdentificationCard from '../../public/Images/svg/IdentificationBadge.svg';
 
 export const sideMenu = [
     {
@@ -62,7 +62,7 @@ export const sideMenu = [
     },
     {
         name: "Employee management",
-        menuIcon: <Image src={IdentificationBadge} alt={"Ellipse"} width={20} height={20} />,
+        menuIcon: <Image src={IdentificationCard} alt={"Ellipse"} width={20} height={20} />,
         url: '/users-management',
         pages: []
     },

@@ -7,13 +7,12 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
-import Appointments from '.';
 
 const localizer = momentLocalizer(moment)
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-     backgroundColor: "#E7E7E7",
+    backgroundColor: "#E7E7E7",
     color: '#2E2E2E',
     fontFamily: 'Avenir-Heavy',
     padding: "4px",
@@ -25,7 +24,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontFamily: 'Avenir-Book',
     color: '#2E2E2E',
     lineHeight: '24px',
-     padding: "3px"
+    padding: "3px"
   },
 }));
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -70,11 +69,11 @@ function CalenderAppointments(props) {
 
   const CalendarToolbar = ({ onView, label, views, onNavigate }) => (
     <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-around", alignItems: "flex-start", marginBottom: "15px" }}>
-      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#FFF", backgroundColor: "#024751" }} onClick={() => goToBack(onNavigate)}>Back</Button>
+      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#FFF", backgroundColor: "#6425FE" }} onClick={() => goToBack(onNavigate)}>Back</Button>
       <Typography style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "20px", fontFamily: "Avenir-Black", color: "#000", marginTop: "5px" }}>
         {label}
       </Typography>
-      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#FFF", backgroundColor: "#024751" }} onClick={() => goToNext(onNavigate)}>Next</Button>
+      <Button style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "15px", fontFamily: "Avenir-Black", color: "#FFF", backgroundColor: "#6425FE" }} onClick={() => goToNext(onNavigate)}>Next</Button>
     </div>
   );
 
@@ -101,7 +100,7 @@ function CalenderAppointments(props) {
           titleAccessor={(e) => { return state.events.length > 1 ? `Appointments : ${state.events.length}` : `Appointment : ${state.events.length}`; }}
           // onSelectSlot={handleEventClick()}
           eventPropGetter={(event) => {
-            const backgroundColor = '#024751';
+            const backgroundColor = '#3A1692';
             return { style: { backgroundColor } }
           }}
           selectable
@@ -109,18 +108,18 @@ function CalenderAppointments(props) {
         <Dialog open={state.patientAppointmentDetailsOpen} maxWidth={'lg'} >
           <Grid container>
             <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-              <DisabledByDefaultRoundedIcon style={{ color: "#024751", fontSize: "35px", position: "absolute" }} onClick={() => addTestClose()} />
+              <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "35px", position: "absolute" }} onClick={() => addTestClose()} />
             </Grid>
-          </Grid>          
-          <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" , marginTop:10, marginBottom:10}}>
-            <Grid container style={{ paddingBottom: "3px", display: "flex", flexDirection: "row", justifyContent: "space-between",  borderRadius: "5px", padding: "4px" }}>
+          </Grid>
+          <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8", marginTop: 10, marginBottom: 10 }}>
+            <Grid container style={{ paddingBottom: "3px", display: "flex", flexDirection: "row", justifyContent: "space-between", borderRadius: "5px", padding: "4px" }}>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", }}> Date : </Typography>
                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", marginLeft: "5px" }}> {moment(state.date).format("DD/MM/YYYY")} </Typography>
               </Grid>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black",  }}>Appointments :  </Typography>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir",  marginLeft: "5px" }}> {state.events.length} </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", }}>Appointments :  </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", marginLeft: "5px" }}> {state.events.length} </Typography>
               </Grid>
             </Grid>
           </DialogTitle>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Typography, Grid, TextField, Button } from '@mui/material';
+import { Typography, Grid, TextField } from '@mui/material';
 import Image from 'next/image';
-import Logo from '../../../public/Images/logo.png';
+import Logo from '../../../public/Images/svg/LogoLogin.svg';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import CustomizedButtons from '@/src/components/CustomButton';
 
 function SignUp(props) {
     const [state, setState] = useState({
@@ -40,12 +41,12 @@ function SignUp(props) {
                                 value={state.email}  />
                         </Grid>
                         <Grid item xs={8}>
-                            <Button variant='contained' fullWidth style={{ backgroundColor: "#024751", textTransform: 'none', padding: "10px" }}>Continue</Button>
+                            <CustomizedButtons variant='contained' fullWidth>Continue</CustomizedButtons>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} justifyContent='center' alignItems='center'>
                         <Grid item xs={8} >
-                            <Typography align="left" style={{ lineHeight: "24px", fontSize: "14px", marginTop: "7px" }}>Already have an account? <span><Button variant="text" style={{ color: "#024751", textTransform: "none" }} onClick={() => Login()}>Login</Button></span></Typography>
+                            <Typography align="left" style={{ lineHeight: "24px", fontSize: "14px", marginTop: "7px" }}>Already have an account? <span><CustomizedButtons variant="text" onClick={() => Login()}>Login</CustomizedButtons></span></Typography>
                         </Grid>
                         <Grid item xs={8} style={{ display: "flex", alignItems: "center" }}>
                             <div style={{ background: "#998E8A", height: 1, width: "15vw", marginRight: "10px" }} />

@@ -3,8 +3,7 @@ import { Grid, Table, TableBody, TableContainer, TableCell, TableHead, TableRow,
 import Image from 'next/image';
 import dialogClose from '../../../public/Images/dialogClose.png';
 import { styled } from '@mui/material';
-import { ControlPointDuplicate } from '@mui/icons-material';
-import { height } from '@mui/system';
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -88,9 +87,9 @@ function RolesAndPermission(props) {
                 obj[y] = [];
 
                 for (let z of access) {
+                    console.log("************z***********"+JSON.stringify(z))
                     let obj2 = {};
-                    const [key, value] = Object.entries(z)[0];
-                    obj2[value] = true;
+                    obj2[z] = z;
                     obj[y].push(obj2);
                 }
                 data['roles'].push(obj);
@@ -120,14 +119,12 @@ function RolesAndPermission(props) {
         );
     };
 
-  
-
-     
     return (
         <>
             <Grid container  style={{height:"100%"}}  >
                 <Grid item xs={12}>
-                    <IconButton onClick={props.dialogClose}><Image src={dialogClose} alt={'close'} width={25} height={25} /></IconButton>
+                    {/* <IconButton onClick={props.dialogClose}><Image src={dialogClose} alt={'close'} width={25} height={25} /></IconButton> */}
+                    <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width:25,height:25 }} onClick={() => props.dialogClose()} />
                 </Grid>
                 <Grid  item xs={12}  justifyContent ={"center"} alignItems={"center"} sx={{ width: "90vw" }}>
                     <TableContainer component={Paper}>

@@ -227,7 +227,7 @@ function Classification(props) {
                                         <StyledTableCell>{classification.code}</StyledTableCell>
                                         <StyledTableCell>{classification.test_type}</StyledTableCell>
                                         <StyledTableCell>{classification.test_groups}</StyledTableCell>
-                                        <StyledTableCell style={{ color: "#3FA455" }}>{classification.status}</StyledTableCell>
+                                        <StyledTableCell >{classification.status}</StyledTableCell>
                                         <StyledTableCell >
                                             <div style={{ display: "flex", flexDirection: "row" }}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, Grid, TableRow, tableCellClasses, styled, TableCell, Table, TableBody, tableRowClasses, FormControl, Select, MenuItem } from '@mui/material';
 import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
-import RightArrow from '../../../public/Images/go.png';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Placeholder = ({ children }) => {
     return <div styles={{ color: "#aaa" }}>{children}</div>;
@@ -158,8 +158,8 @@ function Type(props) {
                                                         }} color={"#718797"}>Status: </Typography>
                                                         <Typography style={{
                                                             letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book",
-                                                            backgroundColor: "#EBF4F1", marginLeft: "5px", padding: "2px"
-                                                        }} color={"#024751"}> {type.status}</Typography>
+                                                            backgroundColor: "#F0E9FF", marginLeft: "5px", padding: "2px"
+                                                        }} color={"#6425FE"}> {type.status}</Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
                                                         <Typography className='miniText' color='"rgba(16, 16, 16, 0.6)"'>Display Name: {type.display_name} </Typography>
@@ -175,7 +175,7 @@ function Type(props) {
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: "pointer" }}>
                                                         <Typography className='miniHeading'>Show Details</Typography>
-                                                        <Image src={RightArrow} alt='rightArrow' width={"20vw"} height={"20vh"} onClick={() => alert("WIP")} />
+                                                        <ArrowForwardIcon width={"20vw"} height={"20vh"} style={{color:"#6425FE"}} onClick={() => alert("WIP")}/>
                                                     </Grid>
                                                 </Grid>
                                             </StyledTableCell>

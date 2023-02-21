@@ -25,7 +25,7 @@ function CustomSearchInput(props) {
                             '& .MuiOutlinedInput-root': {
                                padding: "0px 15px 0px 15px",
                                 marginLeft: "5px", 
-                                backgroundColor: "#FBF7F4",
+                                backgroundColor: "#F0E9FF",
                                 marginTop:"15px"
                             },
                             '& .MuiOutlinedInput-notchedOutline': {

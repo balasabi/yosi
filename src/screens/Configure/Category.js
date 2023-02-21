@@ -226,8 +226,8 @@ function Category(props) {
                                 <TableRow >
                                     <StyledTableCell style={{ width: "150px" }}>Name</StyledTableCell>
                                     <StyledTableCell style={{ width: "80px" }}>Code</StyledTableCell>
-                                    <StyledTableCell style={{ width: "80px" }}>Short Code</StyledTableCell>
-                                    <StyledTableCell style={{ width: "130px" }}>Sequence Number</StyledTableCell>
+                                    <StyledTableCell style={{ width: "98px" }}>Short Code</StyledTableCell>
+                                    <StyledTableCell style={{ width: "158px" }}>Sequence Number</StyledTableCell>
                                     <StyledTableCell style={{ width: "70px" }}>Status</StyledTableCell>
                                     <StyledTableCell>Description</StyledTableCell>
                                 </TableRow>
@@ -239,7 +239,7 @@ function Category(props) {
                                         <StyledTableCell>{category.code}</StyledTableCell>
                                         <StyledTableCell>{category.short_code}</StyledTableCell>
                                         <StyledTableCell>{category.sequence_number}</StyledTableCell>
-                                        <StyledTableCell style={{ color: "#3FA455" }}>{category.status}</StyledTableCell>
+                                        <StyledTableCell >{category.status}</StyledTableCell>
                                         <StyledTableCell style={{ wordBreak: "break-word" }}>{category.description}</StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
