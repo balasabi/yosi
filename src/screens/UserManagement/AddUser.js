@@ -12,21 +12,21 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
     },
     "& .MuiInputBase-input": {
         position: "relative",
-        backgroundColor: "#FBF7F4",
+        backgroundColor: "#F0E9FF",
         fontSize: 16,
         padding: "10px",
-        borderRadius: "8px",
+        borderRadius: "5px",
         fontFamily: [
             'Avenir-Book'
         ].join(","),
         "&:focus": {
             border: 0,
-            backgroundColor: "#FBF7F4",
+            backgroundColor: "#F0E9FF",
             border: "2px solid #4D1EC0",
         },
         "&:active": {
             border: "2px solid #4D1EC0",
-            backgroundColor: "#FBF7F4"
+            backgroundColor: "#F0E9FF"
         }
     }
 }));
@@ -99,7 +99,7 @@ function AddUser(props) {
                 <Grid item xs={12}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <Typography style={{ color: '#024751' }}>Test information</Typography>
+                            <Typography style={{ color: '#6425FE' }}>Test information</Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl sx={{ width: 260 }}>
@@ -158,12 +158,12 @@ function AddUser(props) {
                             <Grid container justifyContent={"flex-end"} >
                                 <Grid item xs={6}>
                                     <Grid container textAlign='right'>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={9}>
                                             <CustomizedButtons variant="text" onClick={props.close}>
                                                 Cancel
                                             </CustomizedButtons>
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={3}>
                                             <CustomizedButtons variant="contained" onClick={() => handleSubmit(props.mode === "ADD" ? "S" : "U")}>
                                                 {props.mode === "ADD" ? "Submit" : "Update"}
                                             </CustomizedButtons>

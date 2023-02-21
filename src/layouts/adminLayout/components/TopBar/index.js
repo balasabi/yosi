@@ -39,7 +39,7 @@ function TopBar(props) {
                                         </IconButton>
                                         <input
                                             type="text"
-                                            class="no-outline"
+                                            className="no-outline"
                                             size='small'
                                             placeholder='Search input text'
                                             style={{ width: "500px", color: "#FFF", background: "#3A1692", border: 0, fontFamily: "Avenir", fontSize: 18 }}

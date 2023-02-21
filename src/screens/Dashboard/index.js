@@ -7,8 +7,7 @@ import arrow from '../../../public/Images/arrow.png';
 import _ from 'underscore';
 import Barcode from '../../../public/Images/barcode.png';
 import CustomizedButtons from '../../components/CustomButton';
-import Upload from '../../../public/Images/svg/upload.svg';
-
+import Upload from '../../../public/Images/svg/Upload.svg';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: 'rgba(2, 55, 81, 0.05)',

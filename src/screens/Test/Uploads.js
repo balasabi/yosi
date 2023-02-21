@@ -6,7 +6,7 @@ import {
 import { useRouter } from 'next/router';
 import CustomSearchInput from '../../components/CustomSearchInput';
 import Image from 'next/image';
-import Upload from '../../../public/Images/svg/upload.svg';
+import Upload from '../../../public/Images/svg/Upload.svg';
 import { useDropzone } from "react-dropzone";
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { MdDelete } from "react-icons/md";

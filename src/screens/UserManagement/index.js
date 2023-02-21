@@ -16,6 +16,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import _ from 'underscore';
 import { useDispatch, useSelector } from 'react-redux';
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -322,8 +323,13 @@ function UsersManagement(props) {
                         onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)} />
                 </Grid>
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>
-                    <DialogTitle>
-                        <Typography style={{ paddingBottom: '10px', fontWeight: "bold" }}><span style={{ color: '#024751' }}>{state.mode === "ADD" ? "Add" : "Edit"}</span> New User</Typography>
+                <Grid container>
+                            <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
+                                <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => handleClose()} />
+                            </Grid>
+                        </Grid>
+                        <DialogTitle>
+                        <Typography style={{ paddingBottom: '10px', fontWeight: "bold", fontSize:"20px" }}>{state.mode === "ADD" ? "Add New User" : "Edit New User"} </Typography>
                         <div style={{ background: '#E8E8E8', height: 1 }}></div>
                     </DialogTitle>
                     <DialogContent>
