@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, Grid, Button, TableRow, Table, TableHead, TableBody, tableCellClasses, tableRowClasses, styled, TableCell, Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { Typography, Grid, Button, TableRow, Table, TableHead, TableBody, tableCellClasses, tableRowClasses, styled,
+     TableCell, Dialog, DialogContent, DialogTitle, TableFooter, TablePagination } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import Plus from '../../../public/Images/plus.png';
 import editIcon from '../../../public/Images/editIcon.png';
@@ -37,7 +38,9 @@ function ViewLocation(props) {
     const [state, setState] = useState({
         isAdd: false,
         mode: "ADD",
-        location: ''
+        location: '',
+        page: 0,
+        rowsPerPage: 10,
     })
     const location = useSelector(state => state.locationReducer.location);
     // const handleAddLocation = (param) => {
@@ -56,6 +59,13 @@ function ViewLocation(props) {
     };
     const handleCloseLocation = () => {
         setState({ ...state, isAdd: false })
+    };
+    const handleChangePage = (event, newPage) => {
+        setState({ ...state, page: newPage });
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setState({ ...state, rowsPerPage: event.target.value, page: 0 });
     };
     // console.log("****location******"+JSON.stringify(location))
     return (
@@ -83,7 +93,7 @@ function ViewLocation(props) {
                                 <StyledTableCell>Action</StyledTableCell>
                             </StyledTableRow>
                         </TableHead>
-                        {!!location && location.map((item, index) => (
+                        { location.length>0 ? !!location && location.map((item, index) => (
                             <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                 <StyledTableRow>
                                     <StyledTableCell>{item.name}</StyledTableCell>
@@ -99,13 +109,31 @@ function ViewLocation(props) {
                                     </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
-                        ))}
+                        )):
+                         <TableBody>
+                        <StyledTableRow>
+                            <StyledTableCell align='center' colSpan={7}><Typography >There are no location available</Typography></StyledTableCell>
+                        </StyledTableRow>
+                    </TableBody>}
+                    <TableFooter>
+                                <TableRow align='left'>
+                                    <TablePagination
+                                        count={!!location && location.length}
+                                        page={state.page}
+                                        onPageChange={handleChangePage}
+                                        rowsPerPage={state.rowsPerPage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        labelRowsPerPage={"No. of items per page : "}
+                                        sx={{ borderBottom: "1.43px solid #D5DBE1" }}
+                                    />
+                                </TableRow>
+                            </TableFooter>
                     </Table>
 
                     <Dialog open={state.isAdd} onClose={() => handleCloseLocation()}>
                         <Grid container>
                             <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                                <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => handleCloseLocation()} />
+                                <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => handleCloseLocation()} />
                             </Grid>
                         </Grid>
                         <DialogTitle>

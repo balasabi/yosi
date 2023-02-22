@@ -9,17 +9,17 @@ const CustomButton = styled(Button)({
   lineHeight: '24px',
   padding: "5px",
   color: "#FFF",
-  backgroundColor: '#6425FE',
+  backgroundColor: '#5824D6',
   fontFamily: 'Avenir-Book',
   '&:hover': {
-    backgroundColor: '#6425FE',
-    borderColor: '#6425FE',
+    backgroundColor: '#5824D6',
+    borderColor: '#5824D6',
     boxShadow: 'none',
   },
   '&:active': {
     boxShadow: 'none',
-    backgroundColor: '#6425FE',
-    borderColor: '#6425FE',
+    backgroundColor: '#5824D6',
+    borderColor: '#5824D6',
   }
 });
 

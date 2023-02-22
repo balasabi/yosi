@@ -48,7 +48,7 @@ class Patients extends Component {
         { 'id': '12', 'name': 'Saba Cons', 'email': 'kennysebastian@gmail.com', 'phone': '+1 9988776655', 'dob': '05/05/1998' },
       ],
       page: 0,
-      rowsPerPage: 7,
+      rowsPerPage: 10,
       isClickCheckBox: false,
       selectedPatients: []
     }
@@ -90,11 +90,11 @@ class Patients extends Component {
 
   handleChangeRowsPerPage = (event) => {
     this.setState({
-      rowsPerPage: (parseInt(event.target.value)),
+      rowsPerPage: event.target.value,
       page: 0
     });
   };
-
+ 
   render() {
     return (
       <>
@@ -125,12 +125,11 @@ class Patients extends Component {
                     </StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
-                <TableBody>
-                  {this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) =>
-                    <StyledTableRow
-                      key={index.toString()}
-                      style={{ background: (index % 2) == 0 ? 'white' : '#FCFCFC' }}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                {this.state.rows.length > 0 ?
+                this.state.rows.slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) =>
+                <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? 'white' : '#FCFCFC' }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                  <StyledTableRow  >
                       {/* <StyledTableCell align='right'>
                     <Checkbox
                      style={{display:"flex",justifyContent:"flex-start"}}
@@ -143,20 +142,24 @@ class Patients extends Component {
                       <StyledTableCell align="left">{row.phone}</StyledTableCell>
                       <StyledTableCell align="left">{row.dob}</StyledTableCell>
                     </StyledTableRow>
-                  )}
-                </TableBody>
+                    </TableBody> ):
+                  <TableBody>
+                      <StyledTableRow>
+                          <StyledTableCell align='center' colSpan={7}><Typography >There are no patient available</Typography></StyledTableCell>
+                      </StyledTableRow>
+                  </TableBody>}
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[7, 12]}
+              rowsPerPageOptions={[10,25]}
               component="div"
-              count={this.state.rows.length}
+              count={!!this.state.rows && this.state.rows.length}
               rowsPerPage={this.state.rowsPerPage}
               page={this.state.page}
               onPageChange={() => this.handleChangePage()}
               onRowsPerPageChange={(e) => this.handleChangeRowsPerPage(e)}
               labelRowsPerPage={'No. of item per page:'}
-            />
+             />
           </Grid>
         </Grid>
       </>

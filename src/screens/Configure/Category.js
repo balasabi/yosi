@@ -232,7 +232,7 @@ function Category(props) {
                                     <StyledTableCell>Description</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {!!state.category && state.category.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((category, index) => (
+                            { state.category.length>0 ? !!state.category && state.category.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((category, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow >
                                         <StyledTableCell>{category.name}</StyledTableCell>
@@ -243,7 +243,12 @@ function Category(props) {
                                         <StyledTableCell style={{ wordBreak: "break-word" }}>{category.description}</StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
-                            ))}
+                            )):
+                            <TableBody>
+                                <StyledTableRow>
+                                    <StyledTableCell align='center' colSpan={7}><Typography >There are no category available</Typography></StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>}
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination

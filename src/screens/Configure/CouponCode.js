@@ -183,14 +183,14 @@ function CouponCode() {
                 <Dialog open={state.couponCodeOpen} onClose={() => couponCodeClose()} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{ color: "#3A1692", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
+                                <Typography style={{ color: "#5824D6", marginTop: "10px", marginBottom: "10px" }}>Coupon information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
@@ -224,8 +224,8 @@ function CouponCode() {
                                     <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
                                         <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
                                         <RadioGroup defaultValue="Active" row onChange={(event) => setState({ ...state, status: event.target.value })}>
-                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#3A1692', '&.Mui-checked': { color: '#3A1692' } }} />} label="Active" />
-                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#3A1692', '&.Mui-checked': { color: '#3A1692' } }} />} label="Inactive" />
+                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Active" />
+                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Inactive" />
                                         </RadioGroup>
                                     </Grid>
                                 </Grid>

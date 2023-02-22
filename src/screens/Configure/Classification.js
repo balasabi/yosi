@@ -220,7 +220,7 @@ function Classification(props) {
                                     <StyledTableCell>Action</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {!!state.classification && state.classification.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((classification, index) => (
+                            { state.classification.length>0 ? !!state.classification && state.classification.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((classification, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow >
                                         <StyledTableCell>{classification.name}</StyledTableCell>
@@ -235,7 +235,12 @@ function Classification(props) {
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
-                            ))}
+                            )):
+                            <TableBody>
+                                <StyledTableRow>
+                                    <StyledTableCell align='center' colSpan={7}><Typography >There are no classification available</Typography></StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>}
                             <TableFooter>
                                 <TableRow>
                                     <TablePagination

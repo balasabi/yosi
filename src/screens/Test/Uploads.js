@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, tableRowClasses,
     TablePagination, FormControl, Select, MenuItem, TableContainer, Paper, Dialog, DialogTitle, DialogContent
@@ -192,13 +192,11 @@ function Uploads(props) {
     const dragOver = (e) => {
         e.preventDefault();
     }
-
-    
+  
     const dragEnter = (e) => {
         e.preventDefault();
     }
 
-    
     const dragLeave = (e) => {
         e.preventDefault();
     }
@@ -207,16 +205,16 @@ function Uploads(props) {
         e.preventDefault();
         const files = e.dataTransfer.files
         let file = files[0]
-        setState({...state,data:file})
+        setState({ ...state, data:file })
     }
 
     const fileHandler = (e) => {
         e.preventDefault();
         let file = e.target.files[0];
-        setState({...state,
-            data: file
-        })
+        setState({ ...state, data: file })
     }
+
+console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
 
     return (
         <>
@@ -288,7 +286,7 @@ function Uploads(props) {
                                     <StyledTableCell >Status</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {!!state.upload && state.upload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
+                            {state.upload.length>0 ? !!state.upload && state.upload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow >
                                         <StyledTableCell className='tableContent'>{upload.test_upload_name}</StyledTableCell>
@@ -300,10 +298,16 @@ function Uploads(props) {
                                         <StyledTableCell className='tableContent'>{upload.status}</StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
-                            ))}
+                            )) :
+                            <TableBody>
+                                <StyledTableRow>
+                                    <StyledTableCell align='center' colSpan={7}><Typography >There are no test upload available</Typography></StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>}
                         </Table>
                     </TableContainer>
                     <TablePagination
+                    component={"div"}
                         count={!!state.upload && state.upload.length}
                         page={state.page}
                         onPageChange={handleChangePage}
@@ -316,13 +320,13 @@ function Uploads(props) {
                 <Dialog open={state.uploadTestOpen} onClose={() => uploadTestClose()} maxWidth={'sm'}>
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => uploadTestClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => uploadTestClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Upload test result</DialogTitle>
                     <DialogContent>
                         <Grid container>
-                             <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", fontWeight:"bold", lineHeight: "10px", fontFamily: "Avenir", textTransform: "none", marginTop:"10px", marginLeft: "5px", textAlign: "center", padding: "2px 10px", borderRadius: "5px", cursor: "pointer", background:"#3A1692" }}>
+                             <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", fontWeight:"bold", lineHeight: "10px", fontFamily: "Avenir", textTransform: "none", marginTop:"10px", marginLeft: "5px", textAlign: "center", padding: "2px 10px", borderRadius: "5px", cursor: "pointer", background:"#5824D6" }}>
                              <div>
                                     <input
                                         accept=".xls,.xlsx"
@@ -345,9 +349,16 @@ function Uploads(props) {
                              onDragLeave={(e)=>dragLeave(e)}
                              onDrop={(e)=>dropOn(e)}>
                                <div>
-                                <Typography style={{fontSize:"24px", color:"#3A1692", fontWeight:600}}>{state.data === "" ? "Drag and Drop": state.data.name}{state.data !== "" && <MdDelete style={{ color: "red",marginTop:"10px", cursor:"pointer" }} onClick={()=>setState({ ...state, data:"" })}/>}</Typography>
-                                <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
-                                <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
+                                <Typography style={{fontSize:"24px", color:"#5824D6", fontWeight:600}}>{state.data === "" ? "Drag and Drop": state.data.name}{state.data !== "" && <MdDelete style={{ color: "red",marginTop:"10px", cursor:"pointer" }} onClick={()=>setState({ ...state, data:"" })}/>}</Typography>
+                                { 
+                            state.data === "" ? 
+                            <>
+                            <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
+                            <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
+                            </>
+                                 :
+                            ""    
+                                }
                                </div>
                              </div>
                             </Grid>

@@ -71,10 +71,10 @@ function Appointments(props) {
                 <Grid item xs={12} style={{ marginLeft: "12px" }}>
                     <Grid container>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "T" ? "#3A1692" : "#474747", borderBottom: state.selectedTab === "T" ? "5px solid #3A1692" : "none", borderRadius: "0px" }} onClick={() => buttonAction("T")}>Today</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "T" ? "#5824D6" : "#474747", borderBottom: state.selectedTab === "T" ? "5px solid #5824D6" : "none", borderRadius: "0px" }} onClick={() => buttonAction("T")}>Today</CustomizedButtons>
                         </Grid>
                         <Grid item xs={2} >
-                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "C" ? "#3A1692" : "#474747", borderBottom: state.selectedTab === "C" ? "5px solid #3A1692" : "none", borderRadius: "0px" }} onClick={() => buttonAction("C")}>Months</CustomizedButtons>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "C" ? "#5824D6" : "#474747", borderBottom: state.selectedTab === "C" ? "5px solid #5824D6" : "none", borderRadius: "0px" }} onClick={() => buttonAction("C")}>Months</CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -90,7 +90,7 @@ function Appointments(props) {
                 <Dialog open={state.addAppointmentOpen} onClose={() => addAppointmentClose()} maxWidth={'sm'} style={{ marginBottom: "180px" }} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => addAppointmentClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => addAppointmentClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add appointment</DialogTitle>
@@ -141,7 +141,7 @@ function Appointments(props) {
                                                         sx: {
                                                             fontFamily: "Avenir",
                                                             backgroundColor: "#F0E9FF",
-                                                            border: "2px solid #3A1692",
+                                                            border: "2px solid #5824D6",
                                                         }
                                                     }}
                                                 />
@@ -162,7 +162,7 @@ function Appointments(props) {
                                                     InputLabelProps={{
                                                         sx: {
                                                             fontFamily: "Avenir",
-                                                            border: "2px solid #3A1692",
+                                                            border: "2px solid #5824D6",
                                                         }
                                                     }} />
                                             }
@@ -183,7 +183,7 @@ function Appointments(props) {
                                                         sx: {
                                                             fontFamily: "Avenir",
                                                             backgroundColor: "#F0E9FF",
-                                                            border: "2px solid #3A1692",
+                                                            border: "2px solid #5824D6",
                                                         }
                                                     }} />}
                                         />

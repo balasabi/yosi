@@ -124,7 +124,7 @@ function RolesAndPermission(props) {
             <Grid container  style={{height:"100%"}}  >
                 <Grid item xs={12}>
                     {/* <IconButton onClick={props.dialogClose}><Image src={dialogClose} alt={'close'} width={25} height={25} /></IconButton> */}
-                    <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width:25,height:25 }} onClick={() => props.dialogClose()} />
+                    <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width:25, height:25, cursor:"pointer" }} onClick={() => props.dialogClose()} />
                 </Grid>
                 <Grid  item xs={12}  justifyContent ={"center"} alignItems={"center"} sx={{ width: "90vw" }}>
                     <TableContainer component={Paper}>

@@ -100,7 +100,7 @@ function CalenderAppointments(props) {
           titleAccessor={(e) => { return state.events.length > 1 ? `Appointments : ${state.events.length}` : `Appointment : ${state.events.length}`; }}
           // onSelectSlot={handleEventClick()}
           eventPropGetter={(event) => {
-            const backgroundColor = '#3A1692';
+            const backgroundColor = '#5824D6';
             return { style: { backgroundColor } }
           }}
           selectable
@@ -108,7 +108,7 @@ function CalenderAppointments(props) {
         <Dialog open={state.patientAppointmentDetailsOpen} maxWidth={'lg'} >
           <Grid container>
             <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-              <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "35px", position: "absolute" }} onClick={() => addTestClose()} />
+              <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "35px", position: "absolute" }} onClick={() => addTestClose()} />
             </Grid>
           </Grid>
           <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8", marginTop: 10, marginBottom: 10 }}>

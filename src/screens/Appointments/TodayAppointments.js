@@ -137,8 +137,8 @@ function TodayAppointments(props) {
         <>
             <Grid container spacing={1}>
                 <Grid item xs={12} style={{ display: "flex", flexDirection: "column", marginTop: "20px", marginLeft: "85px", marginBottom: "10px" }} >
-                    <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#3A1692", marginLeft: "10px" }}>{day}</Typography>
-                    <div style={{ display: "flex", justifyContent: "center", backgroundColor: "#3A1692", width: "4vw", height: "4vw", borderRadius: "50px" }}>
+                    <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#5824D6", marginLeft: "10px" }}>{day}</Typography>
+                    <div style={{ display: "flex", justifyContent: "center", backgroundColor: "#5824D6", width: "4vw", height: "4vw", borderRadius: "50px" }}>
                         <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#fff", textAlign: "center", alignSelf: "center" }}>{moment(state.date).format("DD")}</Typography>
                     </div>
                 </Grid>
@@ -151,7 +151,7 @@ function TodayAppointments(props) {
                             <Grid item xs={11} style={{ borderLeft: "1px solid #DADCE0", borderTop: "1px solid #DADCE0", padding: appointments.filter((i) => i.start_time && i.end_time === time).length > 0 ? "5px" : "20px" }}>
                                 <Grid container  >
                                     {appointments.filter((i) => i.start_time && i.end_time === time).map((value) =>
-                                        <Grid item key={index} xs={appointments.filter((i) => i.start_time && i.end_time === time).length === 1 ? 12 : (12 / appointments.filter((i) => i.start_time && i.end_time === time).length)} style={{ display: "flex", flexDirection: "column", borderRadius: "5px", padding: "5px", backgroundColor: "#3A1692" }}>
+                                        <Grid item key={index} xs={appointments.filter((i) => i.start_time && i.end_time === time).length === 1 ? 12 : (12 / appointments.filter((i) => i.start_time && i.end_time === time).length)} style={{ display: "flex", flexDirection: "column", borderRadius: "5px", padding: "5px", backgroundColor: "#5824D6" }}>
                                             <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign: "center" }}> {value.patient_name}</Typography>
                                             <Typography style={{ fontFamily: "Avenir-Black", fontSize: "14px", color: "#fff", textAlign: "center" }}>{value.test_name} </Typography>
                                         </Grid>)}

@@ -294,9 +294,9 @@ function UsersManagement(props) {
                                     <StyledTableCell>Action</StyledTableCell>
                                 </StyledTableRow>
                             </TableHead>
-                            <TableBody>
-                                {users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
-                                    <StyledTableRow key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
+                            { users.length>0 ? users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
+                             <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
+                                 <StyledTableRow >
                                         <StyledTableCell>
                                             <Checkbox
                                                 checked={state.selectedUser.includes(item.id)}
@@ -309,8 +309,13 @@ function UsersManagement(props) {
                                         <StyledTableCell>{item.status}</StyledTableCell>
                                         <StyledTableCell className='tableContent'><Button style={{ textTransform: "none", color: "#000" }} onClick={() => editUser(item)} ><Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button></StyledTableCell>
                                     </StyledTableRow>
-                                )}
-                            </TableBody>
+                                </TableBody>)
+                            :
+                         <TableBody>
+                        <StyledTableRow>
+                            <StyledTableCell align='center' colSpan={7}><Typography >There are no user available</Typography></StyledTableCell>
+                        </StyledTableRow>
+                    </TableBody>}
                         </Table>
                     </TableContainer>
                     <TablePagination component="div"
@@ -325,7 +330,7 @@ function UsersManagement(props) {
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>
                 <Grid container>
                             <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                                <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => handleClose()} />
+                                <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => handleClose()} />
                             </Grid>
                         </Grid>
                         <DialogTitle>

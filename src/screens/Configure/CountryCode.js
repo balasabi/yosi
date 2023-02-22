@@ -154,7 +154,7 @@ function CountryCode() {
                                     <StyledTableCell>Action</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {!!country && country.map((code, index) => (
+                            {country.length>0 ? !!country && country.map((code, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow>
                                         <StyledTableCell>{code.code}</StyledTableCell>
@@ -169,7 +169,12 @@ function CountryCode() {
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
-                            ))}
+                            )):
+                            <TableBody>
+                                <StyledTableRow>
+                                    <StyledTableCell align='center' colSpan={7}><Typography >There are no country code available</Typography></StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>}
                             <TableFooter>
                                 <TableRow align='left'>
                                     <TablePagination
@@ -189,14 +194,14 @@ function CountryCode() {
                 <Dialog open={state.countryCodeOpen} onClose={() => countryCodeClose()} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#3A1692", fontSize: "45px", position: "absolute" }} onClick={() => countryCodeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => countryCodeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add country code" : "Edit country code"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#3A1692", marginTop: "10px", marginBottom: "10px" }}>Country information</Typography>
+                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#5824D6", marginTop: "10px", marginBottom: "10px" }}>Country information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
@@ -230,8 +235,8 @@ function CountryCode() {
                                     <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
                                         <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
                                         <RadioGroup defaultValue="Active" row onChange={(event) => setState({ ...state, status: event.target.value })}>
-                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#3A1692', '&.Mui-checked': { color: '#3A1692' } }} />} label="Active" />
-                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#3A1692', '&.Mui-checked': { color: '#3A1692' } }} />} label="Inactive" />
+                                            <FormControlLabel value="Active" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Active" />
+                                            <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Inactive" />
                                         </RadioGroup>
                                     </Grid>
                                 </Grid>

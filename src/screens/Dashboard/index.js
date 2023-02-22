@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Table, TableBody, TableCell, tableCellClasses, IconButton, TableRow, TableHead, TableContainer,
-     Paper, TextField, Radio, FormControlLabel, Select, MenuItem } from '@mui/material';
+import {
+    Grid, Typography, Table, TableBody, TableCell, tableCellClasses, IconButton, TableRow, TableHead, TableContainer,
+    Paper, TextField, Radio, FormControlLabel, Select, MenuItem
+} from '@mui/material';
 import { styled } from '@mui/material';
 import Image from 'next/image';
 import arrow from '../../../public/Images/arrow.png';
@@ -8,6 +10,9 @@ import _ from 'underscore';
 import Barcode from '../../../public/Images/barcode.png';
 import CustomizedButtons from '../../components/CustomButton';
 import Upload from '../../../public/Images/svg/Upload.svg';
+import { MdDelete } from "react-icons/md";
+import { useDropzone } from "react-dropzone";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: 'rgba(2, 55, 81, 0.05)',
@@ -43,6 +48,7 @@ function Dashboard(props) {
         selectedPatients: [],
         test: "",
         lab: "",
+        data: "",
         isClick: false,
         useMoreUserTest: [
             { "id": 1, "testId": "WEL-00001", "patientName": "Basco", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
@@ -81,6 +87,8 @@ function Dashboard(props) {
     //         })
     //     }
     // }
+
+    const { isDragActive } = useDropzone({})
     const seeMoreAction = () => {
         setState({ ...state, isClick: !state.isClick })
     };
@@ -88,6 +96,32 @@ function Dashboard(props) {
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
+
+    const dragOver = (e) => {
+        e.preventDefault();
+    }
+
+    const dragEnter = (e) => {
+        e.preventDefault();
+    }
+
+    const dragLeave = (e) => {
+        e.preventDefault();
+    }
+
+    const dropOn = (e) => {
+        // console.log("((((((((((((data)))))))))"+JSON.stringify())
+        e.preventDefault();
+        const files = e.dataTransfer.files;
+        let file = files[0];
+        setState({ ...state, data: file })
+    }
+
+    const fileHandler = (e) => {
+        e.preventDefault();
+        let file = e.target.files[0];
+        setState({ ...state, data: file })
+    }
 
     let testList = state.isClick ? state.useMoreUserTest : state.useMoreUserTest.slice(0, 4)
     return (
@@ -97,39 +131,62 @@ function Dashboard(props) {
                     <Typography className='header'>Dashboard</Typography>
                 </Grid>
                 <Grid item xs={8.5}>
-                    <Grid container style={{ boxShadow: '1px 2px 5px rgb(0 0 0 / 20%)', marginTop: "2px", padding: "15px", borderRadius: "15px" }} >
+                    <Grid container style={{ boxShadow: '1px 2px 5px rgb(0 0 0 / 20%)', marginTop: "2px", padding: "15px", borderRadius: "15px" }}>
                         <Grid item xs={12} style={{ border: "1px dashed #998E8A", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "25px", background: '#F7F7F7' }}>
-                            <Image src={Upload} alt='upload' width={30} height={30}  style={{marginTop:"10px"}}/>
-                            <Typography className='header'>Upload test</Typography>
-                            <Typography className='miniLiteText'>Supports: .csv, .xl</Typography>
-                            <Typography className='miniLiteText'>Maximum size: .10Kb</Typography>
+                            <div style={{ backgroundColor: '#F7F7F7', paddingTop: "50px", paddingBottom: "50px" }}
+                                onDragOver={(e) => dragOver(e)}
+                                onDragEnter={(e) => dragEnter(e)}
+                                onDragLeave={(e) => dragLeave(e)}
+                                onDrop={(e) => dropOn(e)}>
+                                <div>
+                                    <input
+                                        accept=".xls,.xlsx"
+                                        style={{ display: "none" }}
+                                        id="text-button-file2"
+                                        type="file"
+                                        multiple
+                                        onChange={(e) => fileHandler(e)}
+                                    />
+                                    <label htmlFor="text-button-file2" style={{cursor:"pointer"}}>
+                                        {!isDragActive &&
+                                            <Image src={Upload} alt='upload' width={30} height={30} style={{ marginLeft: "60px" }} />}
+                                    </label>
+                                </div>
+                                <Typography className='header'>{state.data === "" ? "Upload test" : state.data.name}{state.data !== "" && <MdDelete style={{ color: "red", marginTop: "10px", cursor: "pointer" }} onClick={() => setState({ ...state, data: "" })} />}</Typography>
+                                { state.data === "" ?
+                                        <>
+                                            <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
+                                            <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
+                                        </>
+                                        : "" }
+                            </div>
                         </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <Select size="small"
                                     fullWidth
-                                    style= {{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" }}
+                                    style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" }}
                                     value={state.test}
                                     onChange={(event) => setState({ ...state, test: event.target.value })}
                                     displayEmpty
                                     renderValue={
-                                     state.test !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Select test</Typography></Placeholder>
-                                 }>
+                                        state.test !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Select test</Typography></Placeholder>
+                                    }>
                                     <MenuItem value={""}></MenuItem>
-                                    </Select>
+                                </Select>
                             </Grid>
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <Select size="small"
                                     fullWidth
-                                     style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book-Book", backgroundColor: "#F0E9FF" }}
+                                    style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book-Book", backgroundColor: "#F0E9FF" }}
                                     value={state.lab}
                                     onChange={(event) => setState({ ...state, lab: event.target.value })}
                                     displayEmpty
-                                       renderValue={
+                                    renderValue={
                                         state.lab !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Select lab</Typography></Placeholder>
                                     }>
-                                        <MenuItem value={""}></MenuItem>
-                                    </Select>
+                                    <MenuItem value={""}></MenuItem>
+                                </Select>
                             </Grid>
                         </Grid>
                         <Grid item xs={12} style={{ marginTop: "20px", display: "flex", flexDirection: "row" }}>
@@ -145,17 +202,17 @@ function Dashboard(props) {
                                 },
                             }} />} label="Format" />
                         </Grid>
-                        <Grid item xs={4} style={{ marginTop: "20px" , marginBottom:10}}>
-                            <CustomizedButtons variant={"text"} className='subText' style={{ padding: "4px 60px 4px 60px", border: "1px solid #6425FE", color: "#6425FE", marginLeft: "5px", borderRadius: "5px", fontSize: "18px", fontFamily: "Avenir-Heavy",height:50, width:250}} onClick={() => alert("WIP")} >
+                        <Grid item xs={4} style={{ marginTop: "20px", marginBottom: 10 }}>
+                            <CustomizedButtons variant={"text"} className='subText' style={{ padding: "4px 60px 4px 60px", border: "1px solid #6425FE", color: "#38148E", marginLeft: "5px", borderRadius: "5px", fontSize: "18px", fontFamily: "Avenir-Heavy", height: 50, width: 250 }} onClick={() => alert("WIP")} >
                                 Upload
                             </CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>
-              
+
                 <Grid item xs={3.5} style={{ display: "flex", flexDirection: "row" }}>
                     <Grid container style={{ boxShadow: '1px 2px 9px rgb(0 0 0 / 20%)', marginTop: "2px", padding: "10px", borderRadius: "15px" }} >
-                        <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center" , marginTop:10}}>
+                        <Grid item xs={12} style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: 10 }}>
                             <Typography className='header'>Scan patient</Typography>
                             <Typography className='miniLiteText' style={{ color: "rgba(71, 71, 71, 0.6)" }}>Tap to scan a patient</Typography>
                             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 10, width: 70, height: 70, backgroundColor: "#FEC14B", borderRadius: 35 }}>
@@ -173,17 +230,17 @@ function Dashboard(props) {
                             <TextField size="small"
                                 fullWidth
                                 placeholder='Enter Patient ID'
-                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book",backgroundColor: "#F0E9FF", } }}
+                                inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF", } }}
                                 value={state.lab}
                                 onChange={(event) => setState({ ...state, lab: event.target.value })}
                             />
-                            <CustomizedButtons variant={"contained"} fullWidth style={{ marginLeft: "5px", borderRadius: "5px", marginTop: "10px", fontWeight: 800 , height:"6vh", fontSize: "18px", fontFamily: "Avenir-Heavy", }} onClick={() => alert("WIP")} >
+                            <CustomizedButtons variant={"contained"} fullWidth style={{ marginLeft: "5px", borderRadius: "5px", marginTop: "10px", fontWeight: 800, height: "6vh", fontSize: "18px", fontFamily: "Avenir-Heavy", }} onClick={() => alert("WIP")} >
                                 Find
                             </CustomizedButtons>
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} style={{ display: "flex", flexDirection: "row", alignItems: "center",marginTop:10 }}>
+                <Grid item xs={12} style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 10 }}>
                     <Typography className='header' style={{ marginRight: 10 }}>
                         Recent Appointments
                     </Typography>

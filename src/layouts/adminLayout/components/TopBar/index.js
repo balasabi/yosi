@@ -13,7 +13,7 @@ function TopBar(props) {
 
     return (
         <>
-            <AppBar style={{ background: "#4D1EC0" }}>
+            <AppBar style={{ background: "#38148E" }}>
                 <Toolbar>
                     <Grid container>
                         <Grid item xs={12}>
@@ -33,7 +33,7 @@ function TopBar(props) {
                                     <IconButton aria-label="right arrow"><AiOutlineArrowRight style={{ width: 20, height: 20 ,color:"#AFA8C2" }} /></IconButton>
                                 </Grid>
                                 <Grid item xs={4} sm={6} textAlign='left' >
-                                    <div style={{ display: "flex", flexDirection: "row", borderRadius: "10px", padding: "4px", background: "#3A1692", border: "1px solid #3A1692", width: "500px" }}>
+                                    <div style={{ display: "flex", flexDirection: "row", borderRadius: "10px", padding: "4px", background: "#270D64", border: "1px solid #3A1692", width: "500px" }}>
                                         <IconButton aria-label="search">
                                             <AiOutlineSearch style={{ width: 20, height: 20 }} color="#fff" />
                                         </IconButton>
@@ -42,12 +42,12 @@ function TopBar(props) {
                                             className="no-outline"
                                             size='small'
                                             placeholder='Search input text'
-                                            style={{ width: "500px", color: "#FFF", background: "#3A1692", border: 0, fontFamily: "Avenir", fontSize: 18 }}
+                                            style={{ width: "500px", color: "#FFF", background: "#270D64", border: 0, fontFamily: "Avenir", fontSize: 18 }}
                                         />
                                     </div>
                                 </Grid>
                                 <Grid item xs={2} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
-                                    <Image src={bell} alt="YOSI LAB" width={21} height={26} />
+                                    <Image src={bell} alt="YOSI LAB" width={30} height={30} />
                                 </Grid>
                             </Grid>
                         </Grid>
