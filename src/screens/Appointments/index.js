@@ -97,6 +97,9 @@ function Appointments(props) {
                     <DialogContent>
                         <Grid item xs={12} style={{ paddingTop: "20px" }}>
                             <Grid container spacing={2}>
+                            <Grid item xs={12} >
+                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE",  }}>Appointment information</Typography>
+                            </Grid>
                                 <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                                     <TextField size='small'
                                         fullWidth

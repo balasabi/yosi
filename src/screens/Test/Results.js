@@ -469,7 +469,7 @@ function Result(props) {
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12} >
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE", marginTop: "10px", marginBottom: "10px" }}>Test information</Typography>
+                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE", marginTop: "10px", marginBottom: "10px" }}>Test order information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={3}>

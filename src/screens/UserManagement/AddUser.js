@@ -49,9 +49,9 @@ function AddUser(props) {
     const ref = useRef();
     const roles = ["Admin", "system Manager", "Text", "Location manager"]
 
-    useEffect(() => {
-        setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
-    }, [])
+    // useEffect(() => {
+    //     setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
+    // }, [])
 
     const handleSubmit = () => {
         const { email, id, phoneNumber, firstName, status, role, lastName } = state;
@@ -90,8 +90,9 @@ function AddUser(props) {
             dispatch(updateUserAction(data, props.close))
         }
     };
-
-    console.log("param edit" + JSON.stringify(props.param))
+    const Placeholder = ({ children }) => {
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
+    };
 
     return (
         <>
@@ -99,19 +100,22 @@ function AddUser(props) {
                 <Grid item xs={12}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <Typography style={{ color: '#6425FE' }}>Test information</Typography>
+                            <Typography style={{ color: '#6425FE' }}>User information</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <FormControl sx={{ width: 260 }}>
-                                <Select size='small'
-                                    value={state.role}
+                           <Select size='small'
+                                fullWidth
+                                    value={!!state.role && state.role}
                                     input={<CustomInput />}
-                                    onChange={(e) => setState({ ...state, role: e.target.value })}>
-                                    {roles.map((item, index) =>
+                                    onChange={(e) => setState({ ...state, role: e.target.value })}
+                                    displayEmpty
+                                    renderValue={
+                                        state.role !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Role</Typography></Placeholder>
+                                    }  >
+                                    {!!roles && roles.map((item, index) =>
                                         <MenuItem key={index.toString()} value={item}>{item}</MenuItem>
                                     )}
                                 </Select>
-                            </FormControl>
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
@@ -120,7 +124,8 @@ function AddUser(props) {
                                 value={state.email}
                                 onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
                                 error={state.emailError === true ? state.invalidEmailError : false}
-                                helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "please enter valid email" : ""} />
+                                helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "please enter valid email" : ""}
+                                 />
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
@@ -129,7 +134,8 @@ function AddUser(props) {
                                 value={state.firstName}
                                 onChange={(e) => setState({ ...state, firstName: e.target.value, firstNameError: false })}
                                 error={state.firstNameError}
-                                helperText={state.firstNameError === true ? "Please enter first name" : ""} />
+                                helperText={state.firstNameError === true ? "Please enter first name" : ""} 
+                                />
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
@@ -145,7 +151,8 @@ function AddUser(props) {
                                 value={state.phoneNumber}
                                 onChange={(e) => setState({ ...state, phoneNumber: e.target.value, phoneNumberError: false })}
                                 error={state.phoneNumberError}
-                                helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} />
+                                helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} 
+                                />
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
                             <Typography style={{ fontWeight: "bold", paddingRight: "7px" }}>Status</Typography>

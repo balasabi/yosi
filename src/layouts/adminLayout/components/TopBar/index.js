@@ -13,7 +13,7 @@ function TopBar(props) {
 
     return (
         <>
-            <AppBar style={{ background: "#38148E" }}>
+            <AppBar style={{ backgroundColor: "#38148E" }}>
                 <Toolbar>
                     <Grid container>
                         <Grid item xs={12}>

@@ -72,6 +72,9 @@ function AddLocations(props) {
             <Grid container>
                 <Grid item xs={12}>
                     <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                            <Typography style={{ color: '#6425FE' }}>Location information</Typography>
+                        </Grid>
                         <Grid item xs={6}>
                             <CustomInput value={state.locationCode} placeholder="Location code"
                                 size='small' fullWidth

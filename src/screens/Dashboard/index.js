@@ -133,7 +133,7 @@ function Dashboard(props) {
                 <Grid item xs={8.5}>
                     <Grid container style={{ boxShadow: '1px 2px 5px rgb(0 0 0 / 20%)', marginTop: "2px", padding: "15px", borderRadius: "15px" }}>
                         <Grid item xs={12} style={{ border: "1px dashed #998E8A", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "25px", background: '#F7F7F7' }}>
-                            <div style={{ backgroundColor: '#F7F7F7', paddingTop: "50px", paddingBottom: "50px" }}
+                            <div style={{ backgroundColor: '#F7F7F7'}}
                                 onDragOver={(e) => dragOver(e)}
                                 onDragEnter={(e) => dragEnter(e)}
                                 onDragLeave={(e) => dragLeave(e)}
