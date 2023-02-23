@@ -25,6 +25,15 @@ function Appointments(props) {
         start_time: null,
         end_time: null,
     })
+    const initialState=()=>{
+        setState({
+            patient_name: "",
+        test_name: "",
+        date: new Date(),
+        start_time: null,
+        end_time: null
+    })
+    }
     const dispatch = useDispatch();
     const buttonAction = (param) => {
         setState({ ...state, selectedTab: param })
@@ -33,16 +42,17 @@ function Appointments(props) {
         setState({ ...state, addAppointmentOpen: false })
     };
     const submit = async () => {
-        alert("WIP")
-        // let { patient_name, test_name, date, start_time, end_time } = state;
-        // let data = {}
-        // data.patient_name = patient_name;
-        // data.test_name = test_name;
-        // data.date = moment(date).format("DD/MM/YYYY");
-        // data.start_time = moment(start_time).format("hh:mm A");
-        // data.end_time = moment(end_time).format("hh:mm A");
-        // dispatch(createAppointmentAction(data))
+        // alert("WIP")
+        let { patient_name, test_name, date, start_time, end_time } = state;
+        let data = {}
+        data.patient_name = patient_name;
+        data.test_name = test_name;
+        data.start_date = moment(date).format("MM/DD/YYYY");
+        data.start_time = moment(start_time).format("hh:mm A");
+        data.end_time = moment(end_time).format("hh:mm A");
+        dispatch(createAppointmentAction(data))
          setState({ ...state, addAppointmentOpen: false })
+        // initialState();
     };
 
     const cancel = () => {

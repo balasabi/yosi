@@ -8,6 +8,7 @@ import Image from 'next/image';
 import AddLocations from './AddLocation';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { useDispatch, useSelector } from 'react-redux';
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
         height: "14px"

@@ -10,6 +10,7 @@ import Upload from '../../../public/Images/svg/Upload.svg';
 import { useDropzone } from "react-dropzone";
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { MdDelete } from "react-icons/md";
+import CustomizedButtons from '../../components/CustomButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -39,7 +40,7 @@ function Uploads(props) {
         result: "",
         status: "",
         date: "",
-        data:"",
+        data: "",
         upload: [
             {
                 test_upload_name: "T-00000126",
@@ -161,7 +162,7 @@ function Uploads(props) {
         </li>
     ));
 
-    const handleChangePage = ( newPage) => {
+    const handleChangePage = (newPage) => {
         setState({ ...state, page: newPage });
     };
 
@@ -192,7 +193,7 @@ function Uploads(props) {
     const dragOver = (e) => {
         e.preventDefault();
     }
-  
+
     const dragEnter = (e) => {
         e.preventDefault();
     }
@@ -201,11 +202,11 @@ function Uploads(props) {
         e.preventDefault();
     }
 
-    const dropOn = (e) => { 
+    const dropOn = (e) => {
         e.preventDefault();
         const files = e.dataTransfer.files
         let file = files[0]
-        setState({ ...state, data:file })
+        setState({ ...state, data: file })
     }
 
     const fileHandler = (e) => {
@@ -214,7 +215,9 @@ function Uploads(props) {
         setState({ ...state, data: file })
     }
 
-console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
+    const handleSubmit = () => {
+        alert("WIP")
+    }
 
     return (
         <>
@@ -229,7 +232,7 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px", alignItems: 'center' }}>
                             <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 }}} size="small">
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
                                 <Select
                                     value={state.result}
                                     onChange={(e) => handleChange(e, "R")}
@@ -268,7 +271,7 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                                     }>
                                 </Select>
                             </FormControl>
-                            <Image src={Upload} alt='upload' width={24} height={22} style={{cursor:"pointer"}} onClick={() => setState({ ...state, uploadTestOpen: true })} />
+                            <Image src={Upload} alt='upload' width={24} height={22} style={{ cursor: "pointer" }} onClick={() => setState({ ...state, uploadTestOpen: true })} />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -276,7 +279,7 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                     <TableContainer component={Paper} >
                         <Table>
                             <TableHead>
-                                <TableRow >
+                                <TableRow>
                                     <StyledTableCell>Test Upload Name</StyledTableCell>
                                     <StyledTableCell>Tube Number</StyledTableCell>
                                     <StyledTableCell >Result</StyledTableCell>
@@ -286,7 +289,7 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                                     <StyledTableCell >Status</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {state.upload.length>0 ? !!state.upload && state.upload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
+                            {state.upload.length > 0 ? !!state.upload && state.upload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow >
                                         <StyledTableCell className='tableContent'>{upload.test_upload_name}</StyledTableCell>
@@ -299,15 +302,15 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                                     </StyledTableRow>
                                 </TableBody>
                             )) :
-                            <TableBody>
-                                <StyledTableRow>
-                                    <StyledTableCell align='center' colSpan={7}><Typography >There are no test upload available</Typography></StyledTableCell>
-                                </StyledTableRow>
-                            </TableBody>}
+                                <TableBody>
+                                    <StyledTableRow>
+                                        <StyledTableCell align='center' colSpan={7}><Typography >There are no test upload available</Typography></StyledTableCell>
+                                    </StyledTableRow>
+                                </TableBody>}
                         </Table>
                     </TableContainer>
                     <TablePagination
-                    component={"div"}
+                        component={"div"}
                         count={!!state.upload && state.upload.length}
                         page={state.page}
                         onPageChange={handleChangePage}
@@ -320,14 +323,15 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                 <Dialog open={state.uploadTestOpen} onClose={() => uploadTestClose()} maxWidth={'sm'}>
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => uploadTestClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => uploadTestClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Upload test result</DialogTitle>
                     <DialogContent>
                         <Grid container>
-                             <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", fontWeight:"bold", lineHeight: "10px", fontFamily: "Avenir", textTransform: "none", marginTop:"10px", marginLeft: "5px", textAlign: "center", padding: "2px 10px", borderRadius: "5px", cursor: "pointer", background:"#5824D6" }}>
-                             <div>
+                            <Grid item xs={6} display="flex">
+                            <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", fontWeight: "bold", lineHeight: "10px", fontFamily: "Avenir", textTransform: "none", textAlign: "center", padding: "2px 10px", borderRadius: "5px", cursor: "pointer", marginTop:"10px", background: "#5824D6" }}>
+                                <div >
                                     <input
                                         accept=".xls,.xlsx"
                                         style={{ display: "none" }}
@@ -336,31 +340,41 @@ console.log("^^^^^^^^^json^^^^^^^^^^"+JSON.stringify(state.data.type))
                                         multiple
                                         onChange={(e) => fileHandler(e)}
                                     />
-                                     <label htmlFor="text-button-file2">
-                                       { !isDragActive &&
-                                        <p>Browse File</p>
-                                    } </label>
+                                    <label htmlFor="text-button-file2" style={{ cursor: "pointer" }}>
+                                        {!isDragActive &&
+                                            <p>Browse File</p>
+                                        } </label>
                                 </div>
-                             </Typography>
-                            <Grid item xs={12} style={{ display:"flex", justifyContent: "center", alignItems:"center"}}>
-                             <div style={{ border: "1px dashed #998E8A", marginTop: "20px", borderRadius: "5px",  display: "flex", justifyContent: "center", alignItems:"center", backgroundColor:'#F7F7F7' ,paddingTop:"50px", paddingBottom:"50px" , paddingRight:"180px", paddingLeft:"180px"}}
-                             onDragOver={(e)=>dragOver(e)}
-                             onDragEnter={(e)=>dragEnter(e)}
-                             onDragLeave={(e)=>dragLeave(e)}
-                             onDrop={(e)=>dropOn(e)}>
-                               <div>
-                                <Typography style={{fontSize:"24px", color:"#5824D6", fontWeight:600}}>{state.data === "" ? "Drag and Drop": state.data.name}{state.data !== "" && <MdDelete style={{ color: "red",marginTop:"10px", cursor:"pointer" }} onClick={()=>setState({ ...state, data:"" })}/>}</Typography>
-                                { 
-                            state.data === "" ? 
-                            <>
-                            <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
-                            <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
-                            </>
-                                 :
-                            ""    
-                                }
-                               </div>
-                             </div>
+                            </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                            { state.data !== "" ?
+                                <CustomizedButtons variant={"contained"} style={{ padding: "5px 10px 5px 10px", marginLeft: "5px", fontSize:"14px", marginTop: "10px", float: "right" }} onClick={ () => handleSubmit() }>
+                                    <Typography>
+                                        Submit
+                                    </Typography>
+                                </CustomizedButtons>
+                                : "" }
+                            </Grid>
+                            <Grid item xs={12} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <div style={{ border: "1px dashed #998E8A", marginTop: "20px", borderRadius: "5px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: '#F7F7F7', paddingTop: "50px", paddingBottom: "50px", paddingRight: "180px", paddingLeft: "180px" }}
+                                    onDragOver={(e) => dragOver(e)}
+                                    onDragEnter={(e) => dragEnter(e)}
+                                    onDragLeave={(e) => dragLeave(e)}
+                                    onDrop={(e) => dropOn(e)}>
+                                    <div>
+                                        <Typography style={{ fontSize: "24px", color: "#5824D6", fontWeight: 600 }}>{state.data === "" ? "Drag and Drop" : state.data.name}{state.data !== "" && <MdDelete style={{ color: "red", marginTop: "10px", cursor: "pointer" }} onClick={() => setState({ ...state, data: "" })} />}</Typography>
+                                        {
+                                            state.data === "" ?
+                                                <>
+                                                    <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
+                                                    <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
+                                                </>
+                                                :
+                                                ""
+                                        }
+                                    </div>
+                                </div>
                             </Grid>
                             <Grid item xs={12} style={{ marginTop: "20px", display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                 <Typography style={{ fontSize: "14px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", textTransform: "none", marginLeft: "5px", }}>{files}</Typography>

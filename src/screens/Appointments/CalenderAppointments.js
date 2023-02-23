@@ -7,6 +7,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import { useSelector, useDispatch } from 'react-redux';
 
 const localizer = momentLocalizer(moment)
 
@@ -42,22 +43,25 @@ function CalenderAppointments(props) {
         id: "PID0001",
         patient_name: "Kavi",
         test_name: "Heart Test",
-        timing: "09:00 AM",
-        'start': new Date("02/17/2023"),
-        'end': new Date("02/17/2023")
+        start_time: "09:00 AM",
+         end_time:"09:00 AM",
+        start_date: new Date("17/02/2023"),
+        'end': new Date("17/02/2023")
       },
       {
         id: "PID0002",
         patient_name: "Arun",
         test_name: "Full CheckUp",
-        timing: "10:00 AM",
-        'start': new Date("02/18/2023"),
+        start_time: "10:00 AM",
+         end_time:"10:00 AM",
+        start_date: new Date("02/18/2023"),
         'end': new Date("02/17/2023")
       },
     ],
-    patientAppointmentDetailsOpen: false,
+     patientAppointmentDetailsOpen: false,
     date: null
   })
+  const appointments = useSelector(state => state.appointmentReducer.appointments);
 
   const goToBack = (onNavigate) => {
     onNavigate("PREV");
@@ -78,26 +82,29 @@ function CalenderAppointments(props) {
   );
 
   const handleEventClick = (param) => {
-    setState({ ...state, patientAppointmentDetailsOpen: true, date: param.start })
+    setState({ ...state, patientAppointmentDetailsOpen: true, date: param.start_date})
   };
 
   const addTestClose = () => {
     setState({ ...state, patientAppointmentDetailsOpen: false })
   };
-
+  // const appointment = appointments.map((item,index)=> new Date(moment(item.start_date).format("MM/DD/YYYY")))
+  const appointment = appointments.map(item => ({ patient_name: item.patient_name, test_name: item.test_name, start_date: new Date(item.start_date), start_time: item.start_time, end_time: item.end_time }));
+console.log("appointments===========>"+JSON.stringify(appointment))
+console.log("events=>>>>>>>>>>"+JSON.stringify(state.events))
   return (
     <>
       <Grid item xs={12} style={{ display: "flex", marginTop: "20px" }}>
         <Calendar
           localizer={localizer}
-          events={state.events}
-          startAccessor="start"
-          endAccessor="end"
+          events={appointment}
+          startAccessor="start_date"
+          // endAccessor="end"
           views={['month']}
           components={{ toolbar: CalendarToolbar }}
           style={{ height: 500, width: 1200 }}
           onSelectEvent={(event) => handleEventClick(event)}
-          titleAccessor={(e) => { return state.events.length > 1 ? `Appointments : ${state.events.length}` : `Appointment : ${state.events.length}`; }}
+          titleAccessor={(e) => { return appointment.length > 1 ? `Appointments : ${appointment.length}` : `Appointment : ${appointment.length}`; }}
           // onSelectSlot={handleEventClick()}
           eventPropGetter={(event) => {
             const backgroundColor = '#5824D6';
@@ -115,7 +122,7 @@ function CalenderAppointments(props) {
             <Grid container style={{ paddingBottom: "3px", display: "flex", flexDirection: "row", justifyContent: "space-between", borderRadius: "5px", padding: "4px" }}>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", }}> Date : </Typography>
-                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", marginLeft: "5px" }}> {moment(state.date).format("DD/MM/YYYY")} </Typography>
+                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", marginLeft: "5px" }}> {moment(state.events.start_date).format("DD/MM/YYYY")} </Typography>
               </Grid>
               <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Black", }}>Appointments :  </Typography>
@@ -138,7 +145,7 @@ function CalenderAppointments(props) {
                     <StyledTableRow >
                       <StyledTableCell align={"center"}>{event.patient_name}</StyledTableCell>
                       <StyledTableCell align={"center"}>{event.test_name}</StyledTableCell>
-                      <StyledTableCell align={"center"}>{event.timing}</StyledTableCell>
+                      <StyledTableCell align={"center"}>{event.start_time}- {event.end_time}</StyledTableCell>
                     </StyledTableRow>
                   </TableBody>
                 ))}

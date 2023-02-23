@@ -1,147 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, TextField } from '@mui/material';
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function TodayAppointments(props) {
     const [state, setState] = useState({
-        // patients: [
-        //     {
-        //         id: "PID0001",
-        //         title: "title1",
-        //         patient_name: "Kavi M",
-        //         test_name: "Heart Test",
-        //         timing_start: "9:00 AM",
-        //         timing_end: "9:00 AM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0002",
-        //         title: "title2",
-        //         patient_name: "Arun S",
-        //         test_name: "Full CheckUp",
-        //         timing_start: "9:00 AM",
-        //         timing_end: "9:00 AM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0003",
-        //         title: "title2",
-        //         patient_name: "Senthil R",
-        //         test_name: "Full CheckUp",
-        //         timing_start: "9:00 AM",
-        //         timing_end: "9:00 AM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0004",
-        //         title: "title3",
-        //         patient_name: "Veni G" ,
-        //         test_name: "Blood Test",
-        //         timing_start: "12:00 PM",
-        //         timing_end: "12:00 PM",
-        //         'start': new Date("02/17/2023"),
-        //         'end': new Date("02/17/2023")
-        //     },
-        //     {
-        //         id: "PID0005",
-        //         title: "title3",
-        //         patient_name: "Kumar S",
-        //         test_name: "Blood Test",
-        //         timing_start: "12:00 PM",
-        //         timing_end: "12:00 PM",
-        //         'start': new Date("02/17/2023"),
-        //         'end': new Date("02/17/2023")
-        //     },
-        //     {
-        //         id: "PID0006",
-        //         title: "title4",
-        //         patient_name: "Pavi S",
-        //         test_name: "Heart Test",
-        //         timing_start: "2:00 PM",
-        //         timing_end: "3:00 PM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0007",
-        //         title: "title4",
-        //         patient_name: "Pavi R",
-        //         test_name: "Heart Test",
-        //         timing_start: "2:00 PM",
-        //         timing_end: "3:00 PM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0008",
-        //         title: "title4",
-        //         patient_name: "Raja R",
-        //         test_name: "Heart Test",
-        //         timing_start: "2:00 PM",
-        //         timing_end: "3:00 PM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0009",
-        //         title: "title4",
-        //         patient_name: "Mani S",
-        //         test_name: "Heart Test",
-        //         timing_start: "2:00 PM",
-        //         timing_end: "3:00 PM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0010",
-        //         title: "title4",
-        //         patient_name: "Palani S",
-        //         test_name: "Heart Test",
-        //         timing_start: "2:00 PM",
-        //         timing_end: "3:00 PM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-        //     {
-        //         id: "PID0011",
-        //         title: "title5",
-        //         patient_name: "Siva R",
-        //         test_name: "Blood Test",
-        //         timing_start: "2:00 PM",
-        //         timing_end: "2:00 PM",
-        //         'start': new Date("02/16/2023"),
-        //         'end': new Date("02/16/2023")
-        //     },
-
-        // ],
         date: new Date()
     })
 
-    const appointments = useSelector(state => state.appointmentReducer.appointments);
+    const appointment = useSelector(state => state.appointmentReducer.appointments);
 
-    const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-    const d = state.date;
-    let day = days[d.getDay()];
+    // const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+    // const d = state.date;
+    // let day = days[d.getDay()];
 
     const times = ["12:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM",
         "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
         "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM",
         "09:00 PM", "10:00 PM", "11:00 PM"];
-
+   
+    const appointments = appointment.filter((item,index)=> item.start_date === moment(state.date).format("MM/DD/YYYY"))
+       
     return (
         <>
             <Grid container spacing={1}>
-                <Grid item xs={12} style={{ display: "flex", flexDirection: "column", marginTop: "20px", marginLeft: "85px", marginBottom: "10px" }} >
-                    <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#5824D6", marginLeft: "10px" }}>{day}</Typography>
+                <Grid item xs={12} sm={5} md={6} lg={8} xl={9} style={{ display: "flex", flexDirection: "column", marginTop: "20px", marginLeft: "85px", marginBottom: "10px" }} >
+                    {/* <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#5824D6", marginLeft: "10px" }}>{day}</Typography> */}
                     <div style={{ display: "flex", justifyContent: "center", backgroundColor: "#5824D6", width: "4vw", height: "4vw", borderRadius: "50px" }}>
                         <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#fff", textAlign: "center", alignSelf: "center" }}>{moment(state.date).format("DD")}</Typography>
                     </div>
                 </Grid>
+                <Grid item xs={12} sm={4} md={4} lg={3} xl={2} style={{marginTop: "20px",}}>
+                                    <Typography style={{ fontFamily: "Avenir-Black", fontWeight: 400, fontSize: "14px", lineHeight: "24px", Letter: "0.15px" }}>Date :</Typography>
+                                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                                        <DatePicker
+                                            views={['year', 'month', 'day']}
+                                            disablePast
+                                            value={state.date}
+                                            onChange={(date) => setState({ ...state, date: date })}
+                                            renderInput={(params) =>
+                                                <TextField {...params}
+                                                    size='small'
+                                                    fullWidth
+                                                    sx={{
+                                                        backgroundColor: '#F0E9FF', fontFamily: "Avenir", "&.Mui-disabled": {
+                                                            border: "none"
+                                                        }
+                                                    }}
+                                                    InputLabelProps={{
+                                                        sx: {
+                                                            fontFamily: "Avenir",
+                                                            backgroundColor: "#F0E9FF",
+                                                            border: "2px solid #5824D6",
+                                                        }
+                                                    }}
+                                                />
+                                            }
+                                        />
+                                    </LocalizationProvider>
+                                </Grid>
                 <Grid item xs={12} style={{ marginBottom: "10px" }}>
                     {times.map((time, index) => (
                         <Grid container key={index} style={{ display: "flex", flexDirection: "row" }}>

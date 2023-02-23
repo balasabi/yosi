@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     coupons: [
-        { "id": "1", "name": "YOS150%", "code": "1st order deal", "price": "50%", "status": "Active" },
-        { "id": "2", "name": "YOS150%", "code": "1st order deal", "price": "50%", "status": "Active" },
-        { "id": "3", "name": "YOS150%", "code": "1st order deal", "price": "50%", "status": "Active" },
-        { "id": "4", "name": "YOS150%", "code": "1st order deal", "price": "50%", "status": "Active" },
-        { "id": "5", "name": "YOS150%", "code": "1st order deal", "price": "50%", "status": "Active" },
-        { "id": "6", "name": "YOS150%", "code": "1st order deal", "price": "50%", "status": "Active" },
+        { "id": "1", "name": "YOS151%", "code": "1st order deal", "price": "40%", "status": "Active" },
+        { "id": "2", "name": "YOS152%", "code": "2st order deal", "price": "20%", "status": "Active" },
+        { "id": "3", "name": "YOS153%", "code": "3st order deal", "price": "20%", "status": "Active" },
+        { "id": "4", "name": "YOS154%", "code": "4st order deal", "price": "10%", "status": "Active" },
+        { "id": "5", "name": "YOS155%", "code": "5st order deal", "price": "10%", "status": "Active" },
+        { "id": "6", "name": "YOS158%", "code": "6st order deal", "price": "10%", "status": "Active" },
     ]
 }
 

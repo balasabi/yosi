@@ -47,7 +47,7 @@ function AddUser(props) {
     })
     const dispatch = useDispatch();
     const ref = useRef();
-    const roles = ["Admin", "system Manager", "Text", "Location manager"]
+    const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"]
 
     // useEffect(() => {
     //     setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
@@ -90,6 +90,7 @@ function AddUser(props) {
             dispatch(updateUserAction(data, props.close))
         }
     };
+    
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };

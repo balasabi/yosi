@@ -26,6 +26,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         padding: "2px",
         fontFamily: 'Avenir-Heavy',
         fontSize: '1.1em',
+        paddingLeft:"30px"
     },
     [`&.${tableCellClasses.body}`]: {
         color: '#2E2E2E',
@@ -34,6 +35,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         fontFamily: "Avenir-Book",
         fontStyle: "normal",
         fontSize: '16px',
+        paddingLeft:"30px"
     },
 }))
 
@@ -162,13 +164,13 @@ function UsersManagement(props) {
         setState({ ...state, openPermission: false, isActive: false,selectedTab:"U" })
     };
 
-    const checkBoxAction = () => {
-        setState({
-            ...state,
-            isClickCheckBox: !state.isClickCheckBox,
-            selectedUser: !state.isClickCheckBox === true ? _.pluck(state.users, 'id') : []
-        })
-    }
+    // const checkBoxAction = () => {
+    //     setState({
+    //         ...state,
+    //         isClickCheckBox: !state.isClickCheckBox,
+    //         selectedUser: !state.isClickCheckBox === true ? _.pluck(state.users, 'id') : []
+    //     })
+    // }
 
     const singleSelectAction = (param) => {
         if (state.selectedUser.length > 0 && state.selectedUser.includes(param)) {
@@ -271,9 +273,11 @@ function UsersManagement(props) {
                         <Table >
                             <TableHead>
                                 <StyledTableRow>
-                                    <StyledTableCell><Checkbox
+                                   {/* <StyledTableCell>
+                                         <Checkbox 
                                         checked={state.isClickCheckBox}
-                                        onClick={() => checkBoxAction()} /></StyledTableCell>
+                                        onClick={() => checkBoxAction()} />
+                                        </StyledTableCell>*/}
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Name</Typography>
@@ -294,14 +298,15 @@ function UsersManagement(props) {
                                     <StyledTableCell>Action</StyledTableCell>
                                 </StyledTableRow>
                             </TableHead>
-                            { users.length>0 ? users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
+                            { users.length > 0 ? users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
                              <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
-                                 <StyledTableRow >
-                                        <StyledTableCell>
+                                 <StyledTableRow>
+                                        {/* <StyledTableCell>
                                             <Checkbox
                                                 checked={state.selectedUser.includes(item.id)}
                                                 onClick={() => singleSelectAction(item.id)}
-                                            /></StyledTableCell>
+                                            />
+                                            </StyledTableCell> */}
                                         <StyledTableCell>{item.first_name}{item.last_name}</StyledTableCell>
                                         <StyledTableCell>{item.email}</StyledTableCell>
                                         <StyledTableCell>{item.phone_number}</StyledTableCell>
@@ -330,7 +335,7 @@ function UsersManagement(props) {
                 <Dialog open={state.addUserOpen} onClose={handleClose} maxWidth={"sm"} PaperProps={{ sx: { borderRadius: "10px" } }}>
                 <Grid container>
                             <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                                <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => handleClose()} />
+                                <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => handleClose()} />
                             </Grid>
                         </Grid>
                         <DialogTitle>

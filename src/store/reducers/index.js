@@ -6,6 +6,8 @@ import countryReducer from './countryReducer';
 import couponReducer from './couponReducer';
 import appointmentReducer from './appointmentReducer';
 import locationReducer from './locationReducer';
+import patientReducer from './patientReducer';
+import testTypeReducer from './testTypeReducer';
 
 export const rootReducer = combineReducers({
     sessionReducer,
@@ -14,7 +16,9 @@ export const rootReducer = combineReducers({
     countryReducer,
     couponReducer,
     appointmentReducer,
-    locationReducer
+    locationReducer,
+    patientReducer,
+    testTypeReducer
 })
 
 export default rootReducer;

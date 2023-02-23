@@ -4,12 +4,17 @@ import Image from 'next/image';
 import menu from '../../../../../public/Images/menu.png';
 import yosiTop from '../../../../../public/Images/svg/LogoFinal.svg';
 import bell from '../../../../../public/Images/svg/Notification.svg';
-import back from '../../../../../public/Images/back.png';
-import go from '../../../../../public/Images/go.png';
 import { AiOutlineArrowRight, AiOutlineSearch,AiOutlineArrowLeft } from "react-icons/ai";
-
+import { useRouter } from 'next/router'
 
 function TopBar(props) {
+     const router = useRouter()
+
+     const backButtonAction =() => {  
+        if(router.pathname.split("/").splice(0, 3).join("/") !== "/dashboard") {            
+             router.back();
+        } 
+     }
 
     return (
         <>
@@ -29,7 +34,7 @@ function TopBar(props) {
                                     <Image src={yosiTop} alt="YOSI LAB" style={{ paddingLeft: "20px" }} width={140} height={49} />
                                 </Grid>
                                 <Grid item xs={3} sm={1} textAlign="left">
-                                    <IconButton aria-label="left arrow"> <AiOutlineArrowLeft style={{ width: 20, height: 20, color:"#fff" }} /></IconButton>
+                                    <IconButton aria-label="left arrow"> <AiOutlineArrowLeft style={{ width: 20, height: 20, color:"#fff" }}  onClick={() => backButtonAction() } /></IconButton>
                                     <IconButton aria-label="right arrow"><AiOutlineArrowRight style={{ width: 20, height: 20 ,color:"#AFA8C2" }} /></IconButton>
                                 </Grid>
                                 <Grid item xs={4} sm={6} textAlign='left' >

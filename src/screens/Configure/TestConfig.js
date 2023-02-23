@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Grid } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
-import Type from "./Types";
+import TestType from "./TestType";
 import Category from './Category';
 import Classification from './Classification';
 
@@ -41,7 +41,7 @@ function Test(props) {
                 <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
                 <Grid item xs={12}>
                     {state.testMode === "T" &&
-                        <Type />
+                        <TestType />
                     }
                 </Grid>
                 <Grid item xs={12}>

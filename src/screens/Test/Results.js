@@ -82,128 +82,6 @@ function Result(props) {
         testType: "",
         allLocations: "",
         date: "",
-        test: [
-            {
-                id: 1,
-                test_id: "WEL-000001",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 2,
-                test_id: "WEL-000002",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 3,
-                test_id: "WEL-000003",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 4,
-                test_id: "WEL-000004",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 5,
-                test_id: "WEL-000005",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 6,
-                test_id: "WEL-000006",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 7,
-                test_id: "WEL-000007",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 8,
-                test_id: "WEL-000008",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 9,
-                test_id: "WEL-000009",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 10,
-                test_id: "WEL-000010",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 11,
-                test_id: "WEL-000011",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-            {
-                id: 12,
-                test_id: "WEL-000012",
-                patient_name: "Kenny sebastin",
-                test_type: "Insurance CAB Test - Camelback",
-                collection_date: "12/13/2022 01:57:25",
-                tube_number: "T5000",
-                result: "Negative",
-                analysis: "Result available"
-            },
-        ],
         isClickCheckBox: false,
         selectedResults: []
     })
@@ -427,8 +305,8 @@ function Result(props) {
                                             </StyledTableCell>
                                             {/* <StyledTableCell className='tableContent'>{test.test_id}</StyledTableCell> */}
                                             <StyledTableCell className='tableContent'>{index + 1}</StyledTableCell>
-                                            <StyledTableCell className='tableContent'>{test.name}</StyledTableCell>
-                                            <StyledTableCell className='tableContent'>{test.location_test_type}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>{test.patient_name}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>{test.test_type}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.location}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.tube_number}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.result}</StyledTableCell>
@@ -466,8 +344,8 @@ function Result(props) {
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test order</DialogTitle>
-                    <DialogContent>
-                        <Grid container>
+                    <DialogContent >
+                        <Grid container style={{ paddingTop: '10px' }}>
                             <Grid item xs={12} >
                                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE", marginTop: "10px", marginBottom: "10px" }}>Test order information</Typography>
                             </Grid>
@@ -500,21 +378,21 @@ function Result(props) {
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
-                                            placeholder={"Location test type "}
+                                            placeholder={"Test type "}
                                             fullWidth
                                             // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#FBF7F4" } }}
                                             value={state.location_test_type}
                                             onChange={(event) => setState({ ...state, location_test_type: event.target.value })}
                                         />
                                     </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
                                             placeholder={"Ordering provider(Optional)"}
                                             fullWidth
                                             value={state.ordering_provider}
                                             onChange={(event) => setState({ ...state, ordering_provider: event.target.value })}
                                         />
-                                    </Grid>
+                                    </Grid> */}
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                        <CustomInput size="small"
                                            placeholder={"Test lab"}

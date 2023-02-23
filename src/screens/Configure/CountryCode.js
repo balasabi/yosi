@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
     Typography, Grid, Table, TableHead, TableRow, styled, TableCell, tableCellClasses, FormControlLabel, RadioGroup, Radio,
     tableRowClasses, TableBody, TablePagination, TableFooter, Select, MenuItem, FormControl, Dialog, DialogTitle, DialogContent, TextField,
-    TableContainer, Paper
+    TableContainer, Paper,
 } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import plus from "../../../public/Images/plus.png";
@@ -11,6 +11,9 @@ import Image from 'next/image';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { createCountryAction, updateCountryAction } from "../../store/actions/countryAction";
 import { useDispatch, useSelector } from 'react-redux';
+import InputBase from "@mui/material/InputBase";
+
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: "#F2F5F6",
@@ -35,26 +38,46 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
+
+
+const CustomInput = styled(InputBase)(({ theme }) => ({
+    "label + &": {
+      marginTop: theme.spacing(3)
+    },
+    "& .MuiInputBase-input": {
+      position: "relative",
+      fontSize: '1em',
+      padding: "10px",
+      backgroundColor: "#F0E9FF",
+      borderRadius: "5px",
+      fontFamily: [
+        'Avenir-Book'
+      ].join(","),
+      "&:focus": {
+        border: 0,
+        backgroundColor: "#F0E9FF",
+        border: "2px solid #6425FE",
+      },
+      "&:active": {
+        border: "2px solid #6425FE",
+        backgroundColor: "#F0E9FF"
+      }
+    }
+  }));
+
 function CountryCode() {
 
     const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
-        statusFilter: "",
-        // countryCode: [
-        //     { 'code': '+91', 'name': 'India', 'iso': 'IND', 'status': 'Active' },
-        //     { 'code': '+1', 'name': 'United States of America', 'iso': 'USA', 'status': 'Active' },
-        //     { 'code': '+4', 'name': 'Colombia', 'iso': 'COL', 'status': 'Active' },
-        //     { 'code': '+5', 'name': 'Pakistan', 'iso': 'PAK', 'status': 'Active' },
-        //     { 'code': '+34', 'name': 'Africa', 'iso': 'AFR', 'status': 'Active'},
-        // ],
+        statusFilter: "All",       
         countryCodeOpen: false,
         code: "",
         name: "",
         iso: "",
         status: "Active",
         mode: "ADD"
-    },
+     },
     )
 
     const dispatch = useDispatch();
@@ -80,18 +103,19 @@ function CountryCode() {
         setState({ ...state, countryCodeOpen: false })
     };
 
-    const submit = async () => {
-        // alert("WIP")
-        let { name, code, iso, status } = state;
-        let data = {}
+    const submit = async () => {   
+        let { name, code, iso, status,id } = state;
+        let data = {}     
         data.name = name;
         data.code = code;
         data.iso = iso;
         data.status = status;
         if (state.mode === "ADD") {
+            data.id = country.length+1
             dispatch(createCountryAction(data))
         }
         else {
+             data.id =id
             dispatch(updateCountryAction(data))
         }
         setState({ ...state, countryCodeOpen: false })
@@ -105,12 +129,16 @@ function CountryCode() {
         setState({ ...state, countryCodeOpen: true, mode: "ADD" })
     };
 
-    const editAction = () => {
-        setState({ ...state, countryCodeOpen: true, mode: "EDIT" })
+    const editAction = (param) => {
+         let result = country.filter((item) => item.id === param )[0]
+        setState({ ...state, id:result.id,code: result.code,name: result.name,iso: result.iso,status: result.status,countryCodeOpen: true, mode: "EDIT" })
     };
 
+
+    let displayRecord = state.statusFilter ==="All"? country : country.filter((item) => item.status === state.statusFilter)
+    
     return (
-        <>
+         <>
             <Grid container>
                 <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
                 <Grid item xs={12} display={"flex"} flexDirection={'row'}>
@@ -119,7 +147,7 @@ function CountryCode() {
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={plus} alt='union' width={14} height={15} />
                                 <Typography style={{ marginLeft: "5px" }}>
-                                    Add country code
+                                    Add Country
                                 </Typography>
                             </CustomizedButtons>
                         </Grid>
@@ -154,7 +182,7 @@ function CountryCode() {
                                     <StyledTableCell>Action</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {country.length>0 ? !!country && country.map((code, index) => (
+                            {displayRecord.length>0 ? !!displayRecord && displayRecord.map((code, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow>
                                         <StyledTableCell>{code.code}</StyledTableCell>
@@ -162,7 +190,7 @@ function CountryCode() {
                                         <StyledTableCell>{code.iso}</StyledTableCell>
                                         <StyledTableCell>{code.status}</StyledTableCell>
                                         <StyledTableCell>
-                                            <div style={{ display: "flex", flexDirection: "row" }} onClick={() => editAction()}>
+                                            <div style={{ display: "flex", flexDirection: "row" }} onClick={() => editAction(code.id)}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -178,7 +206,7 @@ function CountryCode() {
                             <TableFooter>
                                 <TableRow align='left'>
                                     <TablePagination
-                                        count={!!country && country.length}
+                                        count={!!displayRecord && displayRecord.length}
                                         page={state.page}
                                         onPageChange={handleChangePage}
                                         rowsPerPage={state.rowsPerPage}
@@ -206,7 +234,7 @@ function CountryCode() {
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                    <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
@@ -215,7 +243,7 @@ function CountryCode() {
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                    <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
@@ -224,7 +252,7 @@ function CountryCode() {
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"ISO"}
                                             fullWidth
                                             inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
@@ -234,7 +262,7 @@ function CountryCode() {
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
                                         <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
-                                        <RadioGroup defaultValue="Active" row onChange={(event) => setState({ ...state, status: event.target.value })}>
+                                        <RadioGroup defaultValue= {state.mode ==="ADD" ? "Active": state.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
                                             <FormControlLabel value="Active" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Active" />
                                             <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Inactive" />
                                         </RadioGroup>
@@ -245,7 +273,7 @@ function CountryCode() {
                                         Cancel
                                     </CustomizedButtons>
                                     <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
-                                        Submit
+                                       {state.mode === "Active " ?  "Submit":"Update"}
                                     </CustomizedButtons>
                                 </Grid>
                             </Grid>

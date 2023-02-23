@@ -41,8 +41,8 @@ function RolesAndPermission(props) {
 
     const [role ,setRole] = useState([]);
 
-    const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System admin", "Lab executive", "PSR tech", "Logistics", "Client Manager", "Client physician", "DB"];
-    const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test upload results", "Location", "Location Test Type", "Test Group", "User and Access"]
+    const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"];
+    const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test Upload Results", "Location", "Location Test Type", "Test Group", "User and Access"]
    const access = [
          'View',
         'Edit',
