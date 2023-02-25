@@ -232,7 +232,7 @@ function CouponCode() {
                                         <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -241,7 +241,7 @@ function CouponCode() {
                                         <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
@@ -251,7 +251,7 @@ function CouponCode() {
                                             value={state.price}
                                             placeholder={"Price"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             onChange={(event) => setState({ ...state, price: event.target.value })}
                                         />
                                     </Grid>

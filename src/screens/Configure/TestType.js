@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, TableRow, tableCellClasses, styled, TableCell, Table, TableBody, tableRowClasses, FormControl,
-    Select, MenuItem, Dialog, DialogTitle, DialogContent, TextField, FormControlLabel, RadioGroup, Radio
+    Select, MenuItem, Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase
 } from '@mui/material';
 import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
@@ -32,6 +32,31 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     }
 }));
 
+const CustomInput = styled(InputBase)(({ theme }) => ({
+    "label + &": {
+        marginTop: theme.spacing(3)
+    },
+    "& .MuiInputBase-input": {
+        position: "relative",
+        fontSize: '1em',
+        padding: "10px",
+        backgroundColor: "#F0E9FF",
+        borderRadius: "5px",
+        fontFamily: [
+            'Avenir-Book'
+        ].join(","),
+        "&:focus": {
+            border: 0,
+            backgroundColor: "#F0E9FF",
+            border: "2px solid #6425FE",
+        },
+        "&:active": {
+            border: "2px solid #6425FE",
+            backgroundColor: "#F0E9FF"
+        }
+    }
+}));
+
 function TestType(props) {
     const [state, setState] = useState({
         test_type: [],
@@ -44,8 +69,9 @@ function TestType(props) {
         result: "",
         date: "",
         addTestTypeOpen: false,
-        all_status: "",
-        mode: "ADD"
+        statusFilter: "",
+        mode: "ADD",
+        searchText: null,
     })
     const dispatch = useDispatch();
     const test_type = useSelector(state => state.testTypeReducer.test_type);
@@ -56,7 +82,7 @@ function TestType(props) {
 
     const handleChange = (event, param) => {
         if (param === "S") {
-            setState({ ...state, all_status: event.target.value });
+            setState({ ...state, statusFilter: event.target.value });
         } else if (param === "R") {
             setState({ ...state, result: event.target.value });
         } else if (param === "D") {
@@ -78,13 +104,13 @@ function TestType(props) {
         data.description = description;
         data.status = status;
         if (state.mode === "ADD") {
-            data.id = test_type.length+1
+            data.id = test_type.length + 1
             dispatch(createTestTypeAction(data))
-         }
+        }
         else {
-            data.id =id
+            data.id = id
             dispatch(updateTestTypeAction(data))
-         }
+        }
         setState({ ...state, addTestTypeOpen: false })
     };
 
@@ -103,6 +129,8 @@ function TestType(props) {
     const testTypeAction = (param) => {
         Router.push({ pathname: '/configure/view-test-type', query: "testTypeId=" + param })
     }
+    let displayTestTypeRecord = state.statusFilter === "" || state.statusFilter === "All" ? test_type : test_type.filter((item) => item.status === state.statusFilter)
+
     return (
         <>
             <Grid container>
@@ -124,7 +152,7 @@ function TestType(props) {
                         </Grid>
                         <Grid item xs={5} sm={5} md={5} lg={5} xl={5} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "10px" }}>
                             <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
+                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
                                 <Select
                                     value={state.result}
                                     onChange={(e) => handleChange(e, "R")}
@@ -134,20 +162,20 @@ function TestType(props) {
                                     <MenuItem value={"Negative"}>Negative</MenuItem>
                                     <MenuItem value={"Positive"}>Positive</MenuItem>
                                 </Select>
-                            </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
+                            </FormControl> */}
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRadius: 0 }} size="small">
                                 <Select
-                                    value={state.all_status}
+                                    value={state.statusFilter}
                                     onChange={(e) => handleChange(e, "S")}
                                     displayEmpty
-                                    renderValue={state.all_status !== "" ? undefined : () => <Placeholder>Status</Placeholder>}
+                                    renderValue={state.statusFilter !== "" ? undefined : () => <Placeholder>Status</Placeholder>}
                                 >
                                     <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"Active"}>Active</MenuItem>
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, borderRadius: 0 }} size="small">
+                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, borderRadius: 0 }} size="small">
                                 <Select
                                     value={state.date}
                                     onChange={(e) => handleChange(e, "D")}
@@ -157,13 +185,13 @@ function TestType(props) {
                                         state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
                                     }>
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container>
-                        {!!test_type && test_type.map((type, index) =>
+                        {!!displayTestTypeRecord && displayTestTypeRecord.map((type, index) =>
                             <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={index.toString()}>
                                 <Table>
                                     <TableBody>
@@ -223,44 +251,44 @@ function TestType(props) {
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Display name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.display_name}
                                             onChange={(event) => setState({ ...state, display_name: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                                        <TextField size="small"
+                                        <CustomInput size="small"
                                             placeholder={"Description"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.description}
                                             onChange={(event) => setState({ ...state, description: event.target.value })}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
                                         <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
-                                        <RadioGroup defaultValue="Active" row onChange={(event) => setState({ ...state, status: event.target.value })}>
+                                        <RadioGroup defaultValue={state.mode === "ADD" ? "Active" : state.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
                                             <FormControlLabel value="Active" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Active" />
                                             <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Inactive" />
                                         </RadioGroup>

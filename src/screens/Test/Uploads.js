@@ -11,6 +11,8 @@ import { useDropzone } from "react-dropzone";
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import { MdDelete } from "react-icons/md";
 import CustomizedButtons from '../../components/CustomButton';
+import { useSelector, useDispatch } from 'react-redux';
+import Excel from 'exceljs'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,7 +34,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function Uploads(props) {
-
+    const uploads = useSelector(state => state.testResultReducer.uploads);
+    console.log("upload===>" + JSON.stringify(uploads))
     const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
@@ -41,118 +44,11 @@ function Uploads(props) {
         status: "",
         date: "",
         data: "",
-        upload: [
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-            {
-                test_upload_name: "T-00000126",
-                tube_number: "NT208255979",
-                result: "Negative",
-                file_name: "API",
-                created_by: "-",
-                created_date: "12/21/2022",
-                status: "Success",
-            },
-        ],
-        uploadTestOpen: false
+        uploadTestOpen: false,
+        displayUpload: uploads
     })
+
+    // const uploads = useSelector(state => state.testResultReducer.uploads);
 
     const router = useRouter();
     const { isDragActive, acceptedFiles } = useDropzone({})
@@ -171,15 +67,16 @@ function Uploads(props) {
     };
 
     const Placeholder = ({ children }) => {
-        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
+        return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
     const handleChange = (e, param) => {
         if (param === "R") {
-            setState({ ...state, result: e.target.value })
+            console.log("&&&&" + state.result)
+            setState({ ...state, result: e.target.value, displayUpload: e.target.value === "All" ? uploads : uploads.filter((item) => item.result === e.target.value) })
         }
         else if (param === "S") {
-            setState({ ...state, status: e.target.value })
+            setState({ ...state, status: e.target.value, displayUpload: e.target.value === "All" ? uploads : uploads.filter((item) => item.status === e.target.value) })
         }
         else if (param === "D") {
             setState({ ...state, date: e.target.value })
@@ -192,33 +89,51 @@ function Uploads(props) {
 
     const dragOver = (e) => {
         e.preventDefault();
-    }
+    };
 
     const dragEnter = (e) => {
         e.preventDefault();
-    }
+    };
 
     const dragLeave = (e) => {
         e.preventDefault();
-    }
+    };
 
     const dropOn = (e) => {
         e.preventDefault();
         const files = e.dataTransfer.files
         let file = files[0]
         setState({ ...state, data: file })
-    }
+    };
 
     const fileHandler = (e) => {
         e.preventDefault();
         let file = e.target.files[0];
         setState({ ...state, data: file })
-    }
+    };
 
-    const handleSubmit = () => {
-        alert("WIP")
-    }
+    const handleSubmit = async (param) => {
+        console.log("****param****" + JSON.stringify(param))
 
+        const workbook = new Excel.Workbook();
+        await workbook.xlsx.readFile(param).then(() =>{
+            const ws = workbook.getWorksheet('Account');
+            try{
+                ws.eachRow({ includeEmpty: true }, async (row, rowNumber) => {
+                    if(rowNumber > 0){
+
+                    setState({...state, status:row.getCell(4).value})
+                    }
+                })
+            }catch{
+
+            }
+        } 
+        )
+        // console.log("********" + JSON.stringify(workbook))
+
+    };
+    // console.log("********" + JSON.stringify(state.data))
     return (
         <>
             <Grid container>
@@ -252,9 +167,7 @@ function Uploads(props) {
                                     onChange={(e) => handleChange(e, "S")}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>
-                                    }>
+                                    renderValue={state.status !== "" ? undefined : () => <Placeholder>Status</Placeholder>}>
                                     <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"Success"}>Success</MenuItem>
                                     <MenuItem value={"Failure"}>Failure</MenuItem>
@@ -289,7 +202,7 @@ function Uploads(props) {
                                     <StyledTableCell >Status</StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {state.upload.length > 0 ? !!state.upload && state.upload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
+                            {state.displayUpload.length > 0 ? state.displayUpload && state.displayUpload.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((upload, index) => (
                                 <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                     <StyledTableRow >
                                         <StyledTableCell className='tableContent'>{upload.test_upload_name}</StyledTableCell>
@@ -311,7 +224,7 @@ function Uploads(props) {
                     </TableContainer>
                     <TablePagination
                         component={"div"}
-                        count={!!state.upload && state.upload.length}
+                        count={!!state.displayUpload && state.displayUpload.length}
                         page={state.page}
                         onPageChange={handleChangePage}
                         rowsPerPage={state.rowsPerPage}
@@ -330,31 +243,31 @@ function Uploads(props) {
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={6} display="flex">
-                            <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", fontWeight: "bold", lineHeight: "10px", fontFamily: "Avenir", textTransform: "none", textAlign: "center", padding: "2px 10px", borderRadius: "5px", cursor: "pointer", marginTop:"10px", background: "#5824D6" }}>
-                                <div >
-                                    <input
-                                        accept=".xls,.xlsx"
-                                        style={{ display: "none" }}
-                                        id="text-button-file2"
-                                        type="file"
-                                        multiple
-                                        onChange={(e) => fileHandler(e)}
-                                    />
-                                    <label htmlFor="text-button-file2" style={{ cursor: "pointer" }}>
-                                        {!isDragActive &&
-                                            <p>Browse File</p>
-                                        } </label>
-                                </div>
-                            </Typography>
+                                <Typography style={{ backgroundColor: "#024751", color: "#fff", fontSize: "14px", fontStyle: "normal", fontWeight: "bold", lineHeight: "10px", fontFamily: "Avenir-Book", textTransform: "none", textAlign: "center", padding: "2px 10px", borderRadius: "5px", cursor: "pointer", marginTop: "10px", background: "#5824D6" }}>
+                                    <div >
+                                        <input
+                                            accept=".xls,.xlsx"
+                                            style={{ display: "none" }}
+                                            id="text-button-file2"
+                                            type="file"
+                                            multiple
+                                            onChange={(e) => fileHandler(e)}
+                                        />
+                                        <label htmlFor="text-button-file2" style={{ cursor: "pointer" }}>
+                                            {!isDragActive &&
+                                                <p>Browse File</p>
+                                            } </label>
+                                    </div>
+                                </Typography>
                             </Grid>
                             <Grid item xs={6}>
-                            { state.data !== "" ?
-                                <CustomizedButtons variant={"contained"} style={{ padding: "5px 10px 5px 10px", marginLeft: "5px", fontSize:"14px", marginTop: "10px", float: "right" }} onClick={ () => handleSubmit() }>
-                                    <Typography>
-                                        Submit
-                                    </Typography>
-                                </CustomizedButtons>
-                                : "" }
+                                {state.data !== "" ?
+                                    <CustomizedButtons variant={"contained"} style={{ padding: "5px 10px 5px 10px", marginLeft: "5px", fontSize: "14px", marginTop: "10px", float: "right" }} onClick={() => handleSubmit(state.data)}>
+                                        <Typography>
+                                            Submit
+                                        </Typography>
+                                    </CustomizedButtons>
+                                    : ""}
                             </Grid>
                             <Grid item xs={12} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                 <div style={{ border: "1px dashed #998E8A", marginTop: "20px", borderRadius: "5px", display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: '#F7F7F7', paddingTop: "50px", paddingBottom: "50px", paddingRight: "180px", paddingLeft: "180px" }}

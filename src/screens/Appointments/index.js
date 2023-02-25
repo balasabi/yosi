@@ -21,18 +21,18 @@ function Appointments(props) {
         addAppointmentOpen: false,
         patient_name: "",
         test_name: "",
-        date: new Date(),
+        date: null,
         start_time: null,
         end_time: null,
     })
-    const initialState=()=>{
+    const initialState = () => {
         setState({
             patient_name: "",
-        test_name: "",
-        date: new Date(),
-        start_time: null,
-        end_time: null
-    })
+            test_name: "",
+            date: new Date(),
+            start_time: null,
+            end_time: null
+        })
     }
     const dispatch = useDispatch();
     const buttonAction = (param) => {
@@ -51,7 +51,7 @@ function Appointments(props) {
         data.start_time = moment(start_time).format("hh:mm A");
         data.end_time = moment(end_time).format("hh:mm A");
         dispatch(createAppointmentAction(data))
-         setState({ ...state, addAppointmentOpen: false })
+        setState({ ...state, addAppointmentOpen: false })
         // initialState();
     };
 
@@ -107,9 +107,9 @@ function Appointments(props) {
                     <DialogContent>
                         <Grid item xs={12} style={{ paddingTop: "20px" }}>
                             <Grid container spacing={2}>
-                            <Grid item xs={12} >
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE",  }}>Appointment information</Typography>
-                            </Grid>
+                                <Grid item xs={12} >
+                                    <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE", }}>Appointment information</Typography>
+                                </Grid>
                                 <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                                     <TextField size='small'
                                         fullWidth
@@ -133,13 +133,13 @@ function Appointments(props) {
                                     </Select>
                                 </Grid>
                                 <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
-                                    <Typography style={{ fontFamily: "Avenir-Black", fontWeight: 400, fontSize: "14px", lineHeight: "24px", Letter: "0.15px" }}>Date :</Typography>
                                     <LocalizationProvider dateAdapter={AdapterMoment}>
                                         <DatePicker
                                             views={['year', 'month', 'day']}
                                             disablePast
                                             value={state.date}
                                             onChange={(date) => setState({ ...state, date: date })}
+                                            inputFormat="MM/DD/YYYY"
                                             renderInput={(params) =>
                                                 <TextField {...params}
                                                     size='small'
@@ -148,6 +148,10 @@ function Appointments(props) {
                                                         backgroundColor: '#F0E9FF', fontFamily: "Avenir", "&.Mui-disabled": {
                                                             border: "none"
                                                         }
+                                                    }}
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        placeholder: "Select date"
                                                     }}
                                                     //   className={"input"}
                                                     InputLabelProps={{
@@ -163,15 +167,19 @@ function Appointments(props) {
                                     </LocalizationProvider>
                                 </Grid>
                                 <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
-                                    <Typography style={{ fontFamily: "Avenir-Black", fontWeight: 400, fontSize: "14px", lineHeight: "24px", Letter: "0.15px" }}>Start Time :</Typography>
                                     <LocalizationProvider dateAdapter={AdapterMoment}>
                                         <TimePicker
                                             value={state.start_time}
                                             onChange={(time) => setState({ ...state, start_time: time })}
+                                            inputFormat="hh:mm A"
                                             renderInput={(params) =>
                                                 <TextField {...params} size='small'
                                                     fullWidth
                                                     sx={{ backgroundColor: '#F0E9FF', fontFamily: "Avenir", }}
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        placeholder: "Select start time"
+                                                    }}
                                                     InputLabelProps={{
                                                         sx: {
                                                             fontFamily: "Avenir",
@@ -183,15 +191,19 @@ function Appointments(props) {
                                     </LocalizationProvider>
                                 </Grid>
                                 <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
-                                    <Typography style={{ fontFamily: "Avenir-Black", fontWeight: 400, fontSize: "14px", lineHeight: "24px", Letter: "0.15px" }}>End Time :</Typography>
                                     <LocalizationProvider dateAdapter={AdapterMoment}>
                                         <TimePicker
                                             value={state.end_time}
                                             onChange={(time) => setState({ ...state, end_time: time })}
+                                            inputFormat="hh:mm A"
                                             renderInput={(params) =>
                                                 <TextField {...params} size='small'
                                                     sx={{ backgroundColor: '#F0E9FF', fontFamily: "Avenir", }}
                                                     fullWidth
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        placeholder: "Select end time"
+                                                    }}
                                                     InputLabelProps={{
                                                         sx: {
                                                             fontFamily: "Avenir",

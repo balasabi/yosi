@@ -3,9 +3,8 @@ import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import Topbar from "./TopBar";
 import Sidebar from "./SideBar";
-import { Snackbar } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-
 
 const drawerWidth = 250;
 
@@ -58,12 +57,19 @@ export default function AdminLayout(props) {
 
     const dispatch = useDispatch();
 
+    const alert = useSelector(state => state.testResultReducer.alert)
+    console.log("alert===>" + JSON.stringify(alert))
+
     const handleDrawerOpen = () => {
         setOpen(!open);
     };
 
-   
-    return (    
+    const handleClose = () => {
+        !alert
+    }
+
+
+    return (
         <>
             <Topbar isOpen={open} handleDrawerOpen={() => handleDrawerOpen()} />
             <Drawer variant="permanent" open={open} PaperProps={{ sx: { marginTop: 8 } }}>
@@ -74,6 +80,11 @@ export default function AdminLayout(props) {
                 paddingTop: 75,
                 marginLeft: open === true ? "250px" : "125px"
             }}>
+                <Snackbar open={alert} autoHideDuration={1000} onClose ={() => handleClose()} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                    <Alert severity="success" sx={{ width: '100%' }}>
+                        Report successfully sent...
+                    </Alert>
+                </Snackbar>
                 {/* {!!alertMessage &&
                                         <Snackbar
                                             open={openAlert}

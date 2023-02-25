@@ -22,9 +22,9 @@ function TodayAppointments(props) {
         "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
         "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM", "07:00 PM", "08:00 PM",
         "09:00 PM", "10:00 PM", "11:00 PM"];
-   
-    const appointments = appointment.filter((item,index)=> item.start_date === moment(state.date).format("MM/DD/YYYY"))
-       
+
+    const appointments = appointment.filter((item, index) => item.start_date === moment(state.date).format("MM/DD/YYYY"))
+
     return (
         <>
             <Grid container spacing={1}>
@@ -34,35 +34,35 @@ function TodayAppointments(props) {
                         <Typography style={{ fontFamily: "Avenir-Black", fontSize: "16px", color: "#fff", textAlign: "center", alignSelf: "center" }}>{moment(state.date).format("DD")}</Typography>
                     </div>
                 </Grid>
-                <Grid item xs={12} sm={4} md={4} lg={3} xl={2} style={{marginTop: "20px",}}>
-                                    <Typography style={{ fontFamily: "Avenir-Black", fontWeight: 400, fontSize: "14px", lineHeight: "24px", Letter: "0.15px" }}>Date :</Typography>
-                                    <LocalizationProvider dateAdapter={AdapterMoment}>
-                                        <DatePicker
-                                            views={['year', 'month', 'day']}
-                                            disablePast
-                                            value={state.date}
-                                            onChange={(date) => setState({ ...state, date: date })}
-                                            renderInput={(params) =>
-                                                <TextField {...params}
-                                                    size='small'
-                                                    fullWidth
-                                                    sx={{
-                                                        backgroundColor: '#F0E9FF', fontFamily: "Avenir", "&.Mui-disabled": {
-                                                            border: "none"
-                                                        }
-                                                    }}
-                                                    InputLabelProps={{
-                                                        sx: {
-                                                            fontFamily: "Avenir",
-                                                            backgroundColor: "#F0E9FF",
-                                                            border: "2px solid #5824D6",
-                                                        }
-                                                    }}
-                                                />
-                                            }
-                                        />
-                                    </LocalizationProvider>
-                                </Grid>
+                <Grid item xs={12} sm={4} md={4} lg={3} xl={2} style={{ marginTop: "20px", }}>
+                    <Typography style={{ fontFamily: "Avenir-Black", fontWeight: 400, fontSize: "14px", lineHeight: "24px", Letter: "0.15px" }}>Date :</Typography>
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <DatePicker
+                            views={['year', 'month', 'day']}
+                            disablePast
+                            value={state.date}
+                            onChange={(date) => setState({ ...state, date: date })}
+                            renderInput={(params) =>
+                                <TextField {...params}
+                                    size='small'
+                                    fullWidth
+                                    sx={{
+                                        backgroundColor: '#F0E9FF', fontFamily: "Avenir", "&.Mui-disabled": {
+                                            border: "none"
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            fontFamily: "Avenir",
+                                            backgroundColor: "#F0E9FF",
+                                            border: "2px solid #5824D6",
+                                        }
+                                    }}
+                                />
+                            }
+                        />
+                    </LocalizationProvider>
+                </Grid>
                 <Grid item xs={12} style={{ marginBottom: "10px" }}>
                     {times.map((time, index) => (
                         <Grid container key={index} style={{ display: "flex", flexDirection: "row" }}>

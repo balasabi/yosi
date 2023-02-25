@@ -34,17 +34,17 @@ function AddLocations(props) {
     const [state, setState] = useState({
         id: null,
         locationCode: "",
-        manager: '',
+        manager: "",
         status: 'Active',
         address: '',
         name: '',
         closeDialog: null
     })
     const dispatch = useDispatch();
-
+    const location = useSelector(state => state.locationReducer.location);
     useEffect(() => {
         setState({ ...state, manager: props.data.manager, address: props.data.address, locationCode:props.data.location_code, name:props.data.name, id:props.data.id, status:props.data.status })
-    }, [])
+}, [])
 
     const handleSubmit = () => {
         let data = {};
@@ -56,12 +56,14 @@ function AddLocations(props) {
         data.name = state.name;
 
         if (props.mode === "ADD") {
+            data.id = location.length+1
             dispatch(createLocationAction(data))
-            // console.log("****submit******" + JSON.stringify(data))
+            //  console.log("****submit******" + JSON.stringify(data))
         }
         else {
+            data.id =props.data.id
             dispatch(updateLocationAction(data))
-            // console.log("****update******" + JSON.stringify(data))
+            //  console.log("****update******" + JSON.stringify(data))
         }
         setState({ ...state })
         props.close()
@@ -97,7 +99,7 @@ function AddLocations(props) {
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
                             <Typography style={{ fontWeight: "bold", paddingRight: "7px" }}>Status</Typography>
-                            <RadioGroup defaultValue="Active" row onChange={(e) => setState({ ...state, status: e.target.value })}>
+                            <RadioGroup defaultValue={props.mode ==="ADD" ? "Active": props.data.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
                                 <FormControlLabel value="Active" control={<Radio sx={{ color: '#6425FE', '&.Mui-checked': { color: '#6425FE' } }} />} label="Active" />
                                 <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#6425FE', '&.Mui-checked': { color: '#6425FE' } }} />} label="Inactive" />
                             </RadioGroup>

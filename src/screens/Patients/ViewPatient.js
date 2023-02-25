@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Accordion, AccordionSummary, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Grid, Typography, AccordionDetails, } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 
@@ -16,44 +16,99 @@ function ViewPatient(props) {
 
     return (
         <>
-            <Grid container rowSpacing={3} justifyContent='center' alignItems='center'>
-                <Grid item xs={12}>
-                    <Typography className='header'>View Patient</Typography>
-                </Grid>
+            <Grid container rowSpacing={3} justifyContent='center' alignItems='center' style={{ marginTop: "20px", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 5%), 0px 1px 3px 4px rgb(0 0 0 / 5%)', borderRadius: "5px" }}>
                 <Grid item xs={12} style={{ background: "rgba(100, 37, 254, 0.1)", padding: "15px", borderRadius: '5px' }}>
-                    <Typography className='subHeading'>Patient information</Typography>
+                    <Typography style={{ color: "#38148E", letterSpacing: "0.4px", fontSize: "20px", lineHeight: "20px", fontFamily: "Avenir-Bold" }}>
+                        Patient information
+                    </Typography>
                 </Grid>
-                <Grid item xs={12} style={{paddingBottom:'20px'}}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <Typography>Name: {!!patient && patient.name}</Typography>
+                <Grid item xs={12} style={{ padding: '15px', marginTop: "10px" }}>
+                    <Grid container spacing={2} >
+                        <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
+                            <Grid container style={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item xs={4}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Bold", }}>
+                                        Name:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book", }}>
+                                        {!!patient && patient.name}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                        {/* <Grid item xs={6}>
-                            <Typography>Last Name : {!!patient && patient.last_name}</Typography>
-                        </Grid> */}
-                        <Grid item xs={6}>
-                            <Typography>Email: {!!patient && patient.email}</Typography>
+                        <Grid item xs={6} style={{ display: "flex", flexDirection: "row", }}>
+                            <Grid container style={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item xs={4}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Bold", }}>
+                                        Email:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book", }}>
+                                        {!!patient && patient.email}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography>Phone number: {!!patient && patient.phone}</Typography>
+                        <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
+                            <Grid container style={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item xs={4}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Bold", }}>
+                                        Phone Number:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book", }}>
+                                        {!!patient && patient.phone_number}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                            <Typography>Date of birth: {!!patient && patient.dob}</Typography>
+                        <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
+                            <Grid container style={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item xs={4}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Bold", }}>
+                                        DOB:
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={8}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book", }}>
+                                        {!!patient && patient.dob}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
+            </Grid>
+            <Grid container rowSpacing={3} justifyContent='center' alignItems='center' style={{ marginTop: "20px", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 5%), 0px 1px 3px 4px rgb(0 0 0 / 5%)', borderRadius: "5px" }}>
                 <Grid item xs={12} style={{ background: "rgba(100, 37, 254, 0.1)", padding: "15px", borderRadius: '5px' }}>
-                    <Typography className='subHeading'>Test History</Typography>
+                    <Typography style={{ color: "#38148E", letterSpacing: "0.4px", fontSize: "20px", lineHeight: "20px", fontFamily: "Avenir-Bold" }}>
+                    Test History
+                    </Typography>
                 </Grid>
-                <Grid item xs={12}>
-                    <Accordion>
-                        <AccordionSummary>
-                            Blood Culture
-                        </AccordionSummary>
-                    </Accordion>
+                <Grid item xs={12} style={{ padding: '15px', marginTop: "10px" }}>
+                    <Grid container spacing={2} >
+                        <Grid item xs={6} style={{ display: "flex", flexDirection: "row" }}>
+                            <Grid container style={{ display: "flex", flexDirection: "row" }}>
+                                <Grid item xs={4}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Bold", }}>
+                                    Blood Culture
+                                    </Typography>
+                                </Grid>
+                                {/* <Grid item xs={8}>
+                                    <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book", }}>
+                                        {!!patient && patient.name}
+                                    </Typography>
+                                </Grid> */}
+                            </Grid>
+                        </Grid>
+                      </Grid>
                 </Grid>
             </Grid>
-        </>
+           </>
     )
 }
 

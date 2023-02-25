@@ -1,14 +1,16 @@
-import { testResult, fetchTestResult } from '../reducers/testResultReducer';
+import { testResult, sendTestResult } from '../reducers/testResultReducer';
 
 export function addTestResultAction(data) {
 	return async dispatch => {
 		dispatch(testResult(data))
-		console.log("******addTestResultAction******"+JSON.stringify(data))
 	}
 }
-// export function fetchTestResultAction(data) {
-// 	return async dispatch => {
-// 		dispatch(fetchTestResult(data))
-// 		console.log("******fetchTestResultAction******"+JSON.stringify(data))
-// 	}
-// }
+
+export function sendResultAction( state ) {
+	return async dispatch => {
+		console.log("*****"+JSON.stringify(state.alert))
+		dispatch(sendTestResult( state.alert))
+		
+	}
+}
+

@@ -1,5 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, styled, tableCellClasses, tableRowClasses, TableRow, Grid, Button, TablePagination, Typography, Paper, TableFooter, DialogTitle, Dialog, DialogContent } from '@mui/material';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, styled, tableCellClasses, tableRowClasses, TableRow, Grid,
+  Button, TablePagination, Typography, Paper, TableFooter, DialogTitle, Dialog, DialogContent, TextField
+} from '@mui/material';
 import vector from '../../../public/Images/vector.png';
 import _ from 'underscore';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -12,7 +15,10 @@ import Union from '../../../public/Images/plus.png';
 import Image from 'next/image';
 import { createPatientAction } from '../../store/actions/patientAction';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
-
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import moment from 'moment'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -73,14 +79,14 @@ function Patients(props) {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
-    dob: '',
+    phoneNumber: '',
+    dob: null,
     id: '',
   })
   const ref = useRef();
   const dispatch = useDispatch();
   const patients = useSelector((state) => state.patientReducer.patients);
-  // console.log("patients==>"+JSON.stringify(patients))
+
   // const checkBoxAction = () => {
   //   setState({
   //     ...state,
@@ -123,20 +129,19 @@ function Patients(props) {
   };
 
   const handleSubmit = () => {
-    const { id, firstName, lastName, email, phone, dob } = state;
+    const { id, firstName, lastName, email, phoneNumber, dob } = state;
     const isError = false;
-let data = {};
+    let data = {};
     data.id = patients.length + 1;
     data.name = `${firstName} ${lastName}`;
     data.email = email;
-    data.phone = phone;
-    data.dob = dob;
+    data.phone_number = phoneNumber;
+    data.dob = moment(dob).format("DD/MM/YYYY");
     dispatch(createPatientAction(data, state, setState))
-    // console.log("data===>ui" + JSON.stringify(data))
   };
 
   const handleAdd = () => {
-    setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phone: '', dob: '', id: '', })
+    setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '', })
   };
 
 
@@ -172,7 +177,7 @@ let data = {};
                       </div>
                     </StyledTableCell>
                     <StyledTableCell align="left">Email ID</StyledTableCell>
-                    <StyledTableCell align="left">Phone</StyledTableCell>
+                    <StyledTableCell align="left">Phone Number</StyledTableCell>
                     <StyledTableCell>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Typography className='tableHeader'>DOB</Typography>
@@ -189,7 +194,7 @@ let data = {};
                       <StyledTableRow>
                         <StyledTableCell align="left"><span><Button variant='text' onClick={() => patientView(row.id)} style={{ textTransform: 'none', textDecoration: 'underline' }}>{row.name}</Button></span></StyledTableCell>
                         <StyledTableCell align="left">{row.email}</StyledTableCell>
-                        <StyledTableCell align="left">{row.phone}</StyledTableCell>
+                        <StyledTableCell align="left">{row.phone_number}</StyledTableCell>
                         <StyledTableCell align="left">{row.dob}</StyledTableCell>
                       </StyledTableRow>
                     </TableBody>) :
@@ -248,15 +253,50 @@ let data = {};
                 <Grid item xs={6}>
                   <CustomInput fullWidth
                     size='small' placeholder="Phone number"
-                    value={state.phone}
+                    value={state.phoneNumber}
                     inputProps={{ maxLength: 10 }}
-                    onChange={(e) => setState({ ...state, phone: e.target.value.replace(/[^0-9]/g, '') })} />
+                    onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, '') })} />
                 </Grid>
-                <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                   <CustomInput fullWidth size='small'
                     value={state.dob}
                     placeholder="Date of Birth"
                     onChange={(e) => setState({ ...state, dob: e.target.value })} />
+                </Grid> */}
+                <Grid item xs={6}>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      views={['year', 'month', 'day']}
+                      disableFuture
+                      value={state.dob}
+                      style={{ marginBottom: "25px", marginTop: "10px" }}
+                      inputFormat="MM/DD/YYYY"
+                      onChange={(date) => setState({ ...state, dob: date })}
+                      renderInput={(params) =>
+                        <TextField {...params}
+                          size='small'
+                          fullWidth
+                          sx={{
+                            backgroundColor: '#F0E9FF', fontFamily: "Avenir", "&.Mui-disabled": {
+                              border: "none"
+                            }
+                          }}
+                          inputProps={{
+                            ...params.inputProps,
+                            placeholder: "Date of Birth"
+                          }}
+                          InputLabelProps={{
+                            sx: {
+                              fontFamily: "Avenir",
+                              backgroundColor: "#F0E9FF",
+                              border: "2px solid #5824D6",
+                            }
+                          }}
+                          error={false}
+                        />
+                      }
+                    />
+                  </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
                   <CustomizedButtons variant={"text"} onClick={() => handleCancel()}>

@@ -12,11 +12,17 @@ import { FLUSH,
     REGISTER,
   } from 'redux-persist'
 
-const persistConfig = {
+// const persistConfig = {
+//     key: 'root',
+//     storage: storage,  
+//     // stateReconciler: hardSet,
+//   }
+
+  const persistConfig = {
     key: 'root',
-    storage: storage,  
-    stateReconciler: hardSet,
-  }
+    storage: storage,
+    whitelist: ['alert'] // only navigation will be persisted
+  };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

@@ -1,11 +1,8 @@
 import { createPatient } from '../reducers/patientReducer';
 
-export function createPatientAction(data, state, setState){
-    console.log("*****"+JSON.stringify(data))
+export function createPatientAction(data, state, setState) {
     return async dispatch => {
         dispatch(createPatient(data))
-        setState({...state, isAdd:false })
-
-        console.log("*****"+JSON.stringify(data))
+        setState({ ...state, isAdd: false })
     }
 }

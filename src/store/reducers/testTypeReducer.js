@@ -1,62 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    test_type: [
-        // {
-        //     id:1,
-        //     code:"TT0001",
-        //     name: "Insurance At-Home COVID Kit",
-        //     status: "Active",
-        //     display_name: "Rapid antigen test",
-        //     description: "-Results in about 1 hour",
-        //     // description_2: "-Tests for active infections"
-        // },
-        // {
-        //     id:2,
-        //     code:"TT0002",
-        //     name: "Insurance At-Home COVID Kit",
-        //     status: "Active",
-        //     display_name: "Rapid antigen test",
-        //     description: "-Results in about 1 hour",
-        //     // description_2: "-Tests for active infections"
-        // },
-        // {
-        //     id:3,
-        //     code:"TT0003",
-        //     name: "Insurance At-Home COVID Kit",
-        //     status: "Active",
-        //     display_name: "Rapid antigen test",
-        //     description: "-Results in about 1 hour",
-        //     // description_2: "-Tests for active infections"
-        // },
-        // {
-        //     id:4,
-        //     code:"TT0004",
-        //     name: "Insurance At-Home COVID Kit",
-        //     status: "Active",
-        //     display_name: "Rapid antigen test",
-        //     description: "-Results in about 1 hour",
-        //     // description_2: "-Tests for active infections"
-        // },
-        // {
-        //     id:5,
-        //     code:"TT0005",
-        //     name: "Insurance At-Home COVID Kit",
-        //     status: "Active",
-        //     display_name: "Rapid antigen test",
-        //     description: "-Results in about 1 hour",
-        //     // description_2: "-Tests for active infections"
-        // },
-        // {
-        //     id:6,
-        //     code:"TT0006",
-        //     name: "Insurance At-Home COVID Kit",
-        //     status: "Active",
-        //     display_name: "Rapid antigen test",
-        //     description: "-Results in about 1 hour",
-        //     // description_2: "-Tests for active infections"
-        // }
-    ]
+    test_type: [],
+    category: [],
+    classification: []
 }
 
 export const testTypeReducer = createSlice({
@@ -72,9 +19,27 @@ export const testTypeReducer = createSlice({
         updateTestType: (state, { payload }) => {
             state.test_type = state.test_type.map((item) => item.id === payload.id ? payload : item)
         },
+        fetchCategory: (state, { payload }) => {
+            state.category = payload
+        },
+        createCategory: (state, { payload }) => {
+            state.category.push(payload)
+        },
+        updateCategory: (state, { payload }) => {
+            state.category = state.category.map((item) => item.id === payload.id ? payload : item)
+        },
+        fetchClassification: (state, { payload }) => {
+            state.classification = payload
+        },
+        createClassification: (state, { payload }) => {
+            state.classification.push(payload)
+        },
+        updateClassification: (state, { payload }) => {
+            state.classification = state.classification.map((item) => item.id === payload.id ? payload : item)
+        },
     }
 })
 
-export const { fetchTestType, createTestType, updateTestType } = testTypeReducer.actions;
+export const { fetchTestType, createTestType, updateTestType, fetchCategory, createCategory, updateCategory, fetchClassification, createClassification, updateClassification } = testTypeReducer.actions;
 
 export default testTypeReducer.reducer;

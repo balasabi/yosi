@@ -13,7 +13,9 @@ export const userManagementReducer = createSlice({
             // console.log("reducer"+JSON.stringify(state.users))
         },
         updateUser: (state, { payload }) => {
-            state.users = state.users.filter((item) => item.id === payload.id ? payload : item)
+          state.users = state.users.map((item) => item.id === payload.id ? payload : item)
+            // console.log("payload"+JSON.stringify(payload))
+            console.log("&&&&&"+JSON.stringify(state.users))
         }
     }
 })

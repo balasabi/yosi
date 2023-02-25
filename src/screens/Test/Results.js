@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Send from '../../../public/Images/send.png';
 import Union from '../../../public/Images/plus.png';
 // import SignatureCanvas from 'react-signature-canvas';
-import { addTestResultAction, fetchTestResultAction } from "../../store/actions/testResultAction";
+import { addTestResultAction, sendResultAction } from "../../store/actions/testResultAction";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
@@ -83,14 +83,15 @@ function Result(props) {
         allLocations: "",
         date: "",
         isClickCheckBox: false,
-        selectedResults: []
+        selectedResults: [],
+        alert: true,
     })
 
     const router = useRouter();
     const dispatch = useDispatch();
     const signPad = useRef({});
     const testResult = useSelector(state => state.testResultReducer.test_result);
-
+    const test_type = useSelector(state => state.testTypeReducer.test_type);
     // useEffect(() => {
     //   dispatch(fetchTestResultAction());
     //   }, [])
@@ -108,13 +109,7 @@ function Result(props) {
     };
 
     const checkBoxAction = () => {
-        setState(
-            {
-                ...state,
-                isClickCheckBox: !state.isClickCheckBox,
-                selectedResults: !state.isClickCheckBox === true ? _.pluck(testResult, 'id') : []
-            }
-        )
+        setState({ ...state, isClickCheckBox: !state.isClickCheckBox, selectedResults: !state.isClickCheckBox === true ? _.pluck(testResult, 'id') : [] })
     };
 
     const singleSelectAction = (param) => {
@@ -174,12 +169,14 @@ function Result(props) {
     };
 
     const handleSend = (param) => {
-        // let ids = param.find((item) => item)
-        // state.test.map((item) => item.id === param.find((ele) => ele))
-        // dispatch()
-        alert("WIP")
+        if (param.length > 0) {
+            let data = testResult.map((item) => item.id === param.map((ele) => ele) ? item : null)
+            setState({ ...state, alert: true, selectedResults: state.selectedResults.filter((item) => item === param.map((ele) => ele)), isClickCheckBox:false })
+            // console.log("******submit******" + JSON.stringify(state.selectedResults))
+            dispatch(sendResultAction(state));
+        }
     };
-    console.log("***testResult****in***" + JSON.stringify(testResult))
+
     return (
         <>
             <Grid container>
@@ -304,9 +301,9 @@ function Result(props) {
                                                 />
                                             </StyledTableCell>
                                             {/* <StyledTableCell className='tableContent'>{test.test_id}</StyledTableCell> */}
-                                            <StyledTableCell className='tableContent'>{index + 1}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>000{index + 1}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.patient_name}</StyledTableCell>
-                                            <StyledTableCell className='tableContent'>{test.test_type}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>{test.location_test_type}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.location}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.tube_number}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.result}</StyledTableCell>
@@ -337,7 +334,7 @@ function Result(props) {
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Dialog open={state.addTestOpen} onClose={() => addTestClose()} maxWidth={'sm'} >
+                <Dialog open={state.addTestOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
                             <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute" }} onClick={() => addTestClose()} />
@@ -376,7 +373,7 @@ function Result(props) {
                                             onChange={(event) => setState({ ...state, location: event.target.value })}
                                         />
                                     </Grid>
-                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
                                             placeholder={"Test type "}
                                             fullWidth
@@ -384,6 +381,21 @@ function Result(props) {
                                             value={state.location_test_type}
                                             onChange={(event) => setState({ ...state, location_test_type: event.target.value })}
                                         />
+                                    </Grid> */}
+                                    <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                        <Select size='small'
+                                            fullWidth
+                                            value={!!state.location_test_type && state.location_test_type}
+                                            input={<CustomInput />}
+                                            onChange={(e) => setState({ ...state, location_test_type: e.target.value })}
+                                            displayEmpty
+                                            renderValue={
+                                                state.location_test_type !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Test type</Typography></Placeholder>
+                                            }  >
+                                            {!!test_type && test_type.map((item, index) =>
+                                                <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
+                                            )}
+                                        </Select>
                                     </Grid>
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"

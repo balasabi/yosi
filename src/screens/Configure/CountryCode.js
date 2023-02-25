@@ -70,7 +70,7 @@ function CountryCode() {
     const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
-        statusFilter: "All",       
+        statusFilter: "",       
         countryCodeOpen: false,
         code: "",
         name: "",
@@ -135,7 +135,7 @@ function CountryCode() {
     };
 
 
-    let displayRecord = state.statusFilter ==="All"? country : country.filter((item) => item.status === state.statusFilter)
+    let displayRecord = state.statusFilter === "" || state.statusFilter ==="All"? country : country.filter((item) => item.status === state.statusFilter)
     
     return (
          <>
@@ -237,7 +237,7 @@ function CountryCode() {
                                     <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
@@ -246,7 +246,7 @@ function CountryCode() {
                                     <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -255,7 +255,7 @@ function CountryCode() {
                                         <CustomInput size="small"
                                             placeholder={"ISO"}
                                             fullWidth
-                                            inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
+                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.iso}
                                             onChange={(event) => setState({ ...state, iso: event.target.value })}
                                         />
@@ -273,7 +273,7 @@ function CountryCode() {
                                         Cancel
                                     </CustomizedButtons>
                                     <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => submit()} >
-                                       {state.mode === "Active " ?  "Submit":"Update"}
+                                    {state.mode === "ADD" ? "Submit" : "Update"}
                                     </CustomizedButtons>
                                 </Grid>
                             </Grid>

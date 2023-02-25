@@ -3,7 +3,7 @@ import { Grid, Typography, Select, FormControl, RadioGroup, FormControlLabel, Ra
 import InputBase from "@mui/material/InputBase";
 import { styled } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUserAction, updateUserAction } from '../../store/actions/userManagementAction';
 
 const CustomInput = styled(InputBase)(({ theme }) => ({
@@ -38,7 +38,7 @@ function AddUser(props) {
         lastName: "",
         email: "",
         phoneNumber: "",
-        status: "",
+        status: "Active",
         firstNameError: false,
         emailError: false,
         phoneNumberError: false,
@@ -46,12 +46,14 @@ function AddUser(props) {
         id:null
     })
     const dispatch = useDispatch();
+    const users = useSelector(state => state.userManagementReducer.users)
+    // console.log("*********users"+JSON.stringify(users))
     const ref = useRef();
     const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"]
 
-    // useEffect(() => {
-    //     setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
-    // }, [])
+    useEffect(() => {
+        setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
+    }, [])
 
     const handleSubmit = () => {
         const { email, id, phoneNumber, firstName, status, role, lastName } = state;
@@ -68,26 +70,24 @@ function AddUser(props) {
             setState(ref => ({ ...ref, phoneNumberError: true }))
             isError = true;
         }
-        if (isError === false && props.mode === "ADD") {
+        if (isError === false) {
             let data = {};
             data.email = email;
             data.first_name = firstName;
             data.last_name = lastName;
+            data.id=id;
             data.phone_number = phoneNumber;
             data.status = status;
             data.role = role;
+            console.log("%%%%%%%%%%%%%%%status%%%%%%%%%%%%%%%"+JSON.stringify(status))
+            if (props.mode === "ADD") {
+                data.id = users.length+1
             dispatch(createUserAction(data, props.close))
-        }
-        if (isError === false && props.mode !== "ADD") {
-            let data = {};
-            data.email = email;
-            data.id = id;
-            data.first_name = firstName;
-            data.last_name = lastName;
-            data.phone_number = phoneNumber;
-            data.status = status;
-            data.role = role;
+            }
+            else {
+                data.id = props.param.id;
             dispatch(updateUserAction(data, props.close))
+            }
         }
     };
     
@@ -157,7 +157,7 @@ function AddUser(props) {
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
                             <Typography style={{ fontWeight: "bold", paddingRight: "7px" }}>Status</Typography>
-                            <RadioGroup defaultValue="Active" row>
+                            <RadioGroup defaultValue={state.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
                                 <FormControlLabel value="Active" control={<Radio sx={{ color: '#4D1EC0', '&.Mui-checked': { color: '#4D1EC0' } }} />} label="Active" />
                                 <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#4D1EC0', '&.Mui-checked': { color: '#4D1EC0' } }} />} label="Inactive" />
                             </RadioGroup>
@@ -172,7 +172,7 @@ function AddUser(props) {
                                             </CustomizedButtons>
                                         </Grid>
                                         <Grid item xs={3}>
-                                            <CustomizedButtons variant="contained" onClick={() => handleSubmit(props.mode === "ADD" ? "S" : "U")}>
+                                            <CustomizedButtons variant="contained" onClick={() => handleSubmit()}>
                                                 {props.mode === "ADD" ? "Submit" : "Update"}
                                             </CustomizedButtons>
                                         </Grid>
