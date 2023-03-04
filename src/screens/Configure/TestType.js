@@ -72,6 +72,7 @@ function TestType(props) {
         statusFilter: "",
         mode: "ADD",
         searchText: null,
+        selectedStatus:"All"
     })
     const dispatch = useDispatch();
     const test_type = useSelector(state => state.testTypeReducer.test_type);
@@ -82,11 +83,7 @@ function TestType(props) {
 
     const handleChange = (event, param) => {
         if (param === "S") {
-            setState({ ...state, statusFilter: event.target.value });
-        } else if (param === "R") {
-            setState({ ...state, result: event.target.value });
-        } else if (param === "D") {
-            setState({ ...state, date: e.target.value });
+            setState({ ...state, selectedStatus: event.target.value });
         }
     };
 
@@ -129,7 +126,7 @@ function TestType(props) {
     const testTypeAction = (param) => {
         Router.push({ pathname: '/configure/view-test-type', query: "testTypeId=" + param })
     }
-    let displayTestTypeRecord = state.statusFilter === "" || state.statusFilter === "All" ? test_type : test_type.filter((item) => item.status === state.statusFilter)
+    let displayTestTypeRecord = state.selectedStatus === "All" ? test_type : test_type.filter((item) => item.status === state.selectedStatus)
 
     return (
         <>
@@ -139,53 +136,31 @@ function TestType(props) {
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
                                 placeholder='Search test upload name, tube number, file name'
-                                onChange={(name) => alert("WIP")}
+                                onChange={() => alert("WIP")}
                             />
                         </Grid>
                         <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={Union} alt='union' width={14} height={15} />
-                                <Typography style={{ marginLeft: "5px", }} >
+                                <Typography style={{ marginLeft: "5px" }}>
                                     Add Test Type
                                 </Typography>
                             </CustomizedButtons>
                         </Grid>
                         <Grid item xs={5} sm={5} md={5} lg={5} xl={5} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "10px" }}>
                             <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRight: "2px solid #E8E8E8", borderRadius: 0 }} size="small">
-                                <Select
-                                    value={state.result}
-                                    onChange={(e) => handleChange(e, "R")}
-                                    displayEmpty
-                                    renderValue={state.result !== "" ? undefined : () => <Placeholder>All Results</Placeholder>} >
-                                    <MenuItem value={"All"}>All</MenuItem>
-                                    <MenuItem value={"Negative"}>Negative</MenuItem>
-                                    <MenuItem value={"Positive"}>Positive</MenuItem>
-                                </Select>
-                            </FormControl> */}
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, '.Mui-focused fieldset': { border: 0 }, borderRadius: 0 }} size="small">
                                 <Select
-                                    value={state.statusFilter}
+                                    value={state.selectedStatus}
                                     onChange={(e) => handleChange(e, "S")}
                                     displayEmpty
-                                    renderValue={state.statusFilter !== "" ? undefined : () => <Placeholder>Status</Placeholder>}
+                                    renderValue={state.selectedStatus !== "All" ? undefined : () => <Placeholder>Status</Placeholder>}
                                 >
                                     <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"Active"}>Active</MenuItem>
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
                                 </Select>
                             </FormControl>
-                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 }, borderRadius: 0 }} size="small">
-                                <Select
-                                    value={state.date}
-                                    onChange={(e) => handleChange(e, "D")}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
-                                    }>
-                                </Select>
-                            </FormControl> */}
                         </Grid>
                     </Grid>
                 </Grid>

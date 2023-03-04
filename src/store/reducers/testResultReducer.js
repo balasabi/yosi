@@ -1,115 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    uploads: [{
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Positive",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
+    uploads: [],
+    test_result: [
         {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Positive",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Failure",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Positive",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Failure",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Positive",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Failure",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Success",
-        },
-        {
-            test_upload_name: "T-00000126",
-            tube_number: "NT208255979",
-            result: "Negative",
-            file_name: "API",
-            created_by: "-",
-            created_date: "12/21/2022",
-            status: "Failure",
-        }],
-    test_result: [{
         id: 1,
         test_id: "WEL-000001",
         patient_name: "Ravi Kumar",
@@ -117,7 +11,7 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Negative",
-        analysis: "Result available"
+        status: "Result available"
     },
     {
         id: 2,
@@ -127,7 +21,7 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Negative",
-        analysis: "Result available"
+        status: "Result available"
     },
     {
         id: 3,
@@ -137,7 +31,7 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Negative",
-        analysis: "Result available"
+        status: "Result available"
     },
     {
         id: 4,
@@ -147,7 +41,7 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Negative",
-        analysis: "Result available"
+        status: "Result available"
     },
     {
         id: 5,
@@ -157,7 +51,7 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Positive",
-        analysis: "Result available"
+        status: "Result available"
     },
     {
         id: 6,
@@ -167,7 +61,7 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Negative",
-        analysis: "Result available"
+        status: "Result available"
     },
     {
         id: 7,
@@ -177,8 +71,12 @@ const initialState = {
         collection_date: "12/13/2022 01:57:25",
         tube_number: "T5000",
         result: "Negative",
-        analysis: "Result available"
-    }],
+        status: "Result available"
+    }
+],
+    openAlert: false,
+    alertSeverity: '',
+    alertMessage: '',
    
 }
 
@@ -188,16 +86,22 @@ export const testResultReducer = createSlice({
     reducers: {
         testResult: (state, { payload }) => {
             state.test_result.push(payload)
-            // console.log("******testResult******" + JSON.stringify(payload.state))
+           },
+       testResultUpload: (state, { payload }) => {
+            state.uploads.push(payload)
         },
-        sendTestResult: (state, { payload }) => {
-            console.log("******testResult******" + JSON.stringify(payload))
-            state.alert = payload;
+        displayAlert: (state, { payload }) => {
+            state.openAlert = payload.openAlert
+            state.alertSeverity = payload.alertSeverity
+            state.alertMessage = payload.alertMessage
         },
+        updateTestResult: (state, { payload }) => {
+            state.test_result=payload
+       },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const { testResult, sendTestResult } = testResultReducer.actions
+export const { testResult, sendTestResult, testResultUpload, displayAlert, updateTestResult } = testResultReducer.actions
 
 export default testResultReducer.reducer

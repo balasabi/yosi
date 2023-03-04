@@ -1,9 +1,86 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    test_type: [],
-    category: [],
-    classification: []
+    test_type: [
+        {
+        id:1,
+        code:"TT001",
+        name :"Blood Test",
+       display_name :"Blood Test",
+       description:"sample test",
+       status :"Active",
+    },
+    {
+        id:2,
+        code:"TT002",
+        name :"Allergy Test",
+       display_name :"Allergy Test",
+       description:"sample test",
+       status :"Active",
+    },
+    {
+        id:3,
+        code:"TT003",
+        name :"Scan",
+       display_name :"Scan",
+       description:"sample Scan",
+       status :"Active",
+    }
+],
+    category: [
+        {
+            id:1,
+            name: "Respiratory Panels",
+            code: "BRP001",
+            short_code: "BRP",
+            sequence_number: "1",
+            status: "Active",
+            description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+        },
+        {
+            id:2,
+            name: "Respiratory Panels",
+            code: "BRP002",
+            short_code: "BRP",
+            sequence_number: "2",
+            status: "Active",
+            description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+        },{
+            id:3,
+            name: "Respiratory Panels",
+            code: "BRP003",
+            short_code: "BRP",
+            sequence_number: "3",
+            status: "Active",
+            description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
+        }
+    ],
+    classification: [
+        {
+            id:1,
+            name: "COVID/Influenza Test ",
+            code: "PCR",
+            test_type: "Scan",
+            test_groups: "1",
+            status: "Active",
+        },
+        {
+            id:2,
+            name: "Influenza Test ",
+            code: "PCR",
+            test_type: "Blood Test",
+            test_groups: "2",
+            status: "Active",
+        },
+        {
+            id:3,
+            name: "COVID Test ",
+            code: "PCR",
+            test_type: "Allergy Test",
+            test_groups: "3",
+            status: "Active",
+        }
+    ]
 }
 
 export const testTypeReducer = createSlice({

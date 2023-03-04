@@ -5,7 +5,7 @@ import Topbar from "./TopBar";
 import Sidebar from "./SideBar";
 import { Snackbar, Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { displayAlert } from '../../../store/reducers/testResultReducer'
 const drawerWidth = 250;
 
 const openedMixin = (theme) => ({
@@ -57,8 +57,8 @@ export default function AdminLayout(props) {
 
     const dispatch = useDispatch();
 
-    const alert = useSelector(state => state.testResultReducer.alert)
-    console.log("alert===>" + JSON.stringify(alert))
+    // const alert = useSelector(state => state.testResultReducer.alert)
+    // console.log("alert===>" + JSON.stringify(alert))
 
     const handleDrawerOpen = () => {
         setOpen(!open);
@@ -68,35 +68,32 @@ export default function AdminLayout(props) {
         !alert
     }
 
-
+    const openAlert = useSelector(state => state.testResultReducer.openAlert);
+    const alertSeverity = useSelector(state => state.testResultReducer.alertSeverity);
+    const alertMessage = useSelector(state => state.testResultReducer.alertMessage);
     return (
         <>
-            <Topbar isOpen={open} handleDrawerOpen={() => handleDrawerOpen()} />
+          <Topbar isOpen={open} handleDrawerOpen={() => handleDrawerOpen()} />
             <Drawer variant="permanent" open={open} PaperProps={{ sx: { marginTop: 8 } }}>
                 <Sidebar isOpen={open} />
             </Drawer>
+            {!!alertMessage &&
+            <Snackbar
+               open={openAlert}
+               onClose={() => dispatch(
+                  displayAlert(false, 'success', '')
+               )}
+               anchorOrigin={{ vertical: "top", horizontal: "center" }}
+               autoHideDuration={3000}>
+               <Alert icon={false} variant="filled" severity={alertSeverity}>{alertMessage}</Alert>
+            </Snackbar>
+         }
             <main style={{
                 padding: "0px 25px",
                 paddingTop: 75,
                 marginLeft: open === true ? "250px" : "125px"
             }}>
-                <Snackbar open={alert} autoHideDuration={1000} onClose ={() => handleClose()} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-                    <Alert severity="success" sx={{ width: '100%' }}>
-                        Report successfully sent...
-                    </Alert>
-                </Snackbar>
-                {/* {!!alertMessage &&
-                                        <Snackbar
-                                            open={openAlert}
-                                            onClose={() => props.dispatch(
-                                                displayAlert(false, 'success', '')
-                                            )}
-                                            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                                            autoHideDuration={8000}>
-                                            <Alert icon={false} variant="filled" severity={alertSeverity}>{alertMessage}</Alert>
-                                        </Snackbar>
-                                    } */}
-                {props.children}
+               {props.children}
             </main>
         </>
     );

@@ -47,13 +47,13 @@ function AddUser(props) {
     })
     const dispatch = useDispatch();
     const users = useSelector(state => state.userManagementReducer.users)
-    // console.log("*********users"+JSON.stringify(users))
     const ref = useRef();
     const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"]
 
     useEffect(() => {
-        setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number })
-    }, [])
+        if(props.mode==="EDIT"){
+        setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number,status:props.param.status })
+ } }, [])
 
     const handleSubmit = () => {
         const { email, id, phoneNumber, firstName, status, role, lastName } = state;
@@ -79,7 +79,6 @@ function AddUser(props) {
             data.phone_number = phoneNumber;
             data.status = status;
             data.role = role;
-            console.log("%%%%%%%%%%%%%%%status%%%%%%%%%%%%%%%"+JSON.stringify(status))
             if (props.mode === "ADD") {
                 data.id = users.length+1
             dispatch(createUserAction(data, props.close))
@@ -95,7 +94,7 @@ function AddUser(props) {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
-    return (
+   return (
         <>
             <Grid container justifyContent="center">
                 <Grid item xs={12}>
@@ -150,16 +149,17 @@ function AddUser(props) {
                                 fullWidth
                                 placeholder="Phone Number"
                                 value={state.phoneNumber}
-                                onChange={(e) => setState({ ...state, phoneNumber: e.target.value, phoneNumberError: false })}
+                                inputProps={{ maxLength: 10 }}
+                                onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, ''), phoneNumberError: false})}
                                 error={state.phoneNumberError}
                                 helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} 
                                 />
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
                             <Typography style={{ fontWeight: "bold", paddingRight: "7px" }}>Status</Typography>
-                            <RadioGroup defaultValue={state.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
-                                <FormControlLabel value="Active" control={<Radio sx={{ color: '#4D1EC0', '&.Mui-checked': { color: '#4D1EC0' } }} />} label="Active" />
-                                <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#4D1EC0', '&.Mui-checked': { color: '#4D1EC0' } }} />} label="Inactive" />
+                            <RadioGroup defaultValue={props.mode ==="ADD" ? "Active": props.param.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
+                                <FormControlLabel value="Active" control={<Radio sx={{ color: '#6425FE', '&.Mui-checked': { color: '#6425FE' } }} />} label="Active" />
+                                <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#6425FE', '&.Mui-checked': { color: '#6425FE' } }} />} label="Inactive" />
                             </RadioGroup>
                         </Grid>
                         <Grid item xs={12}>

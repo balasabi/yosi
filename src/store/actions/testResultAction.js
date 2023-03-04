@@ -1,4 +1,5 @@
-import { testResult, sendTestResult } from '../reducers/testResultReducer';
+import { testResult, sendTestResult, testResultUpload, updateTestResult } from '../reducers/testResultReducer';
+import { displayAlert } from '../reducers/testResultReducer'
 
 export function addTestResultAction(data) {
 	return async dispatch => {
@@ -6,11 +7,20 @@ export function addTestResultAction(data) {
 	}
 }
 
-export function sendResultAction( state ) {
+export function updateTestResultAction(data, state ) {
 	return async dispatch => {
-		console.log("*****"+JSON.stringify(state.alert))
-		dispatch(sendTestResult( state.alert))
-		
+      if(state.selectedResults.length > 0){
+		   dispatch(updateTestResult(data))
+		   dispatch(displayAlert({ openAlert: true, alertSeverity: 'success', alertMessage: "Result sended successfully" }))
+		}
+		else{
+			dispatch(displayAlert({ openAlert: true, alertSeverity: 'success', alertMessage: "Please select one or more test result to send" }))
+		}
 	}
 }
 
+export function addTestResultUploadAction(data) {
+	return async dispatch => {
+		dispatch(testResultUpload(data))
+	}
+}

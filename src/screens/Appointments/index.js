@@ -11,14 +11,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { createAppointmentAction } from "../../store/actions/appointmentAction";
-import { useDispatch } from 'react-redux';
 import moment from 'moment'
+import { useDispatch, useSelector } from 'react-redux';
 
 function Appointments(props) {
-
+    const test_type = useSelector(state => state.testTypeReducer.test_type);
     const [state, setState] = useState({
         selectedTab: "T",
         addAppointmentOpen: false,
+        id:"",
         patient_name: "",
         test_name: "",
         date: null,
@@ -26,12 +27,15 @@ function Appointments(props) {
         end_time: null,
     })
     const initialState = () => {
-        setState({
+        setState({ ...state,
+            id:"",
             patient_name: "",
             test_name: "",
             date: new Date(),
             start_time: null,
-            end_time: null
+            end_time: null,
+            addAppointmentOpen: false,
+
         })
     }
     const dispatch = useDispatch();
@@ -43,17 +47,22 @@ function Appointments(props) {
     };
     const submit = async () => {
         // alert("WIP")
-        let { patient_name, test_name, date, start_time, end_time } = state;
+        let { id, patient_name, test_name, date, start_time, end_time } = state;
         let data = {}
+        data.id = id;
         data.patient_name = patient_name;
         data.test_name = test_name;
-        data.start_date = moment(date).format("MM/DD/YYYY");
+        data.start_date = new Date(moment(date).format("MM/DD/YYYY"));
         data.start_time = moment(start_time).format("hh:mm A");
         data.end_time = moment(end_time).format("hh:mm A");
+        data.end = new Date(moment(date).format("MM/DD/YYYY"));
+        data.check_data = moment(date).format("MM/DD/YYYY");
         dispatch(createAppointmentAction(data))
         setState({ ...state, addAppointmentOpen: false })
-        // initialState();
+        initialState();
     };
+
+    
 
     const cancel = () => {
         setState({ ...state, addAppointmentOpen: false })
@@ -129,7 +138,9 @@ function Appointments(props) {
                                         renderValue={
                                             state.test_name !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Test name</Typography></Placeholder>
                                         }>
-                                        <MenuItem value={"All"}>All</MenuItem>
+                                          {!!test_type && test_type.map((item, index) =>
+                                                <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
+                                         )}                                       
                                     </Select>
                                 </Grid>
                                 <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>

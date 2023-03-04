@@ -4,6 +4,7 @@ import Image from 'next/image';
 import dialogClose from '../../../public/Images/dialogClose.png';
 import { styled } from '@mui/material';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
+import { useSelector, useDispatch } from 'react-redux';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -17,7 +18,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: "16px",
-        padding: "8px",
+        padding: "14px",
         fontFamily: 'Avenir-Regular',
         fontSize: '16px',
     },
@@ -34,15 +35,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function RolesAndPermission(props) {
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         personName: [],
         rolesAndPermission:[]
     });
-
+    const  [ height, setHeight] = useState(600);
+    const updateDimensions = () => {
+     setHeight(window.innerHeight);
+    }
+     useEffect(() => {
+        updateDimensions()
+       window.addEventListener("resize", updateDimensions);
+        return () => window.removeEventListener("resize", updateDimensions);
+    }, [dispatch])
     const [role ,setRole] = useState([]);
 
-    const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"];
-    const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test Upload Results", "Location", "Location Test Type", "Test Group", "User and Access"]
+  const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"];
+  const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test Upload Results", "Location", "Location Test Type", "Test Group", "User and Access"]
    const access = [
          'View',
         'Edit',
@@ -121,14 +131,14 @@ function RolesAndPermission(props) {
 
     return (
         <>
-            <Grid container  style={{height:"100%"}}  >
+            <Grid container style={{height:"95%"}} >
                 <Grid item xs={12}>
                     {/* <IconButton onClick={props.dialogClose}><Image src={dialogClose} alt={'close'} width={25} height={25} /></IconButton> */}
-                    <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width:25, height:25, cursor:"pointer" }} onClick={() => props.dialogClose()} />
+                    <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width: 25, height: 25, cursor: "pointer" }} onClick={() => props.dialogClose()} />
                 </Grid>
-                <Grid  item xs={12}  justifyContent ={"center"} alignItems={"center"} sx={{ width: "90vw" }}>
-                    <TableContainer component={Paper}>
-                        <Table>
+                <Grid item xs={12}  justifyContent ={"center"} alignItems={"center"} sx={{ width: "95vw"}}>
+                    <TableContainer component={Paper}  style={{ marginTop:"25px"}}>
+                        <Table >
                             <TableHead>
                                 <StyledTableRow>
                                     <StyledTableCell style={{ fontWeight: "bold" }}>Pages</StyledTableCell>
@@ -137,16 +147,17 @@ function RolesAndPermission(props) {
                                     )}
                                 </StyledTableRow>
                             </TableHead>
-                            <TableBody>
+                            <TableBody >
                                 {state.personName.map((personNameItem, personNameIndex) =>
                                      <StyledTableRow key={personNameIndex.toString()} style={{ background: (personNameIndex % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
                                         <StyledTableCell>{personNameItem.screen}</StyledTableCell>                                       
                                         {personNameItem.roles.map ((item) =>
-                                            <StyledTableCell align="center">                                             
-                                                <FormControl sx={{ m: 1, width: 100, mt: 3 }}>
-                                                    <Select
+                                            <StyledTableCell align="center">    
+                                              <FormControl sx={{ m: 0, width: 75, mt: 1, }}>                                        
+                                                <Select
                                                         size='small'
                                                         multiple
+                                                        fullWidth
                                                         displayEmpty
                                                         value={state.personName}
                                                         onChange={handleChange}
@@ -166,7 +177,7 @@ function RolesAndPermission(props) {
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
-                                                </FormControl>
+                                                    </FormControl> 
                                             </StyledTableCell>
                                         )} 
                                     </StyledTableRow>
@@ -175,8 +186,8 @@ function RolesAndPermission(props) {
                         </Table>
                     </TableContainer>
                 </Grid>
-            </Grid>
-        </>
+        </Grid>
+         </>
     )
 }
 

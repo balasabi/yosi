@@ -134,7 +134,6 @@ function CountryCode() {
         setState({ ...state, id:result.id,code: result.code,name: result.name,iso: result.iso,status: result.status,countryCodeOpen: true, mode: "EDIT" })
     };
 
-
     let displayRecord = state.statusFilter === "" || state.statusFilter ==="All"? country : country.filter((item) => item.status === state.statusFilter)
     
     return (
@@ -203,7 +202,9 @@ function CountryCode() {
                                     <StyledTableCell align='center' colSpan={7}><Typography >There are no country code available</Typography></StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>}
+                           
                             <TableFooter>
+                            { displayRecord.length > 0  && 
                                 <TableRow align='left'>
                                     <TablePagination
                                         count={!!displayRecord && displayRecord.length}
@@ -214,7 +215,7 @@ function CountryCode() {
                                         labelRowsPerPage={"No. of items per page : "}
                                         sx={{ borderBottom: "1.43px solid #D5DBE1" }}
                                     />
-                                </TableRow>
+                                </TableRow>}
                             </TableFooter>
                         </Table>
                     </TableContainer>
@@ -222,7 +223,7 @@ function CountryCode() {
                 <Dialog open={state.countryCodeOpen} onClose={() => countryCodeClose()} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => countryCodeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => countryCodeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add country code" : "Edit country code"}</DialogTitle>

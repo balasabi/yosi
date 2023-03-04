@@ -83,6 +83,7 @@ function Category(props) {
         description: "",
         status: "Active",
         mode: 'ADD',
+        selectedStatus:"All"
     })
 
     const router = useRouter();
@@ -102,12 +103,8 @@ function Category(props) {
     };
 
     const handleChange = (e, param) => {
-        if (param === "R") {
-            setState({ ...state, results: e.target.value })
-        } else if (param === "S") {
-            setState({ ...state, statusFilter: e.target.value })
-        } else if (param === "D") {
-            setState({ ...state, date: e.target.value })
+        if (param === "S") {
+            setState({ ...state, selectedStatus: e.target.value })
         }
     };
     const categoryClose = () => {
@@ -146,11 +143,12 @@ function Category(props) {
         setState({ ...state, mode: mode, addCategoryOpen: true, id: param.id, code: param.code, name: param.name, code: param.code, short_code: param.short_code, sequence_number: param.sequence_number, description: param.description, status: param.status })
     };
 
-    let displayCategoryRecord = state.statusFilter === "" || state.statusFilter === "All" ? category : category.filter((item) => item.status === state.statusFilter)
+    let displayCategoryRecord = state.selectedStatus === "All" ? category : category.filter((item) => item.status === state.selectedStatus)
+    
     return (
         <>
             <Grid container>
-                <Grid item xs={12} >
+                <Grid item xs={12}>
                     <Grid container spacing={2}>
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
@@ -168,45 +166,20 @@ function Category(props) {
                         </Grid>
                         <Grid item xs={5} sm={5} md={5} lg={5} xl={5} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "10px" }}>
                             <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
-                                <Select
-                                    value={state.results}
-                                    onChange={(e) => handleChange(e, "R")}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
-                                    }>
-                                    <MenuItem value={"All"}>All</MenuItem>
-                                    <MenuItem value={"Negative"}>Negative</MenuItem>
-                                    <MenuItem value={"Positive"}>Positive</MenuItem>
-                                </Select>
-                            </FormControl> */}
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRadius: 0 } }} size="small">
                                 <Select
-                                    value={state.statusFilter}
+                                    value={state.selectedStatus}
                                     onChange={(e) => handleChange(e, "S")}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     renderValue={
-                                        state.statusFilter !== "" ? undefined : () => <Placeholder>Status</Placeholder>
+                                        state.selectedStatus !== "All" ? undefined : () => <Placeholder>Status</Placeholder>
                                     }>
                                     <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"Active"}>Active</MenuItem>
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
                                 </Select>
                             </FormControl>
-                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
-                                <Select
-                                    value={state.date}
-                                    onChange={(e) => handleChange(e, "L")}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
-                                    }>
-                                </Select>
-                            </FormControl> */}
                         </Grid>
                     </Grid>
                 </Grid>

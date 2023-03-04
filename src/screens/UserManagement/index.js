@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Grid, Typography, Select, MenuItem, Table, TableBody, TableCell, tableCellClasses,
     TableRow, TableHead, TableContainer, Checkbox, Button, Paper, TablePagination,
@@ -73,6 +73,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function UsersManagement(props) {
+
     const [state, setState] = useState({
         roles: "",
         page: 0,
@@ -86,33 +87,45 @@ function UsersManagement(props) {
         mode: "ADD",
         editParam: '',
         selectedTab: "U",
-        name:"",
-        email:"",
-        phone:"",
-        role:"",
-        status :"",    
+        name: "",
+        email: "",
+        phone: "",
+        status:"Active",
+        sortOrder:false
     })
+    const [selectedRoles, setSelectedRoles] = useState('All');
+    const [selectedStatus, setSelectedStatus] = useState('All');
+    const  [ height, setHeight] = useState(600);
 
-    const users = useSelector(state => state.userManagementReducer.users)
-    console.log("users"+JSON.stringify(users))
-    function compare(a, b) {
-        console.log("&&&&&")
-        if (state.sort) {
-            if (a.name < b.name) {
-                return -1
-            }
-        } else {
-            if (a.name > b.name) {
-                return 1
-            }
-        }
-    };
+    const dispatch = useDispatch();
 
-    const sorting = () => {
-        alert("***")
-        let x = state.users.sort(compare)
-        setState({ ...state, users: x, sort: !state.sort })
+    const updateDimensions = () => {
+     setHeight(window.innerHeight);
     }
+     useEffect(() => {
+        updateDimensions()
+       window.addEventListener("resize", updateDimensions);
+        return () => window.removeEventListener("resize", updateDimensions);
+    }, [dispatch])
+    const users = useSelector(state => state.userManagementReducer.users)
+
+    const handleChange = (e, param) => {
+        if (param === "R") {
+            setSelectedRoles(e.target.value)
+        } else {
+            setSelectedStatus(e.target.value)
+        }
+    }
+
+const sortByParam =(param) =>{
+   if(!state.sortOrder){
+    let result =  users.sort((a, b) => (a[param] > b[param]) ? 1: -1);
+    setState({...state, users:result, sortOrder:true})
+  }else{
+    let result =  users.sort((a, b) => (b[param] > a[param]) ? 1: -1);
+    setState({...state, users:result, sortOrder:false})
+  }
+}
 
     const handleChangePage = (event, newPage) => {
         setState({ ...state, page: newPage })
@@ -131,7 +144,7 @@ function UsersManagement(props) {
     };
 
     const addUser = () => {
-        setState({ ...state, addUserOpen: true, mode: "ADD",editParam:'' })
+        setState({ ...state, addUserOpen: true, mode: "ADD", editParam: '' })
     };
 
     const editUser = (param) => {
@@ -146,46 +159,23 @@ function UsersManagement(props) {
         setState({ ...state, openPermission: false, isActive: false, selectedTab: "U" })
     };
 
-    // const checkBoxAction = () => {
-    //     setState({
-    //         ...state,
-    //         isClickCheckBox: !state.isClickCheckBox,
-    //         selectedUser: !state.isClickCheckBox === true ? _.pluck(state.users, 'id') : []
-    //     })
-    // }
-
-    const singleSelectAction = (param) => {
-        if (state.selectedUser.length > 0 && state.selectedUser.includes(param)) {
-            setState({
-                ...state,
-                selectedUser: state.selectedUser.filter((item) => item != param)
-            })
-        }
-        else {
-            let result = state.selectedUser
-            result.push(param)
-            setState({
-                selectedUser: result
-            })
-        }
-    }
-
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir", fontStyle: "normal" }}>{children}</div>;
     };
 
-    const handleChange = (e, param) => {
-        if (param === "R") {
-            setState({ ...state, roles: e.target.value })
-        } else if (param === "S") {
-            setState({ ...state, status: e.target.value })
-        }
-        console.log("*****PARAM*****"+JSON.stringify(param))
-    };
+    let displayRecord = [];
 
-    // const buttonAction = (param) => {
-    //     setState({ userManagementMode: param })
-    // };
+    if (selectedStatus === "All" && selectedRoles === "All") {
+        displayRecord = users
+    } else if(selectedRoles === "All" && selectedStatus !== "All") {
+        displayRecord = users.filter((item) => item.status === selectedStatus)
+    }else if(selectedRoles !== "All" && selectedStatus === "All"){
+        displayRecord = users.filter((item) => item.role === selectedRoles)
+    }else if(selectedRoles !== "All" && selectedStatus !== "All"){
+        displayRecord = users.filter((item) => item.role === selectedRoles && item.status === selectedStatus)
+    }
+
+     console.log("*****hie******"+height)
 
     return (
         <>
@@ -197,10 +187,10 @@ function UsersManagement(props) {
                     <Grid container>
                         <Grid item xs={12} sm={3}>
                             <Grid container>
-                                <Grid item xs={6} sm={3} lg={3} >
+                                <Grid item xs={6} sm={3} lg={3}>
                                     <CustomizedButtons variant="text" className='switchHeading' style={{ color: state.selectedTab === "U" ? "#4D1EC0" : "#474747", borderBottom: state.selectedTab === "U" ? "5px solid #4D1EC0" : "none", borderRadius: "0px" }} onClick={() => handleUser()}>Users</CustomizedButtons>
                                 </Grid>
-                                <Grid item xs={6} sm={8} lg={9} >
+                                <Grid item xs={6} sm={8} lg={9}>
                                     <CustomizedButtons variant="text" className='switchHeading' style={{ color: state.selectedTab === "P" ? "#4D1EC0" : "#474747", borderBottom: state.selectedTab === "P" ? "5px solid #4D1EC0" : "none", borderRadius: "0px" }} onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
                                 </Grid>
                             </Grid>
@@ -222,12 +212,12 @@ function UsersManagement(props) {
                                 <Typography className='miniLiteText'>Filter by</Typography>
                                 <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
                                     <Select
-                                        value={state.roles}
+                                        value={selectedRoles}
                                         onChange={(e) => handleChange(e, "R")}
                                         displayEmpty
                                         inputProps={{ 'aria-label': 'Without label' }}
                                         renderValue={
-                                            state.roles !== "" ? undefined : () => <Placeholder>All Roles</Placeholder>
+                                            selectedRoles !== "All" ? undefined : () => <Placeholder>All Roles</Placeholder>
                                         }>
                                         <MenuItem value={"All"}>All</MenuItem>
                                         <MenuItem value={"Admin"}>Admin</MenuItem>
@@ -245,12 +235,12 @@ function UsersManagement(props) {
                                 </FormControl>
                                 <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
                                     <Select
-                                        value={state.status}
+                                        value={selectedStatus}
                                         onChange={(e) => handleChange(e, "S")}
                                         displayEmpty
                                         inputProps={{ 'aria-label': 'Without label' }}
                                         renderValue={
-                                            state.status !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
+                                            selectedStatus !== "All" ? undefined : () => <Placeholder>All Status</Placeholder>
                                         }>
                                         <MenuItem value={"All"}>All</MenuItem>
                                         <MenuItem value={"Active"}>Active</MenuItem>
@@ -262,20 +252,15 @@ function UsersManagement(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <TableContainer component={Paper} >
+                    <TableContainer component={Paper}>
                         <Table >
                             <TableHead>
                                 <StyledTableRow>
-                                    {/* <StyledTableCell>
-                                         <Checkbox 
-                                        checked={state.isClickCheckBox}
-                                        onClick={() => checkBoxAction()} />
-                                        </StyledTableCell>*/}
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Name</Typography>
-                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sorting()} />
-                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} /></div>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByParam("first_name")}/>
+                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => sortByParam("first_name")}/></div>
                                         </div>
                                     </StyledTableCell>
                                     <StyledTableCell>Email ID</StyledTableCell>
@@ -284,33 +269,25 @@ function UsersManagement(props) {
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Status</Typography>
-                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByParam("status")}/>
+                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => sortByParam("status")} /></div>
                                         </div>
                                     </StyledTableCell>
                                     <StyledTableCell>Action</StyledTableCell>
                                 </StyledTableRow>
                             </TableHead>
-                            {users.length > 0 ? users.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
+                            {displayRecord.length > 0 ? displayRecord.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
                                 <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)", borderBottom: "1.1px solid #F2F2F2" }}>
-                                    <StyledTableRow>
-                                        {/* <StyledTableCell>
-                                            <Checkbox
-                                                checked={state.selectedUser.includes(item.id)}
-                                                onClick={() => singleSelectAction(item.id)}
-                                            />
-                                            </StyledTableCell> */}
+                                   <StyledTableRow>
                                         <StyledTableCell>{item.first_name} {item.last_name}</StyledTableCell>
                                         <StyledTableCell>{item.email}</StyledTableCell>
                                         <StyledTableCell>{item.phone_number}</StyledTableCell>
                                         <StyledTableCell>{item.role}</StyledTableCell>
-                                        {console.log("&&&&&&&&&&&&item.role&&&&&&&&&&&&&&&"+JSON.stringify(item.role))}
                                         <StyledTableCell>{item.status}</StyledTableCell>
-                                        {console.log("&&&&&&&&&&&&item.status&&&&&&&&&&&&&&&"+JSON.stringify(item.status))}
                                         <StyledTableCell className='tableContent'>
                                             <div style={{ textTransform: "none", color: "#000" }} onClick={() => editUser(item)}>
-                                            <Button>
-                                                <Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button>
+                                                <Button>
+                                                    <Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button>
                                             </div>
                                         </StyledTableCell>
                                     </StyledTableRow>
@@ -346,7 +323,7 @@ function UsersManagement(props) {
                         <AddUser close={handleClose} mode={state.mode} param={state.editParam} />
                     </DialogContent>
                 </Dialog>
-                <Drawer anchor={'right'} open={state.openPermission} PaperProps={{ sx: { marginTop: '75px' } }}>
+                <Drawer anchor={'right'} open={state.openPermission} PaperProps={{ sx: { marginTop: '75px', height:height > 700 ? height/1.05 : height/1.17} }}>
                     <RolesAndPermission dialogClose={permissionClose} />
                 </Drawer>
             </Grid>

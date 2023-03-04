@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Grid, Dialog, DialogTitle, DialogContent, TextField, MenuItem, Select, FormControl, FormControlLabel, Radio, RadioGroup, styled } from '@mui/material';
+import { Typography, Grid, Dialog, DialogTitle, DialogContent, TextField, TableBody, TableRow, tableCellClasses, tableRowClasses, TableCell, MenuItem, Select, FormControl, FormControlLabel, Radio, RadioGroup, styled } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import plus from "../../../public/Images/plus.png";
 import Image from 'next/image';
@@ -9,7 +9,29 @@ import { createCouponAction, updateCouponAction } from "../../store/actions/coup
 import { useDispatch, useSelector } from 'react-redux';
 import InputBase from "@mui/material/InputBase";
 
-
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: "#F2F5F6",
+        color: '#2E2E2E',
+        fontFamily: 'Avenir-Heavy',
+        padding: "12px",
+        fontSize: "1.1em",
+        lineHeight: '27px'
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: '0.9em',
+        fontFamily: 'Avenir-Book',
+        padding: "10px",
+        color: '#2E2E2E',
+        lineHeight: '24px'
+    },
+}));
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    [`&.${tableRowClasses.root}`]: {
+    },
+    '&:nth-of-type(odd)': {
+    },
+}));
 const CustomInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
         marginTop: theme.spacing(3)
@@ -35,14 +57,12 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
     }
 }));
 
-
-
 function CouponCode() {
+
     const dispatch = useDispatch();
     const coupons = useSelector(state => state.couponReducer.coupons);
+
     const [state, setState] = useState({
-        statusFilter: "All",
-        priceFilter: "All",
         couponCodeOpen: false,
         id: null,
         code: "",
@@ -51,10 +71,10 @@ function CouponCode() {
         status: "Active",
         mode: "ADD",
         isClickFilter: false,
-        displayRecord: coupons
+        displayRecord: coupons,
+        selectedStatus: "All",
+        selectedPrice: "All"
     })
-
-
 
     const couponCodeClose = () => {
         setState({ ...state, couponCodeOpen: false })
@@ -84,12 +104,10 @@ function CouponCode() {
     };
 
     const handleChange = (event, param) => {
-        console.log("*************param*************"+JSON.stringify(param))
         if (param === "S") {
-            setState({ ...state, statusFilter: event.target.value, displayRecord:  event.target.value === "All" ? coupons : coupons.filter((item) => item.status ===  event.target.value) });
-        } else if (param === "P") {
-            setState({ ...state, priceFilter: event.target.value, displayRecord:  event.target.value === "All" ? coupons : coupons.filter((item) => item.price ===  event.target.value) });
-
+            setState({ ...state, selectedStatus: event.target.value });
+        } else {
+            setState({ ...state, selectedPrice: event.target.value });
         }
     };
 
@@ -103,14 +121,25 @@ function CouponCode() {
 
     const editAction = (param) => {
         let result = coupons.filter((item) => item.id === param)[0]
-        console.log("*************" + JSON.stringify(result))
+        // console.log("*************" + JSON.stringify(result))
 
         setState({ ...state, id: result.id, code: result.code, name: result.name, price: result.price, status: result.status, couponCodeOpen: true, mode: "EDIT" })
     };
 
-    
-  let displayRecord = state.statusFilter ==="All"? coupons : coupons.filter((item) => item.status === state.statusFilter)
+    let displayRecord = [];
 
+    if (state.selectedStatus === "All" && state.selectedPrice === "All") {
+        displayRecord = coupons
+    } else if (state.selectedStatus !== "All" && state.selectedPrice === "All") {
+        displayRecord = coupons.filter((item) => item.status === state.selectedStatus)
+    } else if (state.selectedStatus === "All" && state.selectedPrice !== "All") {
+        displayRecord = coupons.filter((item) => item.price === state.selectedPrice)
+    } else if (state.selectedStatus !== "All" && state.selectedPrice !== "All") {
+        displayRecord = coupons.filter((item) => item.price === state.selectedPrice && item.status === state.selectedStatus)
+    }
+    // console.log("**************selectedStatus**********"+JSON.stringify(state.selectedStatus))
+    // console.log("**************selectedPrice**********"+JSON.stringify(state.selectedPrice))
+    // console.log("*********displayRecord************"+JSON.stringify(displayRecord))
     return (
         <>
             <Grid container>
@@ -121,7 +150,7 @@ function CouponCode() {
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "10px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={plus} alt='union' width={14} height={15} />
                                 <Typography style={{ marginLeft: "5px" }}>
-                                    Create new coupon 
+                                    Create new coupon
                                 </Typography>
                             </CustomizedButtons>
                         </Grid>
@@ -129,28 +158,27 @@ function CouponCode() {
                             <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
                                 <Select
-                                    value={state.priceFilter}
+                                    value={state.selectedPrice}
                                     onChange={(e) => handleChange(e, "P")}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     renderValue={
-                                        state.priceFilter !== "" ? undefined : () => <Placeholder>All</Placeholder>
+                                        state.selectedPrice !== "All" ? undefined : () => <Placeholder>All Discount</Placeholder>
                                     }>
                                     <MenuItem value={"All"}>All</MenuItem>
+                                    <MenuItem value={"40%"}>40%</MenuItem>
                                     <MenuItem value={"25%"}>25%</MenuItem>
                                     <MenuItem value={"50%"}>50%</MenuItem>
                                     <MenuItem value={"100%"}>100%</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
                                 <Select
-                                    value={state.statusFilter}
+                                    value={state.selectedStatus}
                                     onChange={(e) => handleChange(e, "S")}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.statusFilter !== "" ? undefined : () => <Placeholder>All Status</Placeholder>
-                                    }>
+                                    renderValue={state.selectedStatus !== "All" ? undefined : () => <Placeholder>All Status</Placeholder>}>
                                     <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"Active"}>Active</MenuItem>
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
@@ -159,7 +187,7 @@ function CouponCode() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item xs={12} >
+                <Grid item xs={12}>
                     <Grid container>
                         <Grid item xs={12} style={{ marginTop: "15px", padding: "12px", backgroundColor: "#F2F5F6" }}>
                             <Grid container>
@@ -181,7 +209,7 @@ function CouponCode() {
                             </Grid>
                         </Grid>
                     </Grid>
-                    {!!displayRecord && displayRecord.map((item, index) => (
+                    {!!displayRecord.length > 0 ? !!displayRecord && displayRecord.map((item, index) => (
                         <Grid container key={index.toString()}>
                             <Grid item xs={12} style={{ marginTop: "30px", border: "2px dashed #D9D9D9", padding: "10px", borderBottom: 0, width: "50vw" }} />
                             <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
@@ -212,12 +240,16 @@ function CouponCode() {
                             </Grid>
                             <Grid item xs={12} style={{ border: "2px dashed #D9D9D9", padding: "10px", borderTop: 0 }} />
                         </Grid>
-                    ))}
+                    )) :
+                        <div style={{display:"flex",justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
+                                <Typography >There are no coupon available</Typography>
+                        </div>
+                    }
                 </Grid>
                 <Dialog open={state.couponCodeOpen} onClose={() => couponCodeClose()} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => couponCodeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => couponCodeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>

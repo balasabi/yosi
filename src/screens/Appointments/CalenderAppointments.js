@@ -45,8 +45,8 @@ function CalenderAppointments(props) {
         test_name: "Heart Test",
         start_time: "09:00 AM",
          end_time:"09:00 AM",
-        start_date: new Date("17/02/2023"),
-        'end': new Date("17/02/2023")
+        start_date: new Date("03/03/2023"),
+       'end': new Date("03/03/2023")
       },
       {
         id: "PID0002",
@@ -54,8 +54,8 @@ function CalenderAppointments(props) {
         test_name: "Full CheckUp",
         start_time: "10:00 AM",
          end_time:"10:00 AM",
-        start_date: new Date("02/18/2023"),
-        'end': new Date("02/17/2023")
+        start_date: new Date("03/01/2023"),
+        'end': new Date("03/01/2023")
       },
     ],
      patientAppointmentDetailsOpen: false,
@@ -63,7 +63,7 @@ function CalenderAppointments(props) {
   })
   const appointments = useSelector(state => state.appointmentReducer.appointments);
 
-  const goToBack = (onNavigate) => {
+   const goToBack = (onNavigate) => {
     onNavigate("PREV");
   };
 
@@ -88,23 +88,29 @@ function CalenderAppointments(props) {
   const addTestClose = () => {
     setState({ ...state, patientAppointmentDetailsOpen: false })
   };
-  // const appointment = appointments.map((item,index)=> new Date(moment(item.start_date).format("MM/DD/YYYY")))
-  const appointment = appointments.map(item => ({ patient_name: item.patient_name, test_name: item.test_name, start_date: new Date(item.start_date), start_time: item.start_time, end_time: item.end_time }));
-console.log("appointments===========>"+JSON.stringify(appointment))
-console.log("events=>>>>>>>>>>"+JSON.stringify(state.events))
+ 
+
+  const appointmentsLength = (param) => { 
+      return appointments.filter((item, index) =>  moment(item.start_date).format("MM/DD/YYYY") === moment(param.start_date).format("MM/DD/YYYY")).length
+  };
+
+
   return (
     <>
       <Grid item xs={12} style={{ display: "flex", marginTop: "20px" }}>
         <Calendar
           localizer={localizer}
-          events={appointment}
+          events={appointments}
           startAccessor="start_date"
           // endAccessor="end"
           views={['month']}
           components={{ toolbar: CalendarToolbar }}
           style={{ height: 500, width: 1200 }}
           onSelectEvent={(event) => handleEventClick(event)}
-          titleAccessor={(e) => { return appointment.length > 1 ? `Appointments : ${appointment.length}` : `Appointment : ${appointment.length}`; }}
+          titleAccessor={(e) => { 
+             let result = appointmentsLength(e)
+                   console.log("*******in******"+result)
+              return  appointmentsLength(e) > 1 ? `Appointments : ${ appointmentsLength(e)}` : `Appointment : ${"1"}`; }}
           // onSelectSlot={handleEventClick()}
           eventPropGetter={(event) => {
             const backgroundColor = '#5824D6';

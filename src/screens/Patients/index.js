@@ -4,7 +4,7 @@ import {
   Button, TablePagination, Typography, Paper, TableFooter, DialogTitle, Dialog, DialogContent, TextField
 } from '@mui/material';
 import vector from '../../../public/Images/vector.png';
-import _ from 'underscore';
+import _, { sortBy } from 'underscore';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Router from 'next/router';
@@ -70,6 +70,8 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function Patients(props) {
+  const patients = useSelector((state) => state.patientReducer.patients);
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     page: 0,
     rowsPerPage: 10,
@@ -82,37 +84,12 @@ function Patients(props) {
     phoneNumber: '',
     dob: null,
     id: '',
-  })
-  const ref = useRef();
-  const dispatch = useDispatch();
-  const patients = useSelector((state) => state.patientReducer.patients);
+    patients:patients,
+    sortOrder:false
+   })
+  
 
-  // const checkBoxAction = () => {
-  //   setState({
-  //     ...state,
-  //     isClickCheckBox: !state.isClickCheckBox,
-  //     selectedPatients: !state.isClickCheckBox === true ? _.pluck(state.rows, 'id') : []
-  //   })
-  // };
-
-  // const singleSelectAction = (param) => {
-  //   if (state.selectedPatients.length > 0 && state.selectedPatients.includes(param)) {
-  //     setState({
-  //       ...state,
-  //       selectedPatients: state.selectedPatients.filter((item) => item != param)
-  //     })
-  //   }
-  //   else {
-  //     let result = state.selectedPatients
-  //     result.push(param)
-  //     setState({
-  //       ...state,
-  //       selectedPatients: result
-  //     })
-  //   }
-  // };
-
-  const handleChangePage = (event, newPage) => {
+ const handleChangePage = (event, newPage) => {
     setState({ ...state, page: newPage })
   };
 
@@ -145,6 +122,18 @@ function Patients(props) {
   };
 
 
+const sortAction =(param) =>{
+   if(!state.sortOrder){
+    let result =  patients.sort((a, b) => (a.name > b.name) ? 1: -1);  
+    setState({...state,patients:result, sortOrder:true})
+  }else{
+    let result =  patients.sort((a, b) => (b.name > a.name) ? 1: -1);  
+    setState({...state,patients:result,sortOrder:false})
+  }
+}
+
+
+
   return (
     <>
       <Grid container spacing={3}>
@@ -172,8 +161,8 @@ function Patients(props) {
                     <StyledTableCell>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Typography className='tableHeader'>Name</Typography>
-                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortAction("A")} />
+                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortAction("A")}  /></div>
                       </div>
                     </StyledTableCell>
                     <StyledTableCell align="left">Email ID</StyledTableCell>
@@ -181,14 +170,14 @@ function Patients(props) {
                     <StyledTableCell>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Typography className='tableHeader'>DOB</Typography>
-                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} /></div>
+                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortAction("D")} />
+                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortAction("D")}/></div>
                       </div>
                     </StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
-                {patients.length > 0 ?
-                  patients.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((row, index) =>
+                {state.patients.length > 0 ?
+                  state.patients.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((row, index) =>
                     <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? 'white' : '#FCFCFC' }}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                       <StyledTableRow>
@@ -207,7 +196,7 @@ function Patients(props) {
                   <TableRow>
                     <TablePagination
                       rowsPerPageOptions={[10, 25]}
-                      count={!!patients && patients.length}
+                      count={!!state.patients && state.patients.length}
                       rowsPerPage={state.rowsPerPage}
                       page={state.page}
                       onPageChange={handleChangePage}

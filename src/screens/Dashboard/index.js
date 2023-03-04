@@ -12,6 +12,7 @@ import CustomizedButtons from '../../components/CustomButton';
 import Upload from '../../../public/Images/svg/Upload.svg';
 import { MdDelete } from "react-icons/md";
 import { useDropzone } from "react-dropzone";
+import { useSelector } from 'react-redux';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -43,6 +44,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function Dashboard(props) {
+    const test_type = useSelector(state => state.testTypeReducer.test_type);
     const [state, setState] = useState({
         isClickCheckBox: false,
         selectedPatients: [],
@@ -165,27 +167,29 @@ function Dashboard(props) {
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <Select size="small"
                                     fullWidth
-                                    style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" }}
+                                    style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" }}
                                     value={state.test}
                                     onChange={(event) => setState({ ...state, test: event.target.value })}
                                     displayEmpty
                                     renderValue={
                                         state.test !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Select test</Typography></Placeholder>
                                     }>
-                                    <MenuItem value={""}></MenuItem>
+                                    {!!test_type && test_type.map((item, index) =>
+                                      <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
+                                    )}
                                 </Select>
                             </Grid>
                             <Grid item xs={6} style={{ marginTop: "20px" }}>
                                 <Select size="small"
                                     fullWidth
-                                    style={{ fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book-Book", backgroundColor: "#F0E9FF" }}
+                                    style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" }}
                                     value={state.lab}
                                     onChange={(event) => setState({ ...state, lab: event.target.value })}
                                     displayEmpty
                                     renderValue={
                                         state.lab !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Select lab</Typography></Placeholder>
                                     }>
-                                    <MenuItem value={""}></MenuItem>
+                                    <MenuItem value={"Yosi Lab"}>Yosi Lab</MenuItem>
                                 </Select>
                             </Grid>
                         </Grid>

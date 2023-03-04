@@ -68,7 +68,6 @@ function Classification(props) {
         page: 0,
         rowsPerPage: 10,
         results: "",
-        statusFilter: "",
         date: "",
         classification: [],
         addClassificationOpen: false,
@@ -79,6 +78,7 @@ function Classification(props) {
         test_groups: "",
         status: "Active",
         searchText: null,
+        selectedStatus:"All"
     })
 
     const router = useRouter();
@@ -99,17 +99,15 @@ function Classification(props) {
     };
 
     const handleChange = (e, param) => {
-        if (param === "R") {
-            setState({ ...state, results: e.target.value })
-        } else if (param === "S") {
-            setState({ ...state, statusFilter: e.target.value })
-        } else if (param === "D") {
-            setState({ ...state, date: e.target.value })
+       if (param === "S") {
+            setState({ ...state, selectedStatus: e.target.value })
         }
     }
+
     const classificationClose = () => {
         setState({ ...state, addClassificationOpen: false })
     };
+
     const submit = async () => {
         let { id, name, code, test_type, test_groups, status } = state;
         let data = {}
@@ -143,7 +141,7 @@ function Classification(props) {
         setState({ ...state, mode: "EDIT", addClassificationOpen: true, id: param.id, code: param.code, name: param.name, code: param.code, test_type: param.test_type, test_groups: param.test_groups, status: param.status })
     };
 
-    let displayClassificationRecord = state.statusFilter === "" || state.statusFilter === "All" ? classification : classification.filter((item) => item.status === state.statusFilter)
+    let displayClassificationRecord = state.selectedStatus === "All" ? classification : classification.filter((item) => item.status === state.selectedStatus);
 
     return (
         <>
@@ -159,52 +157,27 @@ function Classification(props) {
                         <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={Union} alt='union' width={14} height={15} />
-                                <Typography style={{ marginLeft: "5px", }} >
+                                <Typography style={{ marginLeft: "5px"}} >
                                     Add Classification
                                 </Typography>
                             </CustomizedButtons>
                         </Grid>
                         <Grid item xs={5} sm={5} md={5} lg={5} xl={5} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "10px" }}>
                             <Typography className='miniLiteText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
-                                <Select
-                                    value={state.results}
-                                    onChange={(e) => handleChange(e, "R")}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.results !== "" ? undefined : () => <Placeholder>All Results</Placeholder>
-                                    }>
-                                    <MenuItem value={"All"}>All</MenuItem>
-                                    <MenuItem value={"Active"}>Negative</MenuItem>
-                                    <MenuItem value={"Inactive"}>Positive</MenuItem>
-                                </Select>
-                            </FormControl> */}
                             <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRadius: 0 } }} size="small">
                                 <Select
-                                    value={state.statusFilter}
+                                    value={state.selectedStatus}
                                     onChange={(e) => handleChange(e, "S")}
                                     displayEmpty
                                     inputProps={{ 'aria-label': 'Without label' }}
                                     renderValue={
-                                        state.statusFilter !== "" ? undefined : () => <Placeholder>Status</Placeholder>
+                                        state.selectedStatus !== "All" ? undefined : () => <Placeholder>Status</Placeholder>
                                     }>
                                     <MenuItem value={"All"}>All</MenuItem>
                                     <MenuItem value={"Active"}>Active</MenuItem>
                                     <MenuItem value={"Inactive"}>Inactive</MenuItem>
                                 </Select>
                             </FormControl>
-                            {/* <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
-                                <Select
-                                    value={state.date}
-                                    onChange={(e) => handleChange(e, "L")}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    renderValue={
-                                        state.date !== "" ? undefined : () => <Placeholder>Date</Placeholder>
-                                    }>
-                                </Select>
-                            </FormControl> */}
                         </Grid>
                     </Grid>
                 </Grid>

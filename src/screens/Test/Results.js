@@ -10,12 +10,14 @@ import Image from 'next/image';
 import Send from '../../../public/Images/send.png';
 import Union from '../../../public/Images/plus.png';
 // import SignatureCanvas from 'react-signature-canvas';
-import { addTestResultAction, sendResultAction } from "../../store/actions/testResultAction";
+import { addTestResultAction, updateTestResultAction } from "../../store/actions/testResultAction";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import _ from 'underscore';
 import InputBase from "@mui/material/InputBase";
+import { updateTestResult } from "../../store/reducers/testResultReducer"
+import { jsx } from '@emotion/react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -67,10 +69,16 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function Result(props) {
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const signPad = useRef({});
+    const testResult = useSelector(state => state.testResultReducer.test_result);
+    const test_type = useSelector(state => state.testTypeReducer.test_type);
     const [state, setState] = useState({
         page: 0,
         rowsPerPage: 10,
         addTestOpen: false,
+        id: "",
         name: "",
         last_name: "",
         location: "",
@@ -84,14 +92,11 @@ function Result(props) {
         date: "",
         isClickCheckBox: false,
         selectedResults: [],
-        alert: true,
+        sortOrder: false,
+        testResult:testResult
     })
 
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const signPad = useRef({});
-    const testResult = useSelector(state => state.testResultReducer.test_result);
-    const test_type = useSelector(state => state.testTypeReducer.test_type);
+   
     // useEffect(() => {
     //   dispatch(fetchTestResultAction());
     //   }, [])
@@ -134,18 +139,18 @@ function Result(props) {
         //     signature: signPad.current.getTrimmedCanvas()
         //         .toDataURL('image/png')
         // })
-        let { name, last_name, location, location_test_type, ordering_provider, test_lab, signature } = state;
+        let { id, name, last_name, location, location_test_type, ordering_provider, test_lab, signature } = state;
         let data = {}
-        data.name = name;
+        data.id = testResult.length + 1;
+        data.patient_name = name;
         // data.last_name = last_name;
         data.location = location;
-        data.location_test_type = location_test_type;
+        data.test_type = location_test_type;
         data.ordering_provider = ordering_provider;
         // data.test_lab = test_lab;
         // data.signature = signature;
         dispatch(addTestResultAction(data))
         setState({ ...state, addTestOpen: false })
-        console.log("******submit******" + JSON.stringify(data))
     };
 
     const cancel = () => {
@@ -168,14 +173,34 @@ function Result(props) {
         }
     };
 
-    const handleSend = (param) => {
-        if (param.length > 0) {
-            let data = testResult.map((item) => item.id === param.map((ele) => ele) ? item : null)
-            setState({ ...state, alert: true, selectedResults: state.selectedResults.filter((item) => item === param.map((ele) => ele)), isClickCheckBox:false })
-            // console.log("******submit******" + JSON.stringify(state.selectedResults))
-            dispatch(sendResultAction(state));
-        }
+    const handleSend = async(param) => {
+        await setState({ ...state, selectedResults: state.selectedResults.filter((item) => item === param.map((ele) => ele)), isClickCheckBox: false })
+        let result = testResult.map((content, i) => state.selectedResults.includes(content.id) ? { ...content, status: "Result Sent" } : content)
+        dispatch(updateTestResultAction(result, state));
     };
+
+    const addAction = () => {
+        setState({
+            ...state, addTestOpen: true, id: "", name: "",
+            location: "",
+            location_test_type: "",
+            test_type: "",
+            result: "",
+            isClickCheckBox: false,
+            selectedResults: []
+        })
+    }
+
+    const sortByOrder = (param) => {
+        // console.log("*****param*******"+state.sortOrder)
+        if (!state.sortOrder) {
+            let result = testResult.sort((a, b) => (a.patient_name > b.patient_name) ? 1 : -1);
+            setState({ ...state, testResult: result, sortOrder: true })
+        }else{
+            let result = testResult.sort((a, b) => (b.patient_name > a.patient_name) ? 1 : -1);
+            setState({ ...state, testResult: result, sortOrder: false })
+        }
+    }
 
     return (
         <>
@@ -183,7 +208,7 @@ function Result(props) {
                 <Grid item xs={12} >
                     <Grid container >
                         <Grid item xs={12} sm={12} md={4} lg={4} xl={4} >
-                            <CustomizedButtons variant={"contained"} onClick={() => setState({ ...state, addTestOpen: true })} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }}>
+                            <CustomizedButtons variant={"contained"} onClick={() => addAction()} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }}>
                                 <Image src={Union} alt='union' width={14} height={15} />
                                 <Typography style={{ marginLeft: "5px", }} >
                                     Test Order
@@ -270,8 +295,8 @@ function Result(props) {
                                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Typography className='tableHeader1'>Patient Name</Typography>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
-                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />
+                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByOrder("A")} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortByOrder("D")} />
                                             </div>
                                         </div>
                                     </StyledTableCell>
@@ -283,31 +308,32 @@ function Result(props) {
                                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Typography className='tableHeader1'>Status</Typography>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
-                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("WIP")} />
-                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("WIP")} />
+                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("wip")} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("wip")} />
                                             </div>
                                         </div>
                                     </StyledTableCell>
                                 </TableRow>
                             </TableHead>
-                            {testResult.length > 0 ?
-                                testResult.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((test, index) =>
+                            {!!state.testResult && state.testResult.length > 0 ?
+                                state.testResult.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((test, index) =>
                                     <TableBody key={index.toString()} style={{ backgroundColor: (index % 2) ? "#FCFCFC" : "#FFFFFF", borderBottom: "1.1px solid #F2F2F2" }}>
                                         <StyledTableRow>
                                             <StyledTableCell align="center">
                                                 <Checkbox inputProps={{ 'aria-label': 'Checkbox' }}
                                                     checked={state.selectedResults.includes(test.id)}
                                                     onClick={() => singleSelectAction(test.id)}
+                                                    disabled={test.status === "Result Sent" ? true : false}
                                                 />
                                             </StyledTableCell>
                                             {/* <StyledTableCell className='tableContent'>{test.test_id}</StyledTableCell> */}
                                             <StyledTableCell className='tableContent'>000{index + 1}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.patient_name}</StyledTableCell>
-                                            <StyledTableCell className='tableContent'>{test.location_test_type}</StyledTableCell>
-                                            <StyledTableCell className='tableContent'>{test.location}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>{test.test_type}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>{test.collection_date}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.tube_number}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.result}</StyledTableCell>
-                                            <StyledTableCell className='tableContent'>{test.analysis}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>{test.status}</StyledTableCell>
                                         </StyledTableRow>
                                     </TableBody>)
                                 :
@@ -321,7 +347,7 @@ function Result(props) {
                                 <TableRow>
                                     <TablePagination
                                         rowsPerPageOptions={[10, 25]}
-                                        count={!!testResult && testResult.length}
+                                        count={!!state.testResult && state.testResult.length}
                                         page={state.page}
                                         onPageChange={handleChangePage}
                                         rowsPerPage={state.rowsPerPage}
