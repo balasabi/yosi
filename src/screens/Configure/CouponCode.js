@@ -156,7 +156,7 @@ function CouponCode() {
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px" }}>
                             <Typography className='miniText' style={{ marginLeft: "5px", alignSelf: "center" }}>Filter by</Typography>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0 } }} size="small">
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8" } }} size="small">
                                 <Select
                                     value={state.selectedPrice}
                                     onChange={(e) => handleChange(e, "P")}
@@ -172,7 +172,7 @@ function CouponCode() {
                                     <MenuItem value={"100%"}>100%</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRight: "2px solid #E8E8E8", borderRadius: 0 } }} size="small">
+                            <FormControl sx={{ m: 1, minWidth: 60, minHeight: 10, '.MuiOutlinedInput-notchedOutline': { border: 0, borderRadius: 0 } }} size="small">
                                 <Select
                                     value={state.selectedStatus}
                                     onChange={(e) => handleChange(e, "S")}
@@ -229,7 +229,7 @@ function CouponCode() {
                                             <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.status}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px" }} onClick={() => editAction(item.id)}>
+                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px", cursor:"pointer" }} onClick={() => editAction(item.id)}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>

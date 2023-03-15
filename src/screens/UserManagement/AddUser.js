@@ -84,7 +84,7 @@ function AddUser(props) {
             dispatch(createUserAction(data, props.close))
             }
             else {
-                data.id = props.param.id;
+            data.id = props.param.id;
             dispatch(updateUserAction(data, props.close))
             }
         }

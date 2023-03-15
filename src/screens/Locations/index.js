@@ -77,7 +77,6 @@ function Locations(props) {
         setState({ ...state, mode: "EDIT", isAdd: true, id: param.id, locationCode: param.location_code, location: param.location, labCode: param.lab_code, labName: param.lab_name, manager: param.manager, address: param.address, status: param.status })
     };
     const handleView = (param) => {
-        // router.push('/locations/view-location')
         router.push({ pathname: '/locations/view-location', query: "locationId=" + param })
     };
     const handleSubmit = () => {
@@ -123,10 +122,10 @@ function Locations(props) {
                                 onChange={(name) => alert("WIP")}
                             />
                         </Grid>
-                        <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
+                        <Grid item xs={3} sm={3} md={3} lg={3} xl={3}>
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }} onClick={() => addAction()}>
-                                <Image src={Union} alt='union' width={14} height={15} />
-                                <Typography style={{ marginLeft: "5px", }} >
+                                <Image src={Union} alt='union' width={14} height={15}/>
+                                <Typography style={{ marginLeft: "5px" }}>
                                     Add Location
                                 </Typography>
                             </CustomizedButtons>
@@ -151,13 +150,13 @@ function Locations(props) {
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <Grid container spacing={3} >
+                    <Grid container spacing={3}>
                         {!!displaylocationRecord && displaylocationRecord.map((item, index) =>
                             <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={index.toString()}>
-                                <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 30%), 0px 1px 3px 4px rgb(0 0 0 / 10%)', borderRadius: "8px", padding: "10px", }}>
+                                <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 30%), 0px 1px 3px 4px rgb(0 0 0 / 10%)', borderRadius: "8px", padding: "10px" }}>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                         <Typography className='subHeading'>{item.location} </Typography>
-                                        <Image src={Edit} alt='edit' width={18} height={18} onClick={() => editAction(item)} />
+                                        <Image src={Edit} alt='edit' width={18} height={18} style={{cursor:"pointer"}} onClick={() => editAction(item)} />
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
                                         <Typography style={{
@@ -208,7 +207,7 @@ function Locations(props) {
                 <Dialog open={state.isAdd} onClose={() => handleCloseLocation()}>
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => handleCloseLocation()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => handleCloseLocation()} />
                         </Grid>
                     </Grid>
                     <DialogTitle>

@@ -189,7 +189,7 @@ function CountryCode() {
                                         <StyledTableCell>{code.iso}</StyledTableCell>
                                         <StyledTableCell>{code.status}</StyledTableCell>
                                         <StyledTableCell>
-                                            <div style={{ display: "flex", flexDirection: "row" }} onClick={() => editAction(code.id)}>
+                                            <div style={{ display: "flex", flexDirection: "row", cursor:"pointer" }} onClick={() => editAction(code.id)}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>

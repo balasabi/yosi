@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { store ,persistor} from '../store'
+import { store } from '../store'
 import { Provider } from 'react-redux'
 import LayoutWrapper from '../layouts';
 import { ThemeProvider } from '@mui/material/styles';
@@ -8,7 +8,6 @@ import Head from 'next/head';
 import "../styles/css/globals.css";
 import createEmotionCache from '../createEmotionCache';
 import { CacheProvider } from '@emotion/react';
-import { PersistGate, } from "redux-persist/integration/react";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -23,14 +22,12 @@ export default function MyApp(props) {
         <link rel="icon" href="/Images/svg/AppLogo.svg" />
         <title>YosiLab</title>
       </Head>
-      <Provider store={store}>
-      <PersistGate persistor={persistor} >
+      <Provider store={store}>     
         <ThemeProvider theme={theme}>
           <LayoutWrapper {...pageProps}>
             <Component {...pageProps} />
           </LayoutWrapper>
-        </ThemeProvider>
-        </PersistGate>
+        </ThemeProvider>       
       </Provider>
     </CacheProvider>
   )

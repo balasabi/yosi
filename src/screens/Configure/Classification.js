@@ -203,7 +203,7 @@ function Classification(props) {
                                         <StyledTableCell>{classification.test_groups}</StyledTableCell>
                                         <StyledTableCell >{classification.status}</StyledTableCell>
                                         <StyledTableCell>
-                                            <div style={{ display: "flex", flexDirection: "row" }} onClick={() => editAction(classification)}>
+                                            <div style={{ display: "flex", flexDirection: "row", cursor:"pointer" }} onClick={() => editAction(classification)}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -235,7 +235,7 @@ function Classification(props) {
                 <Dialog open={state.addClassificationOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => classificationClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => classificationClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add classification" : "Edit classification"}</DialogTitle>
@@ -250,7 +250,6 @@ function Classification(props) {
                                         <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -259,7 +258,6 @@ function Classification(props) {
                                         <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
@@ -283,7 +281,6 @@ function Classification(props) {
                                         <CustomInput size="small"
                                             placeholder={"Test group"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.test_groups}
                                             onChange={(event) => setState({ ...state, test_groups: event.target.value })}
                                         />

@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, styled, tableCellClasses, tableRowClasses, TableRow, Grid,
   Button, TablePagination, Typography, Paper, TableFooter, DialogTitle, Dialog, DialogContent, TextField
 } from '@mui/material';
-import vector from '../../../public/Images/vector.png';
 import _, { sortBy } from 'underscore';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -70,6 +69,7 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function Patients(props) {
+
   const patients = useSelector((state) => state.patientReducer.patients);
   const dispatch = useDispatch();
   const [state, setState] = useState({
@@ -84,12 +84,12 @@ function Patients(props) {
     phoneNumber: '',
     dob: null,
     id: '',
-    patients:patients,
-    sortOrder:false
-   })
-  
+    patients: patients,
+    sortOrder: false
+  });
 
- const handleChangePage = (event, newPage) => {
+  
+  const handleChangePage = (event, newPage) => {
     setState({ ...state, page: newPage })
   };
 
@@ -117,22 +117,36 @@ function Patients(props) {
     dispatch(createPatientAction(data, state, setState))
   };
 
+
+  useEffect(() => {
+    setState({ ...state, patients: patients })
+  }, [patients]); 
+
   const handleAdd = () => {
-    setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '', })
+     setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '' })
   };
 
-
-const sortAction =(param) =>{
-   if(!state.sortOrder){
-    let result =  patients.sort((a, b) => (a.name > b.name) ? 1: -1);  
-    setState({...state,patients:result, sortOrder:true})
-  }else{
-    let result =  patients.sort((a, b) => (b.name > a.name) ? 1: -1);  
-    setState({...state,patients:result,sortOrder:false})
+  const sortAction = (param) => {
+     let records =[... state.patients]
+    if (!state.sortOrder) {
+      let result = records.sort((a, b) => (a[param]) > (b[param]) ? 1 : -1);
+      setState({ ...state, patients: result, sortOrder: true })
+    } else {
+      let result = records.sort((a, b) => (b[param]) > (a[param]) ? 1 : -1);
+      setState({ ...state, patients: result, sortOrder: false })
+    }
   }
-}
 
-
+  const handleSort = (param) => {
+    let records =[... state.patients]
+    if (!state.sortOrder) {
+      let result = records.sort((a, b) => new Date(a[param]) > new Date(b[param]) ? 1 : -1);
+      setState({ ...state, patients: result, sortOrder: true })
+    } else {
+      let result = records.sort((a, b) => new Date(b[param]) > new Date(a[param]) ? 1 : -1);
+      setState({ ...state, patients: result, sortOrder: false })
+    }
+  }
 
   return (
     <>
@@ -161,8 +175,8 @@ const sortAction =(param) =>{
                     <StyledTableCell>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Typography className='tableHeader'>Name</Typography>
-                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortAction("A")} />
-                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortAction("A")}  /></div>
+                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortAction("name")} />
+                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortAction("name")} /></div>
                       </div>
                     </StyledTableCell>
                     <StyledTableCell align="left">Email ID</StyledTableCell>
@@ -170,8 +184,8 @@ const sortAction =(param) =>{
                     <StyledTableCell>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         <Typography className='tableHeader'>DOB</Typography>
-                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortAction("D")} />
-                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortAction("D")}/></div>
+                        <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => handleSort("dob")} />
+                          <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => handleSort("dob")} /></div>
                       </div>
                     </StyledTableCell>
                   </StyledTableRow>
@@ -213,7 +227,7 @@ const sortAction =(param) =>{
       <Dialog open={state.isAdd}>
         <Grid container>
           <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-            <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute" }} onClick={() => handleCancel()} />
+            <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => handleCancel()} />
           </Grid>
         </Grid>
         <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add Patient</DialogTitle>
@@ -291,7 +305,7 @@ const sortAction =(param) =>{
                   <CustomizedButtons variant={"text"} onClick={() => handleCancel()}>
                     Cancel
                   </CustomizedButtons>
-                  <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => handleSubmit()} >
+                  <CustomizedButtons variant={"contained"} style={{ marginLeft: "5px", borderRadius: "5px" }} onClick={() => handleSubmit()}>
                     Submit
                   </CustomizedButtons>
                 </Grid>

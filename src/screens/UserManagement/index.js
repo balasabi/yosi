@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Grid, Typography, Select, MenuItem, Table, TableBody, TableCell, tableCellClasses,
-    TableRow, TableHead, TableContainer, Checkbox, Button, Paper, TablePagination,
+    TableRow, TableHead, TableContainer, Button, Paper, TablePagination,
     FormControl, Dialog, DialogTitle, DialogContent, Drawer,
 } from '@mui/material';
 import plus from '../../../public/Images/plus.png';
@@ -15,7 +15,7 @@ import RolesAndPermission from './RolesAndPermission';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import _ from 'underscore';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -39,29 +39,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }))
 
-const CustomInput = styled(InputBase)(({ theme }) => ({
-    "label + &": {
-        marginTop: theme.spacing(3)
-    },
-    "& .MuiInputBase-input": {
-        position: "relative",
-        backgroundColor: theme.palette.background.paper,
-        fontSize: 16,
-        padding: "4px",
-        fontFamily: [
-            'Avenir-Book'
-        ].join(","),
-        "&:focus": {
-            border: 0,
-            backgroundColor: "#EBF4F1",
-        },
-        "&:active": {
-            border: 0,
-            backgroundColor: "#EBF4F1"
-        }
-    }
-}));
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: "#FFF",
@@ -73,6 +50,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 function UsersManagement(props) {
+
+    const users = useSelector(state => state.userManagementReducer.users)
 
     const [state, setState] = useState({
         roles: "",
@@ -90,24 +69,24 @@ function UsersManagement(props) {
         name: "",
         email: "",
         phone: "",
-        status:"Active",
-        sortOrder:false
+        status: "Active",
+        sortOrder: false,
+        users:users
     })
     const [selectedRoles, setSelectedRoles] = useState('All');
     const [selectedStatus, setSelectedStatus] = useState('All');
-    const  [ height, setHeight] = useState(600);
-
-    const dispatch = useDispatch();
+    const [height, setHeight] = useState(600);
 
     const updateDimensions = () => {
-     setHeight(window.innerHeight);
+        setHeight(window.innerHeight);
     }
-     useEffect(() => {
+
+    useEffect(() => {
+        setState({...state, users:users})
         updateDimensions()
-       window.addEventListener("resize", updateDimensions);
-        return () => window.removeEventListener("resize", updateDimensions);
-    }, [dispatch])
-    const users = useSelector(state => state.userManagementReducer.users)
+        window.addEventListener("resize", updateDimensions);
+        return () => window.removeEventListener("resize", updateDimensions);      
+    }, [users])
 
     const handleChange = (e, param) => {
         if (param === "R") {
@@ -117,15 +96,16 @@ function UsersManagement(props) {
         }
     }
 
-const sortByParam =(param) =>{
-   if(!state.sortOrder){
-    let result =  users.sort((a, b) => (a[param] > b[param]) ? 1: -1);
-    setState({...state, users:result, sortOrder:true})
-  }else{
-    let result =  users.sort((a, b) => (b[param] > a[param]) ? 1: -1);
-    setState({...state, users:result, sortOrder:false})
-  }
-}
+    const sortByParam = (param) => {
+        let records =[... state.users]
+        if (!state.sortOrder) {
+            let result = records.sort((a, b) => (a[param] > b[param]) ? 1 : -1);
+            setState({ ...state, users: result, sortOrder: true })
+        } else {
+            let result = records.sort((a, b) => (b[param] > a[param]) ? 1 : -1);
+            setState({ ...state, users: result, sortOrder: false })
+        }
+    }
 
     const handleChangePage = (event, newPage) => {
         setState({ ...state, page: newPage })
@@ -166,16 +146,14 @@ const sortByParam =(param) =>{
     let displayRecord = [];
 
     if (selectedStatus === "All" && selectedRoles === "All") {
-        displayRecord = users
-    } else if(selectedRoles === "All" && selectedStatus !== "All") {
+        displayRecord = state.users
+    } else if (selectedRoles === "All" && selectedStatus !== "All") {
         displayRecord = users.filter((item) => item.status === selectedStatus)
-    }else if(selectedRoles !== "All" && selectedStatus === "All"){
+    } else if (selectedRoles !== "All" && selectedStatus === "All") {
         displayRecord = users.filter((item) => item.role === selectedRoles)
-    }else if(selectedRoles !== "All" && selectedStatus !== "All"){
+    } else if (selectedRoles !== "All" && selectedStatus !== "All") {
         displayRecord = users.filter((item) => item.role === selectedRoles && item.status === selectedStatus)
     }
-
-     console.log("*****hie******"+height)
 
     return (
         <>
@@ -259,8 +237,8 @@ const sortByParam =(param) =>{
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Name</Typography>
-                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByParam("first_name")}/>
-                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => sortByParam("first_name")}/></div>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByParam("first_name")} />
+                                                <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => sortByParam("first_name")} /></div>
                                         </div>
                                     </StyledTableCell>
                                     <StyledTableCell>Email ID</StyledTableCell>
@@ -269,7 +247,7 @@ const sortByParam =(param) =>{
                                     <StyledTableCell>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                             <Typography className='tableHeader'>Status</Typography>
-                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByParam("status")}/>
+                                            <div style={{ display: "flex", flexDirection: 'column' }}><ArrowDropUpIcon style={{ height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByParam("status")} />
                                                 <ArrowDropDownIcon style={{ height: "20px", width: "50px" }} onClick={() => sortByParam("status")} /></div>
                                         </div>
                                     </StyledTableCell>
@@ -278,7 +256,7 @@ const sortByParam =(param) =>{
                             </TableHead>
                             {displayRecord.length > 0 ? displayRecord.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((item, index) =>
                                 <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)", borderBottom: "1.1px solid #F2F2F2" }}>
-                                   <StyledTableRow>
+                                    <StyledTableRow>
                                         <StyledTableCell>{item.first_name} {item.last_name}</StyledTableCell>
                                         <StyledTableCell>{item.email}</StyledTableCell>
                                         <StyledTableCell>{item.phone_number}</StyledTableCell>
@@ -302,7 +280,7 @@ const sortByParam =(param) =>{
                     </TableContainer>
                     <TablePagination component="div"
                         rowsPerPageOptions={[10, 25]}
-                        count={users.length}
+                        count={state.users.length}
                         page={state.page}
                         rowsPerPage={state.rowsPerPage}
                         labelRowsPerPage="No. of items per page"
@@ -323,7 +301,7 @@ const sortByParam =(param) =>{
                         <AddUser close={handleClose} mode={state.mode} param={state.editParam} />
                     </DialogContent>
                 </Dialog>
-                <Drawer anchor={'right'} open={state.openPermission} PaperProps={{ sx: { marginTop: '75px', height:height > 700 ? height/1.05 : height/1.17} }}>
+                <Drawer anchor={'right'} open={state.openPermission} PaperProps={{ sx: { marginTop: '75px', height: height > 700 ? height / 1.05 : height / 1.17 } }}>
                     <RolesAndPermission dialogClose={permissionClose} />
                 </Drawer>
             </Grid>

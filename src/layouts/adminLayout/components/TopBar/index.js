@@ -5,7 +5,7 @@ import menu from '../../../../../public/Images/menu.png';
 import yosiTop from '../../../../../public/Images/svg/LogoFinal.svg';
 import bell from '../../../../../public/Images/svg/Notification.svg';
 import { AiOutlineArrowRight, AiOutlineSearch,AiOutlineArrowLeft } from "react-icons/ai";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 function TopBar(props) {
      const router = useRouter()
@@ -51,7 +51,7 @@ function TopBar(props) {
                                         />
                                     </div>
                                 </Grid>
-                                <Grid item xs={2} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
+                                <Grid item xs={2} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", alignItems: "center", cursor:"pointer" }}>
                                     <Image src={bell} alt="YOSI LAB" width={30} height={30} />
                                 </Grid>
                             </Grid>

@@ -175,7 +175,7 @@ function TestType(props) {
                                                 <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 30%), 0px 1px 3px 4px rgb(0 0 0 / 10%)', borderRadius: "8px", padding: "10px" }}>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                                         <Typography className='subHeading'>{type.name} </Typography>
-                                                        <Image src={Edit} alt='edit' width={18} height={18} onClick={() => editAction(type)} />
+                                                        <Image src={Edit} alt='edit' width={18} height={18} style={{cursor:"pointer"}} onClick={() => editAction(type)} />
                                                     </Grid>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
                                                         <Typography style={{
@@ -195,12 +195,11 @@ function TestType(props) {
                                                         }} color={"#313237"}>
                                                             Description: </Typography>
                                                         <Typography className='miniLiteText'>{type.description}</Typography>
-                                                        {/* <Typography className='miniLiteText'>{type.description_2}</Typography> */}
                                                     </Grid>
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: "pointer" }}>
                                                         <Typography className='miniHeading'>Show Details</Typography>
-                                                        <ArrowForwardIcon width={"20vw"} height={"20vh"} style={{ color: "#6425FE" }} onClick={() => testTypeAction(type.id)} />
+                                                        <ArrowForwardIcon style={{ color: "#6425FE" }} onClick={() => testTypeAction(type.id)} />
                                                     </Grid>
                                                 </Grid>
                                             </StyledTableCell>
@@ -214,13 +213,13 @@ function TestType(props) {
                 <Dialog open={state.addTestTypeOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => testTypeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => testTypeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add test type" : "Edit test type"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
-                            <Grid item xs={12} >
+                            <Grid item xs={12}>
                                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#5824D6", marginTop: "10px", marginBottom: "10px" }}>Test type information</Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -229,7 +228,6 @@ function TestType(props) {
                                         <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value })}
                                         />
@@ -238,7 +236,6 @@ function TestType(props) {
                                         <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value })}
                                         />
@@ -247,7 +244,6 @@ function TestType(props) {
                                         <CustomInput size="small"
                                             placeholder={"Display name"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.display_name}
                                             onChange={(event) => setState({ ...state, display_name: event.target.value })}
                                         />
@@ -256,7 +252,6 @@ function TestType(props) {
                                         <CustomInput size="small"
                                             placeholder={"Description"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.description}
                                             onChange={(event) => setState({ ...state, description: event.target.value })}
                                         />

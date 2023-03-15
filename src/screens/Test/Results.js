@@ -93,13 +93,13 @@ function Result(props) {
         isClickCheckBox: false,
         selectedResults: [],
         sortOrder: false,
-        testResult:testResult
+        testResult: testResult
     })
 
-   
-    // useEffect(() => {
-    //   dispatch(fetchTestResultAction());
-    //   }, [])
+
+    useEffect(() => {
+        setState({...state,testResult:testResult})
+    }, [testResult])
 
     const handleChangePage = (event, newPage) => {
         setState({ ...state, page: newPage });
@@ -161,21 +161,21 @@ function Result(props) {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
-    const handleChange = (e, param) => {
-        if (param === "R") {
-            setState({ ...state, results: e.target.value })
-        } else if (param === "T") {
-            setState({ ...state, testType: e.target.value })
-        } else if (param === "L") {
-            setState({ ...state, allLocations: e.target.value })
-        } else if (param === "D") {
-            setState({ ...state, date: e.target.value })
-        }
-    };
+    // const handleChange = (e, param) => {
+    //     if (param === "R") {
+    //         setState({ ...state, results: e.target.value })
+    //     } else if (param === "T") {
+    //         setState({ ...state, testType: e.target.value })
+    //     } else if (param === "L") {
+    //         setState({ ...state, allLocations: e.target.value })
+    //     } else if (param === "D") {
+    //         setState({ ...state, date: e.target.value })
+    //     }
+    // };
 
-    const handleSend = async(param) => {
-        await setState({ ...state, selectedResults: state.selectedResults.filter((item) => item === param.map((ele) => ele)), isClickCheckBox: false })
+    const handleSend = (param) => {
         let result = testResult.map((content, i) => state.selectedResults.includes(content.id) ? { ...content, status: "Result Sent" } : content)
+        setState({ ...state, selectedResults: state.selectedResults.filter((item) => item === param.map((ele) => ele)), isClickCheckBox: false, testResult: result });
         dispatch(updateTestResultAction(result, state));
     };
 
@@ -189,18 +189,19 @@ function Result(props) {
             isClickCheckBox: false,
             selectedResults: []
         })
-    }
+    };
 
     const sortByOrder = (param) => {
-        // console.log("*****param*******"+state.sortOrder)
+        let records =[... state.testResult]
         if (!state.sortOrder) {
-            let result = testResult.sort((a, b) => (a.patient_name > b.patient_name) ? 1 : -1);
+            let result = records.sort((a, b) => (a[param] > b[param]) ? 1 : -1);
             setState({ ...state, testResult: result, sortOrder: true })
-        }else{
-            let result = testResult.sort((a, b) => (b.patient_name > a.patient_name) ? 1 : -1);
+        } else {
+            let result = records.sort((a, b) => (b[param] > a[param]) ? 1 : -1);
             setState({ ...state, testResult: result, sortOrder: false })
         }
-    }
+        console.log("*****surya********"+JSON.stringify(state.testResult))
+    };
 
     return (
         <>
@@ -295,8 +296,8 @@ function Result(props) {
                                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Typography className='tableHeader1'>Patient Name</Typography>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
-                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByOrder("A")} />
-                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortByOrder("D")} />
+                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByOrder("patient_name")} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortByOrder("patient_name")} />
                                             </div>
                                         </div>
                                     </StyledTableCell>
@@ -308,8 +309,8 @@ function Result(props) {
                                         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                                             <Typography className='tableHeader1'>Status</Typography>
                                             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginLeft: -12 }}>
-                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => alert("wip")} />
-                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => alert("wip")} />
+                                                <ArrowDropUpIcon style={{ color: "#000", height: "20px", width: "50px", marginBottom: -12 }} onClick={() => sortByOrder("status")} />
+                                                <ArrowDropDownIcon style={{ color: "#000", height: "20px", width: "50px" }} onClick={() => sortByOrder("status")} />
                                             </div>
                                         </div>
                                     </StyledTableCell>
@@ -360,14 +361,14 @@ function Result(props) {
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Dialog open={state.addTestOpen} maxWidth={'sm'} >
+                <Dialog open={state.addTestOpen} maxWidth={'sm'}>
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
                             <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute" }} onClick={() => addTestClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>Add test order</DialogTitle>
-                    <DialogContent >
+                    <DialogContent>
                         <Grid container style={{ paddingTop: '10px' }}>
                             <Grid item xs={12} >
                                 <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#6425FE", marginTop: "10px", marginBottom: "10px" }}>Test order information</Typography>

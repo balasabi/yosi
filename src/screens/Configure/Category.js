@@ -207,7 +207,7 @@ function Category(props) {
                                         <StyledTableCell style={{ wordBreak: "break-word" }}>{category.description}</StyledTableCell>
                                         <StyledTableCell >{category.status}</StyledTableCell>
                                         <StyledTableCell>
-                                            <div style={{ display: "flex", flexDirection: "row" }} onClick={() => editAction(category, "EDIT")}>
+                                            <div style={{ display: "flex", flexDirection: "row", cursor:"pointer" }} onClick={() => editAction(category, "EDIT")}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -239,7 +239,7 @@ function Category(props) {
                 <Dialog open={state.addCategoryOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => categoryClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => categoryClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add category" : "Edit category"}</DialogTitle>
