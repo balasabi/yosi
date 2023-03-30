@@ -123,8 +123,8 @@ function AddUser(props) {
                                 placeholder="Email ID"
                                 value={state.email}
                                 onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
-                                error={state.emailError === true ? state.invalidEmailError : false}
-                                helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "please enter valid email" : ""}
+                                // error={state.emailError === true ? state.invalidEmailError : false}
+                                // helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "please enter valid email" : ""}
                                  />
                         </Grid>
                         <Grid item xs={6}>
@@ -133,8 +133,8 @@ function AddUser(props) {
                                 placeholder="First Name"
                                 value={state.firstName}
                                 onChange={(e) => setState({ ...state, firstName: e.target.value, firstNameError: false })}
-                                error={state.firstNameError}
-                                helperText={state.firstNameError === true ? "Please enter first name" : ""} 
+                                // error={state.firstNameError}
+                                // helperText={state.firstNameError === true ? "Please enter first name" : ""} 
                                 />
                         </Grid>
                         <Grid item xs={6}>
@@ -151,8 +151,8 @@ function AddUser(props) {
                                 value={state.phoneNumber}
                                 inputProps={{ maxLength: 10 }}
                                 onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, ''), phoneNumberError: false})}
-                                error={state.phoneNumberError}
-                                helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} 
+                                // error={state.phoneNumberError}
+                                // helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} 
                                 />
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>

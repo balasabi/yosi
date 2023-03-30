@@ -1,8 +1,15 @@
-import { createAppointment, fetchAppointment } from '../reducers/appointmentReducer';
+import { createAppointment, fetchAppointment, createAppointmentLength } from '../reducers/appointmentReducer';
+import moment from 'moment'
 
-export function createAppointmentAction(data) {
+export function createAppointmentAction(data, appointment) {
     return async dispatch => {
-        dispatch(createAppointment(data))
+        if (appointment.filter((item, index) => moment(item.start_date).format("MM/DD/YYYY") === moment(data.start_date).format("MM/DD/YYYY")).length > 0) {
+            dispatch(createAppointment(data))
+        }
+        else {
+            dispatch(createAppointment(data))
+            dispatch(createAppointmentLength(data))
+        }
     }
 }
 // export function fetchAppointmentAction(data) {

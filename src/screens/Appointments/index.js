@@ -17,28 +17,30 @@ import { useDispatch, useSelector } from 'react-redux';
 function Appointments(props) {
     const test_type = useSelector(state => state.testTypeReducer.test_type);
     const [state, setState] = useState({
-        selectedTab: "T",
+        selectedTab: "C",
         addAppointmentOpen: false,
-        id:"",
+        id: "",
         patient_name: "",
         test_name: "",
         date: null,
-        start_time: null,
-        end_time: null,
+        // start_time: null,
+        // end_time: null,
     })
     const initialState = () => {
-        setState({ ...state,
-            id:"",
+        setState({
+            ...state,
+            id: "",
             patient_name: "",
             test_name: "",
-            date: new Date(),
-            start_time: null,
-            end_time: null,
+            date: null,
+            // start_time: null,
+            // end_time: null,
             addAppointmentOpen: false,
 
         })
     }
     const dispatch = useDispatch();
+    const appointment = useSelector(state => state.appointmentReducer.appointments);
     const buttonAction = (param) => {
         setState({ ...state, selectedTab: param })
     }
@@ -49,20 +51,18 @@ function Appointments(props) {
         // alert("WIP")
         let { id, patient_name, test_name, date, start_time, end_time } = state;
         let data = {}
-        data.id = id;
+        data.id = appointment.length + 1;
         data.patient_name = patient_name;
         data.test_name = test_name;
-        data.start_date = new Date(moment(date).format("MM/DD/YYYY"));
-        data.start_time = moment(start_time).format("hh:mm A");
-        data.end_time = moment(end_time).format("hh:mm A");
-        data.end = new Date(moment(date).format("MM/DD/YYYY"));
-        data.check_data = moment(date).format("MM/DD/YYYY");
-        dispatch(createAppointmentAction(data))
+        data.start_date = moment(date).format("MM/DD/YYYY");
+        data.end_date = moment(date).format("MM/DD/YYYY");
+        // data.start_time = moment(start_time).format("hh:mm A");
+        // data.end_time = moment(end_time).format("hh:mm A");
+        // data.check_date = moment(date).format("MM/DD/YYYY");
+        dispatch(createAppointmentAction(data, appointment))
         setState({ ...state, addAppointmentOpen: false })
         initialState();
     };
-
-    
 
     const cancel = () => {
         setState({ ...state, addAppointmentOpen: false })
@@ -87,7 +87,7 @@ function Appointments(props) {
                         </Typography>
                     </CustomizedButtons>
                 </Grid>
-                <Grid item xs={12} style={{ marginLeft: "12px" }}>
+                {/* <Grid item xs={12} style={{ marginLeft: "12px" }}>
                     <Grid container>
                         <Grid item xs={2} >
                             <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "T" ? "#5824D6" : "#474747", borderBottom: state.selectedTab === "T" ? "5px solid #5824D6" : "none", borderRadius: "0px" }} onClick={() => buttonAction("T")}>Today</CustomizedButtons>
@@ -96,17 +96,17 @@ function Appointments(props) {
                             <CustomizedButtons variant={"text"} className='subText' style={{ textTransform: "none", color: state.selectedTab === "C" ? "#5824D6" : "#474747", borderBottom: state.selectedTab === "C" ? "5px solid #5824D6" : "none", borderRadius: "0px" }} onClick={() => buttonAction("C")}>Months</CustomizedButtons>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8" }} />
-                <Grid item xs={12}>
-                    {state.selectedTab === "T" &&
+                </Grid> */}
+                {/* <Grid item xs={12} style={{ borderBottom: "2px solid #C8C8C8", marginTop:"50px" }} /> */}
+                <Grid item xs={12} style={{ marginTop: "30px" }}>
+                    {/* {state.selectedTab === "T" &&
                         <TodayAppointments />
-                    }
+                    } */}
                     {state.selectedTab === "C" &&
                         <CalenderAppointments />
                     }
                 </Grid>
-                <Dialog open={state.addAppointmentOpen} onClose={() => addAppointmentClose()} maxWidth={'sm'} style={{ marginBottom: "180px" }} >
+                <Dialog open={state.addAppointmentOpen} maxWidth={'sm'} style={{ marginBottom: "180px" }} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
                             <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute" }} onClick={() => addAppointmentClose()} />
@@ -138,12 +138,12 @@ function Appointments(props) {
                                         renderValue={
                                             state.test_name !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Test name</Typography></Placeholder>
                                         }>
-                                          {!!test_type && test_type.map((item, index) =>
-                                                <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
-                                         )}                                       
+                                        {!!test_type && test_type.map((item, index) =>
+                                            <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
+                                        )}
                                     </Select>
                                 </Grid>
-                                <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                     <LocalizationProvider dateAdapter={AdapterMoment}>
                                         <DatePicker
                                             views={['year', 'month', 'day']}
@@ -162,7 +162,7 @@ function Appointments(props) {
                                                     }}
                                                     inputProps={{
                                                         ...params.inputProps,
-                                                        placeholder: "Select date"
+                                                        placeholder: "Appointment date"
                                                     }}
                                                     //   className={"input"}
                                                     InputLabelProps={{
@@ -177,7 +177,7 @@ function Appointments(props) {
                                         />
                                     </LocalizationProvider>
                                 </Grid>
-                                <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                                {/* <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
                                     <LocalizationProvider dateAdapter={AdapterMoment}>
                                         <TimePicker
                                             value={state.start_time}
@@ -224,7 +224,7 @@ function Appointments(props) {
                                                     }} />}
                                         />
                                     </LocalizationProvider>
-                                </Grid>
+                                </Grid> */}
                                 <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end", marginTop: "20px" }}>
                                     <CustomizedButtons variant={"text"} onClick={() => cancel()}>
                                         Cancel

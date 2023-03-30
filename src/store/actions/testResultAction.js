@@ -11,7 +11,7 @@ export function updateTestResultAction(data, state ) {
 	return async dispatch => {
       if(state.selectedResults.length > 0){
 		   dispatch(updateTestResult(data))
-		   dispatch(displayAlert({ openAlert: true, alertSeverity: 'success', alertMessage: "Result sended successfully" }))
+		   dispatch(displayAlert({ openAlert: true, alertSeverity: 'success', alertMessage: "Result sent successfully" }))
 		}
 		else{
 			dispatch(displayAlert({ openAlert: true, alertSeverity: 'success', alertMessage: "Please select one or more test result to send" }))

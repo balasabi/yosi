@@ -19,7 +19,7 @@ function TodayAppointments(props) {
 
     useEffect(() => {    
         let result = appointment.map(
-          (content, i) => i <= 5 ? { ...content, start_date: new Date(),end:new Date() } : { ...content, start_date: new Date().setDate(new Date().getDate() + 1),end:new Date().setDate(new Date().getDate() + 1) })
+          (content, i) => i <= 5 ? { ...content, start_date: new Date(),end_date:new Date() } : { ...content, start_date: new Date().setDate(new Date().getDate() + 1),end_date:new Date().setDate(new Date().getDate() + 1) })
            dispatch(fetchAppointment(result))
     }, []);
       

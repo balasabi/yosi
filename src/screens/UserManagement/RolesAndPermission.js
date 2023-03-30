@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Table, TableBody, TableContainer, TableCell, TableHead, TableRow, tableCellClasses, IconButton, Paper, Select, MenuItem, FormControl, OutlinedInput } from '@mui/material';
-import Image from 'next/image';
-import dialogClose from '../../../public/Images/dialogClose.png';
+import { Grid, Table, TableBody, TableContainer, Typography, TableCell, TableHead, TableRow, tableCellClasses, Paper, Select, MenuItem, FormControl, OutlinedInput, Checkbox } from '@mui/material';
 import { styled } from '@mui/material';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import _ from 'underscore';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -37,76 +36,55 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function RolesAndPermission(props) {
     const dispatch = useDispatch();
     const [state, setState] = useState({
-        personName: [],
-        rolesAndPermission:[]
+        roleWithPermissions: [],
+        selected: []
     });
-    const  [ height, setHeight] = useState(600);
+
+    const [height, setHeight] = useState(600);
     const updateDimensions = () => {
-     setHeight(window.innerHeight);
+        setHeight(window.innerHeight);
     }
-     useEffect(() => {
+    useEffect(() => {
         updateDimensions()
-       window.addEventListener("resize", updateDimensions);
+        window.addEventListener("resize", updateDimensions);
         return () => window.removeEventListener("resize", updateDimensions);
     }, [dispatch])
-    const [role ,setRole] = useState([]);
 
-  const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"];
-  const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test Upload Results", "Location", "Location Test Type", "Test Group", "User and Access"]
-   const access = [
-         'View',
-        'Edit',
-        'Delete',
-        'NoAccess'
+
+    const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"];
+    const sideBar = ["Dashboard", "Patients", "Test Type", "Test result", "Test Upload Results", "Location", "Location Test Type", "Test Group", "User and Access"]
+    const access = [
+        "View",
+        "Edit",
+        "Delete",
+        "NoAccess"
     ];
 
 
     useEffect(() => {
-    //   let screenArray = []       
-    //   for(let a of sideBar){           
-    //          let data = {}           
-    //           data.screen = a   
-    //           let permissionArray = []
-    //           let screen = undefined   
-    //           for(let b of roles){                     
-    //               let sideData = {}      
-    //                sideData.permission = {'view': true,'add':true, 'edit': false , 'delete':false , 'noAccess':false}
-    //                permissionArray.push(sideData)
-    //             }
-    //           data.screenAccess = permissionArray
-    //           screenArray.push(data)  
-            
-    //     }
-
-    //     setRole(screenArray)
-
-        
-        
-       
-
         let dummyArray = [];
-
         for (let x of sideBar) {
             let data = {};
             data['screen'] = x;
             data['roles'] = [];
-            // console.log("####roles#####"+JSON.stringify(data));
-
             for (let y of roles) {
                 let obj = {};
                 obj[y] = [];
-
                 for (let z of access) {
-                    console.log("************z***********"+JSON.stringify(z))
                     let obj2 = {};
-                    obj2[z] = z;
+                    if (z === "View" || z === "Edit") {
+                        obj2[z] = true
+                    } else {
+                        obj2[z] = false
+                    }
                     obj[y].push(obj2);
                 }
                 data['roles'].push(obj);
             }
             dummyArray.push(data);
         }
-        setState({ personName: [...dummyArray] });
+        setState({ roleWithPermissions: [...dummyArray] });
+
     }, []);
 
     const ITEM_HEIGHT = 48;
@@ -120,27 +98,64 @@ function RolesAndPermission(props) {
         },
     };
 
-    const handleChange = (event) => {
-        const { target: { value } } = event;
-        setState({
-            ...state,
-            personName: typeof value === 'string' ? value.split(',') : value,
+    const handleChange = (event, role, screen) => {
+        let roleWithPermissions = [];
+        for (let item of state.roleWithPermissions) {
+            let data = {};
+            data['screen'] = item.screen
+            data['roles'] = []
+            if (item.screen === screen) {
+                for (let x of item.roles) {
+                    let obj = {};
+                    obj[role] = [];
+                    if (Object.keys(x)[0] === role) {
+                        for (let y of x[role]) {
+                            let permission = {};
+                            if (event.target.value.includes(Object.keys(y)[0])) {
+                                permission[Object.keys(y)[0]] = true
+                                obj[role].push(permission)
+                            } else {
+                                permission[Object.keys(y)[0]] = false
+                                obj[role].push(permission)
+                            }
+                        }
+                        data['roles'].push(obj);
+                    } else {
+                        data['roles'].push(x)
+                    }
+                }
+                roleWithPermissions.push(data)
+            } else {
+                roleWithPermissions.push(item)
+            }
         }
-        );
+        setState({ roleWithPermissions });
     };
 
 
+    const selectedValue = (param) => {
+        let result = param.filter((item) => item.View === true || item.Edit === true || item.Delete === true || item.NoAccess === true)
+        let selectArray = []
+        for (let i = 0; i < result.length; i++) {
+            selectArray.push(Object.keys(result[i])[0])
+        }
+        return selectArray
+    }
 
-    
+
+    const checkedStatus = (param, access) => {
+        return param.filter((item) => item[access] == true).length > 0 ? true : false;
+    }
+
+
     return (
         <>
-            <Grid container style={{height:"95%"}} >
+            <Grid container style={{ height: "95%" }} >
                 <Grid item xs={12}>
-                    {/* <IconButton onClick={props.dialogClose}><Image src={dialogClose} alt={'close'} width={25} height={25} /></IconButton> */}
                     <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width: 25, height: 25, cursor: "pointer" }} onClick={() => props.dialogClose()} />
                 </Grid>
-                <Grid item xs={12}  justifyContent ={"center"} alignItems={"center"} sx={{ width: "95vw"}}>
-                    <TableContainer component={Paper}  style={{ marginTop:"25px"}}>
+                <Grid item xs={12} justifyContent={"center"} alignItems={"center"} sx={{ width: "95vw" }}>
+                    <TableContainer component={Paper} style={{ marginTop: "25px" }}>
                         <Table >
                             <TableHead>
                                 <StyledTableRow>
@@ -151,46 +166,38 @@ function RolesAndPermission(props) {
                                 </StyledTableRow>
                             </TableHead>
                             <TableBody >
-                                {state.personName.map((personNameItem, personNameIndex) =>
-                                     <StyledTableRow key={personNameIndex.toString()} style={{ background: (personNameIndex % 2) == 0 ? "#FFF" : "rgba(240, 240, 240, 0.2)" }}>
-                                        <StyledTableCell>{personNameItem.screen}</StyledTableCell>                                       
-                                        {personNameItem.roles.map ((item) =>
-                                            <StyledTableCell align="center">    
-                                              <FormControl sx={{ m: 0, width: 75, mt: 1, }}>                                        
-                                                <Select
-                                                        size='small'
+                                {state.roleWithPermissions.map((item) => (
+                                    <StyledTableRow key={item.screen}>
+                                        <StyledTableCell>{item.screen}</StyledTableCell>
+                                        {item.roles.map((roleItem, index) => (
+                                            <StyledTableCell key={index}>
+                                                <FormControl sx={{ m: 0, width: 75, mt: 1, }}>
+                                                    <Select
+                                                        labelId="mutiple-select-label"
                                                         multiple
-                                                        fullWidth
-                                                        displayEmpty
-                                                        value={state.personName}
-                                                        onChange={handleChange}
-                                                        input={<OutlinedInput />}
+                                                        value={selectedValue(roleItem[Object.keys(roleItem)[0]])}
+                                                        onChange={(e) => handleChange(e, Object.keys(roleItem)[0], item.screen)}
+                                                        renderValue={(selected) => selected.join(", ")}
                                                         MenuProps={MenuProps}
-                                                        inputProps={{ 'aria-label': 'Without label' }}
                                                     >
-                                                        <MenuItem disabled value="">
-                                                            <em>Placeholder</em>
-                                                        </MenuItem>
-                                                        {access.map((name) => (
-                                                            <MenuItem
-                                                                key={name}
-                                                                value={name}
-                                                            >
-                                                                {name}
+                                                        {access.map((option) => (
+                                                            <MenuItem key={option} value={option}>
+                                                                <Checkbox checked={checkedStatus(roleItem[Object.keys(roleItem)[0]], option)} />
+                                                                {option}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
-                                                    </FormControl> 
+                                                </FormControl>
                                             </StyledTableCell>
-                                        )} 
+                                        ))}
                                     </StyledTableRow>
-                                )}
+                                ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
                 </Grid>
-        </Grid>
-         </>
+            </Grid>
+        </>
     )
 }
 

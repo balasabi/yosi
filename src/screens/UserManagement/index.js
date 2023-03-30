@@ -120,7 +120,7 @@ function UsersManagement(props) {
     };
 
     const handleUser = () => {
-        setState({ ...state, selectedTab: "P" })
+        setState({ ...state, selectedTab: "U" })
     };
 
     const addUser = () => {
@@ -163,12 +163,12 @@ function UsersManagement(props) {
                 </Grid>
                 <Grid item xs={12} style={{ borderBottom: '1px solid #C8C8C8' }}>
                     <Grid container>
-                        <Grid item xs={12} sm={3}>
+                        <Grid item xs={12} >
                             <Grid container>
-                                <Grid item xs={6} sm={3} lg={3}>
+                                <Grid item xs={6} sm={2} md={1} lg={1} xl={1}>
                                     <CustomizedButtons variant="text" className='switchHeading' style={{ color: state.selectedTab === "U" ? "#4D1EC0" : "#474747", borderBottom: state.selectedTab === "U" ? "5px solid #4D1EC0" : "none", borderRadius: "0px" }} onClick={() => handleUser()}>Users</CustomizedButtons>
                                 </Grid>
-                                <Grid item xs={6} sm={8} lg={9}>
+                                <Grid item xs={6} sm={5} md={5} lg={4} xl={1}>
                                     <CustomizedButtons variant="text" className='switchHeading' style={{ color: state.selectedTab === "P" ? "#4D1EC0" : "#474747", borderBottom: state.selectedTab === "P" ? "5px solid #4D1EC0" : "none", borderRadius: "0px" }} onClick={() => handlePermission()}>Roles and Permission</CustomizedButtons>
                                 </Grid>
                             </Grid>
@@ -263,8 +263,8 @@ function UsersManagement(props) {
                                         <StyledTableCell>{item.role}</StyledTableCell>
                                         <StyledTableCell>{item.status}</StyledTableCell>
                                         <StyledTableCell className='tableContent'>
-                                            <div style={{ textTransform: "none", color: "#000" }} onClick={() => editUser(item)}>
-                                                <Button>
+                                            <div style={{ textTransform: "none", color: "#000" }}>
+                                                <Button  onClick={() => editUser(item)}>
                                                     <Image src={editIcon} alt="edit" height={15} width={15} style={{ padding: 5 }} /> Edit</Button>
                                             </div>
                                         </StyledTableCell>
