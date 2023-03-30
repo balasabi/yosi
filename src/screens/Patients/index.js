@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, styled, tableCellClasses, tableRowClasses, TableRow, Grid,
-  Button, TablePagination, Typography, Paper, TableFooter, DialogTitle, Dialog, DialogContent, TextField
+  Button, TablePagination, Typography, Paper, TableFooter, DialogTitle, Dialog, DialogContent, TextField, FormHelperText
 } from '@mui/material';
 import _, { sortBy } from 'underscore';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -35,13 +35,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     lineHeight: '24px'
   },
 }));
+
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   [`&.${tableRowClasses.root}`]: {
   },
   '&:nth-of-type(odd)': {
   },
 }));
-
 
 const CustomInput = styled(InputBase)(({ theme }) => ({
   "label + &": {
@@ -79,16 +79,26 @@ function Patients(props) {
     selectedPatients: [],
     isAdd: false,
     firstName: '',
+    firstNameError: false,
     lastName: '',
     email: '',
+    emailError: false,
+    inValidEmailError: false,
     phoneNumber: '',
+    phoneNumberError: false,
     dob: null,
     id: '',
     patients: patients,
-    sortOrder: false
+    sortOrder: false,
+    dobError: false
   });
 
-  
+  const ref = useRef();
+
+  useEffect(() => {
+    setState({ ...state, patients: patients })
+  }, [patients]);
+
   const handleChangePage = (event, newPage) => {
     setState({ ...state, page: newPage })
   };
@@ -107,27 +117,48 @@ function Patients(props) {
 
   const handleSubmit = () => {
     const { id, firstName, lastName, email, phoneNumber, dob } = state;
-    const isError = false;
-    let data = {};
-    data.id = patients.length + 1;
-    data.name = `${firstName} ${lastName}`;
-    data.email = email;
-    data.phone_number = phoneNumber;
-    data.dob = moment(dob).format("DD/MM/YYYY");
-    dispatch(createPatientAction(data, state, setState))
+    let isError = false;
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+    let result = emailRegex.test(state.email);
+
+    if (!result) {
+      setState(ref => ({ ...ref, inValidEmailError: true }))
+      isError = true
+    }
+    if (firstName === "" || firstName === null || firstName === undefined) {
+      setState(ref => ({ ...ref, firstNameError: true }))
+      isError = true;
+    }
+    if (phoneNumber === "" || phoneNumber === null || phoneNumber === undefined) {
+      setState(ref => ({ ...ref, phoneNumberError: true }))
+      isError = true;
+    }
+    if (email === "" || email === null || email === undefined) {
+      setState(ref => ({ ...ref, emailError: true }))
+      isError = true;
+    }
+    if (dob === "" || dob === null || dob === undefined) {
+      setState(ref => ({ ...ref, dobError: true }))
+      isError = true;
+    }
+    if (isError === false) {
+      let data = {};
+      data.id = patients.length + 1;
+      data.name = `${firstName} ${lastName}`;
+      data.email = email;
+      data.phone_number = phoneNumber;
+      data.dob = moment(dob).format("DD/MM/YYYY");
+      dispatch(createPatientAction(data, state, setState))
+    }
   };
 
-
-  useEffect(() => {
-    setState({ ...state, patients: patients })
-  }, [patients]); 
-
   const handleAdd = () => {
-     setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '' })
+    setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '' })
   };
 
   const sortAction = (param) => {
-     let records =[... state.patients]
+    let records = [...state.patients]
     if (!state.sortOrder) {
       let result = records.sort((a, b) => (a[param]) > (b[param]) ? 1 : -1);
       setState({ ...state, patients: result, sortOrder: true })
@@ -135,10 +166,10 @@ function Patients(props) {
       let result = records.sort((a, b) => (b[param]) > (a[param]) ? 1 : -1);
       setState({ ...state, patients: result, sortOrder: false })
     }
-  }
+  };
 
   const handleSort = (param) => {
-    let records =[... state.patients]
+    let records = [...state.patients]
     if (!state.sortOrder) {
       let result = records.sort((a, b) => new Date(a[param]) > new Date(b[param]) ? 1 : -1);
       setState({ ...state, patients: result, sortOrder: true })
@@ -146,7 +177,7 @@ function Patients(props) {
       let result = records.sort((a, b) => new Date(b[param]) > new Date(a[param]) ? 1 : -1);
       setState({ ...state, patients: result, sortOrder: false })
     }
-  }
+  };
 
   return (
     <>
@@ -159,7 +190,7 @@ function Patients(props) {
             <Grid item xs={6} textAlign='left'>
               <CustomizedButtons variant={"contained"} onClick={() => handleAdd()} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px" }}>
                 <Image src={Union} alt='union' width={14} height={15} />
-                <Typography style={{ marginLeft: "5px", }} >
+                <Typography style={{ marginLeft: "5px" }}>
                   Add Patient
                 </Typography>
               </CustomizedButtons>
@@ -190,7 +221,7 @@ function Patients(props) {
                     </StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
-                {state.patients.length > 0 ?
+                {state.patients !== undefined && state.patients.length > 0 ?
                   state.patients.slice(state.page * state.rowsPerPage, state.page * state.rowsPerPage + state.rowsPerPage).map((row, index) =>
                     <TableBody key={index.toString()} style={{ background: (index % 2) == 0 ? 'white' : '#FCFCFC' }}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
@@ -238,8 +269,13 @@ function Patients(props) {
                 <Grid item xs={6}>
                   <CustomInput fullWidth
                     placeholder="First name"
-                    size='small' value={state.firstName}
-                    onChange={(e) => setState({ ...state, firstName: e.target.value.charAt(0).toUpperCase().trim() + e.target.value.slice(1) })} />
+                    size='small'
+                    onChange={(e) => setState({ ...state, firstName: e.target.value.charAt(0).toUpperCase().trim() + e.target.value.slice(1), firstNameError: false })}
+                    value={state.firstName}
+                    error={state.firstNameError} />
+                  {state.firstNameError === true &&
+                    <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the name</FormHelperText>
+                  }
                 </Grid>
                 <Grid item xs={6}>
                   <CustomInput fullWidth
@@ -249,23 +285,29 @@ function Patients(props) {
                 </Grid>
                 <Grid item xs={6}>
                   <CustomInput fullWidth
-                    placeholder="Email" size='small'
+                    placeholder="Email"
+                    size='small'
                     value={state.email}
-                    onChange={(e) => setState({ ...state, email: e.target.value })} />
+                    onChange={(e) => setState({ ...state, email: e.target.value, emailError: false, inValidEmailError: false })}
+                    error={state.emailError ? true : state.inValidEmailError} />
+                  {state.emailError === true ?
+                    <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the email</FormHelperText>
+                    :
+                    state.inValidEmailError ?
+                      <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the valid email</FormHelperText> : ""
+                  }
                 </Grid>
                 <Grid item xs={6}>
                   <CustomInput fullWidth
                     size='small' placeholder="Phone number"
                     value={state.phoneNumber}
                     inputProps={{ maxLength: 10 }}
-                    onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, '') })} />
+                    onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, ''), phoneNumberError: false })}
+                    error={state.phoneNumberError} />
+                  {state.phoneNumberError === true &&
+                    <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the phone number</FormHelperText>
+                  }
                 </Grid>
-                {/* <Grid item xs={6}>
-                  <CustomInput fullWidth size='small'
-                    value={state.dob}
-                    placeholder="Date of Birth"
-                    onChange={(e) => setState({ ...state, dob: e.target.value })} />
-                </Grid> */}
                 <Grid item xs={6}>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
@@ -295,7 +337,8 @@ function Patients(props) {
                               border: "2px solid #5824D6",
                             }
                           }}
-                          error={false}
+                          error={state.dobError}
+                          helperText={state.dobError ? 'Please select the date' : ""}
                         />
                       }
                     />

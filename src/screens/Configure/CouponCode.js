@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Typography, Grid, Dialog, DialogTitle, DialogContent, TextField, TableBody, TableRow, tableCellClasses, tableRowClasses, TableCell, MenuItem, Select, FormControl, FormControlLabel, Radio, RadioGroup, styled } from '@mui/material';
+import React, { useState, useRef } from "react";
+import { Typography, Grid, Dialog, DialogTitle, DialogContent, TableRow, tableCellClasses, tableRowClasses, TableCell, MenuItem, Select, FormControl, FormControlLabel, Radio, RadioGroup, styled, FormHelperText } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
 import plus from "../../../public/Images/plus.png";
 import Image from 'next/image';
@@ -58,7 +58,7 @@ const CustomInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function CouponCode() {
-
+    const ref = useRef();
     const dispatch = useDispatch();
     const coupons = useSelector(state => state.couponReducer.coupons);
 
@@ -73,7 +73,10 @@ function CouponCode() {
         isClickFilter: false,
         displayRecord: coupons,
         selectedStatus: "All",
-        selectedPrice: "All"
+        selectedPrice: "All",
+        nameError: false,
+        codeError: false,
+        priceError: false
     })
 
     const couponCodeClose = () => {
@@ -82,21 +85,37 @@ function CouponCode() {
 
     const submit = async () => {
         let { name, code, price, status, id } = state;
-        let data = {}
-        data.id = coupons.length + 1
-        data.name = name;
-        data.code = code;
-        data.price = price;
-        data.status = status;
-        if (state.mode === "ADD") {
+        let isError = false;
+
+        if (name === "" || name === null || name === undefined) {
+            setState(ref => ({ ...ref, nameError: true }))
+            isError = true;
+        }
+        if (code === "" || code === null || code === undefined) {
+            setState(ref => ({ ...ref, codeError: true }))
+            isError = true;
+        }
+        if (price === "" || price === null || price === undefined) {
+            setState(ref => ({ ...ref, priceError: true }))
+            isError = true;
+        }
+        if (isError === false) {
+            let data = {}
             data.id = coupons.length + 1
-            dispatch(createCouponAction(data))
-        }
-        else {
-            data.id = id
-            dispatch(updateCouponAction(data))
-        }
-        setState({ ...state, couponCodeOpen: false })
+            data.name = name;
+            data.code = code;
+            data.price = price;
+            data.status = status;
+            if (state.mode === "ADD") {
+                data.id = coupons.length + 1
+                dispatch(createCouponAction(data))
+            }
+            else {
+                data.id = id
+                dispatch(updateCouponAction(data))
+            }
+            setState({ ...state, couponCodeOpen: false })
+        };
     };
 
     const cancel = () => {
@@ -122,7 +141,6 @@ function CouponCode() {
     const editAction = (param) => {
         let result = coupons.filter((item) => item.id === param)[0]
         // console.log("*************" + JSON.stringify(result))
-
         setState({ ...state, id: result.id, code: result.code, name: result.name, price: result.price, status: result.status, couponCodeOpen: true, mode: "EDIT" })
     };
 
@@ -229,7 +247,7 @@ function CouponCode() {
                                             <Typography className='tableContent' align='center' style={{ marginLeft: "10px" }}>{item.status}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px", cursor:"pointer" }} onClick={() => editAction(item.id)}>
+                                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginLeft: "25px", cursor: "pointer" }} onClick={() => editAction(item.id)}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -241,15 +259,15 @@ function CouponCode() {
                             <Grid item xs={12} style={{ border: "2px dashed #D9D9D9", padding: "10px", borderTop: 0 }} />
                         </Grid>
                     )) :
-                        <div style={{display:"flex",justifyContent:"center", alignItems:"center", marginTop:"20px"}}>
-                                <Typography >There are no coupon available</Typography>
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
+                            <Typography >There are no coupon available</Typography>
                         </div>
                     }
                 </Grid>
                 <Dialog open={state.couponCodeOpen} onClose={() => couponCodeClose()} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => couponCodeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => couponCodeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add coupon code" : "Edit coupon code"}</DialogTitle>
@@ -266,8 +284,12 @@ function CouponCode() {
                                             fullWidth
                                             // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
-                                            onChange={(event) => setState({ ...state, name: event.target.value })}
+                                            onChange={(event) => setState({ ...state, name: event.target.value, nameError: false })}
+                                            error={state.nameError}
                                         />
+                                        {state.nameError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the name</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <CustomInput size="small"
@@ -275,8 +297,11 @@ function CouponCode() {
                                             fullWidth
                                             // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
-                                            onChange={(event) => setState({ ...state, code: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, code: event.target.value, codeError: false })}
+                                            error={state.codeError} />
+                                        {state.codeError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the code</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <CustomInput size="small"
@@ -284,8 +309,12 @@ function CouponCode() {
                                             placeholder={"Price"}
                                             fullWidth
                                             // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
-                                            onChange={(event) => setState({ ...state, price: event.target.value })}
+                                            onChange={(event) => setState({ ...state, price: event.target.value, priceError: false })}
+                                            error={state.priceError}
                                         />
+                                        {state.priceError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the price</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{ display: "flex", alignItems: "center" }}>
                                         <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>

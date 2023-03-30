@@ -72,7 +72,7 @@ function RolesAndPermission(props) {
                 obj[y] = [];
                 for (let z of access) {
                     let obj2 = {};
-                    if (z === "View" || z === "Edit") {
+                    if (z === "View" || z === "Edit" || z === "Delete") {
                         obj2[z] = true
                     } else {
                         obj2[z] = false
@@ -87,13 +87,11 @@ function RolesAndPermission(props) {
 
     }, []);
 
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
     const MenuProps = {
         PaperProps: {
             style: {
-                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                width: 250,
+                maxHeight: 232,
+                width: 160,
             },
         },
     };
@@ -147,17 +145,16 @@ function RolesAndPermission(props) {
         return param.filter((item) => item[access] == true).length > 0 ? true : false;
     }
 
-
     return (
         <>
             <Grid container style={{ height: "95%" }} >
                 <Grid item xs={12}>
                     <DisabledByDefaultRoundedIcon style={{ color: "#6425FE", fontSize: "45px", position: "absolute", width: 25, height: 25, cursor: "pointer" }} onClick={() => props.dialogClose()} />
                 </Grid>
-                <Grid item xs={12} justifyContent={"center"} alignItems={"center"} sx={{ width: "95vw" }}>
-                    <TableContainer component={Paper} style={{ marginTop: "25px" }}>
-                        <Table >
-                            <TableHead>
+                <Grid item xs={12} justifyContent={"center"} alignItems={"center"} sx={{ width: "95vw", overflow: 'hidden' }}>
+                    <TableContainer component={Paper} style={{ marginTop: "25px", maxHeight: height < 600 ? height / 1.28 : height / 1.23 }}>
+                        <Table stickyHeader aria-label="sticky table" sx={{ minWidth: 650, }}>
+                            <TableHead style={{ zIndex: 1, position: "sticky", top: 0 }}>
                                 <StyledTableRow>
                                     <StyledTableCell style={{ fontWeight: "bold" }}>Pages</StyledTableCell>
                                     {roles.map((item, index) =>
@@ -168,13 +165,16 @@ function RolesAndPermission(props) {
                             <TableBody >
                                 {state.roleWithPermissions.map((item) => (
                                     <StyledTableRow key={item.screen}>
-                                        <StyledTableCell>{item.screen}</StyledTableCell>
+                                        <StyledTableCell style={{ fontWeight: "bold" }}>{item.screen}</StyledTableCell>
                                         {item.roles.map((roleItem, index) => (
                                             <StyledTableCell key={index}>
-                                                <FormControl sx={{ m: 0, width: 75, mt: 1, }}>
+                                                <Typography style={{ fontSize: 10, color: "#4D1EC0" }}>{selectedValue(roleItem[Object.keys(roleItem)[0]]).join(", ")}</Typography>
+                                                <FormControl sx={{ m: 0, width: 150, mt: 1, }}>
                                                     <Select
                                                         labelId="mutiple-select-label"
                                                         multiple
+                                                        fullWidth
+                                                        size='small'
                                                         value={selectedValue(roleItem[Object.keys(roleItem)[0]])}
                                                         onChange={(e) => handleChange(e, Object.keys(roleItem)[0], item.screen)}
                                                         renderValue={(selected) => selected.join(", ")}

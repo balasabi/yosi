@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Typography, Grid, TextField } from '@mui/material';
 import Image from 'next/image';
 import Logo from '../../../public/Images/svg/LogoLogin.svg';
@@ -10,14 +10,33 @@ function SignUp(props) {
     const [state, setState] = useState({
         email: "",
         emailError: false,
+        invalidEmailError: false,
     })
 
+    const ref = useRef();
     const router = useRouter();
     const isLogin = useSelector(state => state.sessionReducer.isLogin);
 
     const Login = () => {
         router.push({ pathname: '/' })
     };
+
+    const handleContinue = () => {
+        let isError = false;
+        const { email } = state
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+        let result = emailRegex.test(email);
+
+        if (!result) {
+            setState({ ...ref, invalidEmailError: true })
+            isError = true
+        }
+        if ( email === "" || email === undefined || email === null) {
+            setState({ ...ref, emailError: true })
+            isError = true
+        }
+    }
 
     return (
         <>
@@ -35,13 +54,13 @@ function SignUp(props) {
                                 fullWidth
                                 size="small"
                                 label='Email address'
-                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
-                                error={state.emailError}
-                                helperText={state.emailError === true ? "Please enter email" : ""}
-                                value={state.email}  />
+                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false, invalidEmailError: false })}
+                                error={state.emailError ? true : state.invalidEmailError}
+                                helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "Please enter valid email" : false}
+                                value={state.email} />
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomizedButtons variant='contained' fullWidth>Continue</CustomizedButtons>
+                            <CustomizedButtons variant='contained' fullWidth onClick={() => handleContinue()}>Continue</CustomizedButtons>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} justifyContent='center' alignItems='center'>

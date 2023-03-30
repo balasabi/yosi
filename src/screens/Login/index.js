@@ -12,6 +12,7 @@ function Login(props) {
     const [state, setState] = useState({
         email: "",
         emailError: false,
+        invalidEmailError:false,
         password: "",
         passwordError: false,
         showPassword: false
@@ -28,7 +29,14 @@ function Login(props) {
     function loginAction(e) {
         e.preventDefault()
         let isError = false;
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+        let result = emailRegex.test(state.email);
+       
+        if (!result) {
+            setState(ref => ({ ...ref, invalidEmailError: true }))
+            isError = true
+        }
         if (state.email === null || state.email === "") {
             setState(ref => ({ ...ref, emailError: true }))
             isError = true;
@@ -65,9 +73,9 @@ function Login(props) {
                                 fullWidth
                                 size="small"
                                 placeholder={'Email address'}
-                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
-                                error={state.emailError}
-                                helperText={state.emailError === true ? "Please enter email" : ""}
+                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false, invalidEmailError: false })}
+                                error={state.emailError ? true : state.invalidEmailError}
+                                helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "Please enter valid email" : false}
                                 value={state.email} />
                         </Grid>
                         <Grid item xs={8}>
