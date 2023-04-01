@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Grid, Typography, Select, FormControl, RadioGroup, FormControlLabel, Radio, MenuItem } from '@mui/material';
+import { Grid, Typography, Select, RadioGroup, FormControlLabel, Radio, MenuItem, FormHelperText } from '@mui/material';
 import InputBase from "@mui/material/InputBase";
 import { styled } from '@mui/material';
 import CustomizedButtons from '../../components/CustomButton';
@@ -43,7 +43,8 @@ function AddUser(props) {
         emailError: false,
         phoneNumberError: false,
         invalidEmailError: false,
-        id:null
+        roleError: false,
+        id: null
     })
     const dispatch = useDispatch();
     const users = useSelector(state => state.userManagementReducer.users)
@@ -51,15 +52,20 @@ function AddUser(props) {
     const roles = ["Admin", "Consumer", "Lab Techician", "Location Manager", "System Admin", "Lab Executive", "PSR Tech", "Logistics", "Client Manager", "Client Physician", "DB"]
 
     useEffect(() => {
-        if(props.mode==="EDIT"){
-        setState({ ...state, id:props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number,status:props.param.status })
- } }, [])
+        if (props.mode === "EDIT") {
+            setState({ ...state, id: props.param.id, role: props.param.role, email: props.param.email, firstName: props.param.first_name, lastName: props.param.last_name, phoneNumber: props.param.phone_number, status: props.param.status })
+        }
+    }, [])
 
     const handleSubmit = () => {
         const { email, id, phoneNumber, firstName, status, role, lastName } = state;
         let isError = false;
         if (email === "" || email === undefined || email === null) {
             setState(ref => ({ ...ref, emailError: true }))
+            isError = true;
+        }
+        if (role === "" || role === undefined || role === null) {
+            setState(ref => ({ ...ref, roleError: true }))
             isError = true;
         }
         if (firstName === "" || firstName === undefined || firstName === null) {
@@ -75,26 +81,26 @@ function AddUser(props) {
             data.email = email;
             data.first_name = firstName;
             data.last_name = lastName;
-            data.id=id;
+            data.id = id;
             data.phone_number = phoneNumber;
             data.status = status;
             data.role = role;
             if (props.mode === "ADD") {
-                data.id = users.length+1
-            dispatch(createUserAction(data, props.close))
+                data.id = users.length + 1
+                dispatch(createUserAction(data, props.close))
             }
             else {
-            data.id = props.param.id;
-            dispatch(updateUserAction(data, props.close))
+                data.id = props.param.id;
+                dispatch(updateUserAction(data, props.close))
             }
         }
     };
-    
+
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
 
-   return (
+    return (
         <>
             <Grid container justifyContent="center">
                 <Grid item xs={12}>
@@ -103,29 +109,36 @@ function AddUser(props) {
                             <Typography style={{ color: '#6425FE' }}>User information</Typography>
                         </Grid>
                         <Grid item xs={6}>
-                           <Select size='small'
+                            <Select size='small'
                                 fullWidth
-                                    value={!!state.role && state.role}
-                                    input={<CustomInput />}
-                                    onChange={(e) => setState({ ...state, role: e.target.value })}
-                                    displayEmpty
-                                    renderValue={
-                                        state.role !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Role</Typography></Placeholder>
-                                    }  >
-                                    {!!roles && roles.map((item, index) =>
-                                        <MenuItem key={index.toString()} value={item}>{item}</MenuItem>
-                                    )}
-                                </Select>
+                                value={!!state.role && state.role}
+                                input={<CustomInput />}
+                                onChange={(e) => setState({ ...state, role: e.target.value, roleError: false })}
+                                displayEmpty
+                                renderValue={
+                                    state.role !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Role</Typography></Placeholder>
+                                }  >
+                                {!!roles && roles.map((item, index) =>
+                                    <MenuItem key={index.toString()} value={item}>{item}</MenuItem>
+                                )}
+                            </Select>
+                            {state.roleError === true &&
+                                <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please select the role</FormHelperText>
+                            }
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
                                 fullWidth
                                 placeholder="Email ID"
                                 value={state.email}
-                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false })}
-                                // error={state.emailError === true ? state.invalidEmailError : false}
-                                // helperText={state.emailError === true ? "Please enter email" : state.invalidEmailError ? "please enter valid email" : ""}
-                                 />
+                                onChange={(e) => setState({ ...state, email: e.target.value, emailError: false, invalidEmailError: false })}
+                                error={state.emailError ? true : state.invalidEmailError} />
+                            {state.emailError === true ?
+                                <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the email</FormHelperText>
+                                :
+                                state.invalidEmailError ?
+                                    <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the valid email</FormHelperText> : ""
+                            }
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
@@ -133,9 +146,10 @@ function AddUser(props) {
                                 placeholder="First Name"
                                 value={state.firstName}
                                 onChange={(e) => setState({ ...state, firstName: e.target.value, firstNameError: false })}
-                                // error={state.firstNameError}
-                                // helperText={state.firstNameError === true ? "Please enter first name" : ""} 
-                                />
+                                error={state.firstNameError} />
+                            {state.firstNameError === true &&
+                                <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the name</FormHelperText>
+                            }
                         </Grid>
                         <Grid item xs={6}>
                             <CustomInput size='small'
@@ -150,14 +164,15 @@ function AddUser(props) {
                                 placeholder="Phone Number"
                                 value={state.phoneNumber}
                                 inputProps={{ maxLength: 10 }}
-                                onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, ''), phoneNumberError: false})}
-                                // error={state.phoneNumberError}
-                                // helperText={state.phoneNumberError === true ? "Please enter phone number" : ""} 
-                                />
+                                onChange={(e) => setState({ ...state, phoneNumber: e.target.value.replace(/[^0-9]/g, ''), phoneNumberError: false })}
+                                error={state.phoneNumberError} />
+                            {state.phoneNumberError === true &&
+                                <FormHelperText style={{ color: 'red', marginLeft: '5px' }}>Please enter the phone number</FormHelperText>
+                            }
                         </Grid>
                         <Grid item xs={6} style={{ display: "flex", alignItems: "center" }}>
                             <Typography style={{ fontWeight: "bold", paddingRight: "7px" }}>Status</Typography>
-                            <RadioGroup defaultValue={props.mode ==="ADD" ? "Active": props.param.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
+                            <RadioGroup defaultValue={props.mode === "ADD" ? "Active" : props.param.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
                                 <FormControlLabel value="Active" control={<Radio sx={{ color: '#6425FE', '&.Mui-checked': { color: '#6425FE' } }} />} label="Active" />
                                 <FormControlLabel value="Inactive" control={<Radio sx={{ color: '#6425FE', '&.Mui-checked': { color: '#6425FE' } }} />} label="Inactive" />
                             </RadioGroup>

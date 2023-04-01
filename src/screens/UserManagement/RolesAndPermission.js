@@ -165,10 +165,10 @@ function RolesAndPermission(props) {
                             <TableBody >
                                 {state.roleWithPermissions.map((item) => (
                                     <StyledTableRow key={item.screen}>
-                                        <StyledTableCell style={{ fontWeight: "bold" }}>{item.screen}</StyledTableCell>
+                                        <StyledTableCell style={{ fontWeight: "bold", backgroundColor:"#F2F5F6"}}>{item.screen}</StyledTableCell>
                                         {item.roles.map((roleItem, index) => (
                                             <StyledTableCell key={index}>
-                                                <Typography style={{ fontSize: 10, color: "#4D1EC0" }}>{selectedValue(roleItem[Object.keys(roleItem)[0]]).join(", ")}</Typography>
+                                                <Typography style={{ fontSize: 11, color: "#4D1EC0"  }}>{selectedValue(roleItem[Object.keys(roleItem)[0]]).join(", ")}</Typography>
                                                 <FormControl sx={{ m: 0, width: 150, mt: 1, }}>
                                                     <Select
                                                         labelId="mutiple-select-label"
@@ -178,8 +178,7 @@ function RolesAndPermission(props) {
                                                         value={selectedValue(roleItem[Object.keys(roleItem)[0]])}
                                                         onChange={(e) => handleChange(e, Object.keys(roleItem)[0], item.screen)}
                                                         renderValue={(selected) => selected.join(", ")}
-                                                        MenuProps={MenuProps}
-                                                    >
+                                                        MenuProps={MenuProps}>
                                                         {access.map((option) => (
                                                             <MenuItem key={option} value={option}>
                                                                 <Checkbox checked={checkedStatus(roleItem[Object.keys(roleItem)[0]], option)} />

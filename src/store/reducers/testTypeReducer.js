@@ -25,6 +25,14 @@ const initialState = {
        display_name :"Scan",
        description:"sample Scan",
        status :"Active",
+    },
+    {
+        id:4,
+        code:"TT004",
+        name :"Others",
+       display_name :"Others",
+       description:"sample test",
+       status :"Active",
     }
 ],
     category: [

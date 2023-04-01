@@ -59,9 +59,12 @@ export const locationReducer = createSlice({
         updateLocation: (state, { payload }) => {
             state.location = state.location.map((item) => item.id === payload.id ? payload : item)
         },
+        deleteLocation: (state, { payload }) => {
+            state.location = payload;
+        }
     }
 })
 
-export const { fetchLocation, createLocation, updateLocation } = locationReducer.actions;
+export const { fetchLocation, createLocation, updateLocation, deleteLocation } = locationReducer.actions;
 
 export default locationReducer.reducer;

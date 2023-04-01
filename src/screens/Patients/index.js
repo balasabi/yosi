@@ -154,7 +154,7 @@ function Patients(props) {
   };
 
   const handleAdd = () => {
-    setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '' })
+    setState({ ...state, isAdd: true, firstName: '', lastName: '', email: '', phoneNumber: '', dob: '', id: '', emailError: false, inValidEmailError: false, phoneNumberError: false, firstNameError: false, dobError: false })
   };
 
   const sortAction = (param) => {

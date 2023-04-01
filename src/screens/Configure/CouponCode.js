@@ -135,7 +135,7 @@ function CouponCode() {
     };
 
     const addAction = () => {
-        setState({ ...state, couponCodeOpen: true, mode: "ADD" })
+        setState({ ...state, couponCodeOpen: true, mode: "ADD", nameError: false, codeError: false, priceError: false, code: "", name: "", price: "", status: "" })
     };
 
     const editAction = (param) => {

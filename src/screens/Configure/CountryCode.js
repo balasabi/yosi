@@ -130,7 +130,7 @@ function CountryCode() {
     };
 
     const addAction = () => {
-        setState({ ...state, countryCodeOpen: true, mode: "ADD" })
+        setState({ ...state, countryCodeOpen: true, mode: "ADD", codeError: false, nameError:false, code: "", name: "", iso: "", })
     };
 
     const editAction = (param) => {
@@ -206,7 +206,6 @@ function CountryCode() {
                                         <StyledTableCell align='center' colSpan={7}><Typography >There are no country code available</Typography></StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>}
-
                             <TableFooter>
                                 {displayRecord.length > 0 &&
                                     <TableRow align='left'>
@@ -224,17 +223,17 @@ function CountryCode() {
                         </Table>
                     </TableContainer>
                 </Grid>
-                <Dialog open={state.countryCodeOpen} maxWidth={'sm'} >
+                <Dialog open={state.countryCodeOpen} maxWidth={'sm'}>
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
                             <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => cancel()} />
                         </Grid>
                     </Grid>
-                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add country code" : "Edit country code"}</DialogTitle>
+                    <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add Country" : "Edit Country"}</DialogTitle>
                     <DialogContent>
                         <Grid container>
                             <Grid item xs={12}>
-                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#5824D6", marginTop: "10px", marginBottom: "10px" }}>Country information</Typography>
+                                <Typography style={{ fontSize: "16px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", color: "#5824D6", marginTop: "10px", marginBottom: "10px" }}>Country Information</Typography>
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
@@ -242,7 +241,6 @@ function CountryCode() {
                                         <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
                                             onChange={(event) => setState({ ...state, code: event.target.value, codeError: false })}
                                             error={state.codeError}
@@ -256,7 +254,6 @@ function CountryCode() {
                                         <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
                                             onChange={(event) => setState({ ...state, name: event.target.value, nameError: false })}
                                             error={state.nameError} />
@@ -268,7 +265,6 @@ function CountryCode() {
                                         <CustomInput size="small"
                                             placeholder={"ISO"}
                                             fullWidth
-                                            // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.iso}
                                             onChange={(event) => setState({ ...state, iso: event.target.value })}
                                         />
