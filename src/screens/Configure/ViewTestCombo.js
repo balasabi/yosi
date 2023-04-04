@@ -63,7 +63,7 @@ function ViewTestCombo(props) {
                             <Grid container style={{ display: "flex", flexDirection: "row" }}>
                                 <Grid item xs={4}>
                                     <Typography style={{ letterSpacing: "0.4px", fontSize: "16px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Bold", }}>
-                                        Test:
+                                    Tests Included in {testComboData.testComboName}:
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={8}>
