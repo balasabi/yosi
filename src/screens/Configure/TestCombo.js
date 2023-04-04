@@ -208,8 +208,8 @@ function TestCombo(props) {
                                                                 <Typography className='subHeading'>{item.testComboName} </Typography>
                                                             </Grid>
                                                             <Grid item xs={2} style={{ display: "flex", justifyContent: "space-between" }}>
-                                                                <EditIcon onClick={() => editAction(item)} />
-                                                                <DeleteIcon onClick={() => deleteAction(item)} />
+                                                                <EditIcon onClick={() => editAction(item)} />                                                                
+                                                                <DeleteIcon  style={{ color: "red" }} onClick={() => deleteAction(item)} />
                                                             </Grid>
                                                         </Grid>
                                                     </Grid>

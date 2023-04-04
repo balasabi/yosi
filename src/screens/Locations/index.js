@@ -212,7 +212,7 @@ function Locations(props) {
                                     </Grid>
                                     <Grid item xs={1}>
                                         <IconButton onClick={() => handleDelete(item)}>
-                                            <DeleteIcon />
+                                            <DeleteIcon  style={{ color: "red" }} />
                                         </IconButton>
                                     </Grid>
                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }}>
