@@ -47,7 +47,8 @@ function Uploads(props) {
         date: "",
         data: "",
         uploadTestOpen: false,
-        values: []
+        values: [],
+        isSearch: false
     })
     const [selectedResult, setSelectedResult] = useState('All');
     const [selectedStatus, setSelectedStatus] = useState('All');
@@ -68,7 +69,7 @@ function Uploads(props) {
     const handleChangeRowsPerPage = (event) => {
         setState({ ...state, rowsPerPage: event.target.value, page: 0 });
     };
-  
+
     const Placeholder = ({ children }) => {
         return <div style={{ color: "#101010", fontWeight: 900, fontSize: "14px", fontFamily: "Avenir-Book", fontStyle: "normal" }}>{children}</div>;
     };
@@ -76,12 +77,14 @@ function Uploads(props) {
     const handleChange = (e, param) => {
         if (param === "R") {
             setSelectedResult(e.target.value)
+            setState({ ...state, isSearch: false, searchText: null, })
         }
         // else if (param === "S") {
         //     setState({ ...state, status: e.target.value, displayUpload: e.target.value === "All" ? uploads : uploads.filter((item) => item.status === e.target.value) })
         // }
         else {
             setSelectedStatus(e.target.value)
+            setState({ ...state, isSearch: false, searchText: null, })
         }
         // else if (param === "D") {
         //     setState({ ...state, date: e.target.value })
@@ -162,10 +165,12 @@ function Uploads(props) {
             },
         });
     };
+    const search = (name) => {
+        setState({ ...state, searchText: name, isSearch: true })
+    }
 
     let displayRecord = [];
-
-    if (selectedResult === "All" && selectedStatus === "All") {
+    if (state.isSearch === false && state.searchText === null && selectedResult === "All" && selectedStatus === "All") {
         displayRecord = _.flatten(uploads)
     } else if (selectedResult !== "All" && selectedStatus === "All") {
         displayRecord = _.flatten(uploads).filter((item) => item.Result === selectedResult)
@@ -173,6 +178,9 @@ function Uploads(props) {
         displayRecord = _.flatten(uploads).filter((item) => item.Status === selectedStatus)
     } else if (selectedResult !== "All" && selectedStatus !== "All") {
         displayRecord = _.flatten(uploads).filter((item) => item.Result === selectedResult && item.Status === selectedStatus)
+    }
+    else {
+        displayRecord = _.flatten(uploads).filter((item, index) => item.Test_Upload_Name.toLowerCase().includes(state.searchText.toLowerCase()))
     }
 
     return (
@@ -183,7 +191,7 @@ function Uploads(props) {
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
                                 placeholder='Search test upload name, tube number, file name'
-                                onChange={(name) => alert("WIP")}
+                                onChange={(name) => search(name)}
                             />
                         </Grid>
                         <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end", marginTop: "20px", alignItems: 'center' }}>
@@ -262,22 +270,22 @@ function Uploads(props) {
                                         <StyledTableCell align='center' colSpan={7}><Typography >There are no test upload available</Typography></StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>}
-                                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      rowsPerPageOptions={[10, 25]}
-                      count={!!displayRecord && displayRecord.length}
-                      rowsPerPage={state.rowsPerPage}
-                      page={state.page}
-                      onPageChange={handleChangePage}
-                      onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)}
-                      labelRowsPerPage={'No. of item per page:'}
-                    />
-                  </TableRow>
-                </TableFooter>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[10, 25]}
+                                        count={!!displayRecord && displayRecord.length}
+                                        rowsPerPage={state.rowsPerPage}
+                                        page={state.page}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={(e) => handleChangeRowsPerPage(e)}
+                                        labelRowsPerPage={'No. of item per page:'}
+                                    />
+                                </TableRow>
+                            </TableFooter>
                         </Table>
                     </TableContainer>
-                 </Grid>
+                </Grid>
 
                 <Dialog open={state.uploadTestOpen} onClose={() => uploadTestClose()} maxWidth={'sm'}>
                     <Grid container>

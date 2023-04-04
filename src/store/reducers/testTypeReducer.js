@@ -3,41 +3,41 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     test_type: [
         {
-        id:1,
-        code:"TT001",
-        name :"Blood Test",
-       display_name :"Blood Test",
-       description:"sample test",
-       status :"Active",
-    },
-    {
-        id:2,
-        code:"TT002",
-        name :"Allergy Test",
-       display_name :"Allergy Test",
-       description:"sample test",
-       status :"Active",
-    },
-    {
-        id:3,
-        code:"TT003",
-        name :"Scan",
-       display_name :"Scan",
-       description:"sample Scan",
-       status :"Active",
-    },
-    {
-        id:4,
-        code:"TT004",
-        name :"Others",
-       display_name :"Others",
-       description:"sample test",
-       status :"Active",
-    }
-],
+            id: 1,
+            code: "TT001",
+            name: "Blood Test",
+            display_name: "Blood Test",
+            description: "sample test",
+            status: "Active",
+        },
+        {
+            id: 2,
+            code: "TT002",
+            name: "Allergy Test",
+            display_name: "Allergy Test",
+            description: "sample test",
+            status: "Active",
+        },
+        {
+            id: 3,
+            code: "TT003",
+            name: "Scan",
+            display_name: "Scan",
+            description: "sample Scan",
+            status: "Active",
+        },
+        {
+            id: 4,
+            code: "TT004",
+            name: "Others",
+            display_name: "Others",
+            description: "sample test",
+            status: "Active",
+        }
+    ],
     category: [
         {
-            id:1,
+            id: 1,
             name: "Respiratory Panels",
             code: "BRP001",
             short_code: "BRP",
@@ -46,15 +46,15 @@ const initialState = {
             description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
         },
         {
-            id:2,
-            name: "Respiratory Panels",
+            id: 2,
+            name: "Test Panels",
             code: "BRP002",
-            short_code: "BRP",
+            short_code: "TP",
             sequence_number: "2",
             status: "Active",
             description: "*Respiratory Panels tests for SAR-CoV-2 (COVID-19), FLU-A, FLU-B, and Respiratory Syncytial Virus(RSV)",
-        },{
-            id:3,
+        }, {
+            id: 3,
             name: "Respiratory Panels",
             code: "BRP003",
             short_code: "BRP",
@@ -65,7 +65,7 @@ const initialState = {
     ],
     classification: [
         {
-            id:1,
+            id: 1,
             name: "COVID/Influenza Test ",
             code: "PCR",
             test_type: "Scan",
@@ -73,7 +73,7 @@ const initialState = {
             status: "Active",
         },
         {
-            id:2,
+            id: 2,
             name: "Influenza Test ",
             code: "PCR",
             test_type: "Blood Test",
@@ -81,7 +81,7 @@ const initialState = {
             status: "Active",
         },
         {
-            id:3,
+            id: 3,
             name: "COVID Test ",
             code: "PCR",
             test_type: "Allergy Test",
@@ -122,9 +122,12 @@ export const testTypeReducer = createSlice({
         updateClassification: (state, { payload }) => {
             state.classification = state.classification.map((item) => item.id === payload.id ? payload : item)
         },
+        deleteTestType: (state, { payload }) => {
+            state.test_type = payload;
+        }
     }
 })
 
-export const { fetchTestType, createTestType, updateTestType, fetchCategory, createCategory, updateCategory, fetchClassification, createClassification, updateClassification } = testTypeReducer.actions;
+export const { fetchTestType, createTestType, updateTestType, fetchCategory, createCategory, updateCategory, fetchClassification, createClassification, updateClassification, deleteTestType } = testTypeReducer.actions;
 
 export default testTypeReducer.reducer;

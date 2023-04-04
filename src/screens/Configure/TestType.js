@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
     Typography, Grid, TableRow, tableCellClasses, styled, TableCell, Table, TableBody, tableRowClasses, FormControl,
-    Select, MenuItem, Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase
+    Select, MenuItem, Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase, FormHelperText, IconButton,
 } from '@mui/material';
 import Image from 'next/image';
 import CustomSearchInput from '../../components/CustomSearchInput';
@@ -10,9 +10,10 @@ import CustomizedButtons from '../../components/CustomButton';
 import Edit from '../../../public/Images/editIcon.png';
 import Union from '../../../public/Images/plus.png';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
-import { createTestTypeAction, updateTestTypeAction } from "../../store/actions/testTypeAction";
+import { createTestTypeAction, updateTestTypeAction, removeTestTypeAction } from "../../store/actions/testTypeAction";
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     [`&.${tableRowClasses.root}`]: {
@@ -72,7 +73,10 @@ function TestType(props) {
         statusFilter: "",
         mode: "ADD",
         searchText: null,
-        selectedStatus:"All"
+        selectedStatus: "All",
+        nameError: false,
+        codeError: false,
+        isSearch: false
     })
     const dispatch = useDispatch();
     const test_type = useSelector(state => state.testTypeReducer.test_type);
@@ -83,7 +87,7 @@ function TestType(props) {
 
     const handleChange = (event, param) => {
         if (param === "S") {
-            setState({ ...state, selectedStatus: event.target.value });
+            setState({ ...state, selectedStatus: event.target.value, isSearch: false, searchText: null, });
         }
     };
 
@@ -93,22 +97,34 @@ function TestType(props) {
 
     const submit = async () => {
         let { id, name, code, display_name, description, description_2, status } = state;
-        let data = {}
-        data.id = id;
-        data.code = code;
-        data.name = name;
-        data.display_name = display_name;
-        data.description = description;
-        data.status = status;
-        if (state.mode === "ADD") {
-            data.id = test_type.length + 1
-            dispatch(createTestTypeAction(data))
+        let isError = false;
+        if (name === "" || name === null || name === undefined) {
+            setState(ref => ({ ...ref, nameError: true }))
+            isError = true;
         }
-        else {
-            data.id = id
-            dispatch(updateTestTypeAction(data))
+        if (code === "" || code === null || code === undefined) {
+            setState(ref => ({ ...ref, codeError: true }))
+            isError = true;
         }
-        setState({ ...state, addTestTypeOpen: false })
+        if (isError === false) {
+            let data = {}
+            data.id = id;
+            data.code = code;
+            data.name = name;
+            data.display_name = display_name;
+            data.description = description;
+            data.status = status;
+            if (state.mode === "ADD") {
+                data.id = test_type.length + 1
+                dispatch(createTestTypeAction(data))
+            }
+            else {
+                data.id = id
+                dispatch(updateTestTypeAction(data))
+            }
+            setState({ ...state, addTestTypeOpen: false })
+        }
+
     };
 
     const cancel = () => {
@@ -116,7 +132,7 @@ function TestType(props) {
     };
 
     const addAction = () => {
-        setState({ ...state, mode: "ADD", addTestTypeOpen: true, id: "", name: "", code: "", display_name: "", description: "" })
+        setState({ ...state, mode: "ADD", addTestTypeOpen: true, id: "", name: "", code: "", display_name: "", description: "", nameError: false, codeError: false })
     };
 
     const editAction = (param) => {
@@ -126,7 +142,27 @@ function TestType(props) {
     const testTypeAction = (param) => {
         Router.push({ pathname: '/configure/view-test-type', query: "testTypeId=" + param })
     }
-    let displayTestTypeRecord = state.selectedStatus === "All" ? test_type : test_type.filter((item) => item.status === state.selectedStatus)
+    const handleDelete = (param) => {
+        let removeTestType = test_type.filter((item) => item.id !== param.id && item)
+        dispatch(removeTestTypeAction(removeTestType))
+    };
+
+    const search = (name) => {
+        setState({ ...state, searchText: name, isSearch: true })
+    }
+
+    let displayTestTypeRecord = []
+    if (state.searchText === null && state.selectedStatus === "All") {
+        displayTestTypeRecord = test_type
+    }
+    else {
+        if (state.isSearch === true) {
+            displayTestTypeRecord = test_type.filter((item, index) => item.name.toLowerCase().includes(state.searchText.toLowerCase()))
+        }
+        else {
+            displayTestTypeRecord = test_type.filter((item) => item.status === state.selectedStatus)
+        }
+    }
 
     return (
         <>
@@ -135,8 +171,8 @@ function TestType(props) {
                     <Grid container spacing={2} >
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
-                                placeholder='Search test upload name, tube number, file name'
-                                onChange={() => alert("WIP")}
+                                placeholder='Search test name, code'
+                                onChange={(name) => search(name)}
                             />
                         </Grid>
                         <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
@@ -166,7 +202,7 @@ function TestType(props) {
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container>
-                        {!!displayTestTypeRecord && displayTestTypeRecord.map((type, index) =>
+                        {!!displayTestTypeRecord && displayTestTypeRecord.length > 0 ? displayTestTypeRecord.map((type, index) =>
                             <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={index.toString()}>
                                 <Table>
                                     <TableBody>
@@ -175,8 +211,14 @@ function TestType(props) {
                                                 <Grid container style={{ display: "flex", justifyContent: "center", alignItems: "center", boxShadow: '0px 1px 1px -4px rgb(0 0 0 / 30%), 0px 1px 3px 4px rgb(0 0 0 / 10%)', borderRadius: "8px", padding: "10px" }}>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                                         <Typography className='subHeading'>{type.name} </Typography>
-                                                        <Image src={Edit} alt='edit' width={18} height={18} style={{cursor:"pointer"}} onClick={() => editAction(type)} />
+                                                        <Grid item xs={2} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                                            <Image src={Edit} alt='edit' width={18} height={18} style={{ cursor: "pointer" }} onClick={() => editAction(type)} />
+                                                            <IconButton onClick={() => handleDelete(type)}>
+                                                                <DeleteIcon style={{ color: "red", fontSize: "24px", position: "absolute" }} />
+                                                            </IconButton>
+                                                        </Grid>
                                                     </Grid>
+                                                    <Grid item xs={12} onClick={() => testTypeAction(type.id)}>
                                                     <Grid item xs={12} style={{ display: "flex", flexDirection: "row" }} >
                                                         <Typography style={{
                                                             letterSpacing: "0.4px", fontSize: "13px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book",
@@ -201,19 +243,24 @@ function TestType(props) {
                                                         <Typography className='miniHeading'>Show Details</Typography>
                                                         <ArrowForwardIcon style={{ color: "#6425FE" }} onClick={() => testTypeAction(type.id)} />
                                                     </Grid>
+                                                    </Grid>
                                                 </Grid>
                                             </StyledTableCell>
                                         </StyledTableRow>
                                     </TableBody>
                                 </Table>
                             </Grid>
-                        )}
+                        ) :
+                            <Grid item xs={12}>
+                                <Typography style={{ fontSize: "16px", color: "grey", textAlign: "center", marginTop: "10px" }}>No {state.selectedStatus} records available</Typography>
+                            </Grid>
+                        }
                     </Grid>
                 </Grid>
                 <Dialog open={state.addTestTypeOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => testTypeClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => testTypeClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add test type" : "Edit test type"}</DialogTitle>
@@ -229,16 +276,22 @@ function TestType(props) {
                                             placeholder={"Code"}
                                             fullWidth
                                             value={state.code}
-                                            onChange={(event) => setState({ ...state, code: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, code: event.target.value, codeError: false })}
+                                            error={state.codeError} />
+                                        {state.codeError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the code</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
                                             placeholder={"Name"}
                                             fullWidth
                                             value={state.name}
-                                            onChange={(event) => setState({ ...state, name: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, name: event.target.value, nameError: false })}
+                                            error={state.nameError} />
+                                        {state.nameError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the name</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"

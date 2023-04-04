@@ -35,7 +35,7 @@ export const sideMenu = [
         pages: []
         // pages: [{ title: "Test group", url: '/test', menuIcon: <Image src={BookOpen} alt={"Ellipse"} width={20} height={20} /> }]
     },
-    // {
+   // {
     //     name: "Location",
     //     menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />,
     //     url: '/locations',
@@ -58,7 +58,9 @@ export const sideMenu = [
         url: '/configure',
         pages: [{ title: "Country", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
         { title: "Test", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
-        { title: "Location", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' }]
+        { title: "Location", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' },
+        { title: "Test Combo", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-combo' },
+    ]
     },
     {
         name: "Employee management",

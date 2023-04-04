@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
     tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem, TableContainer, Paper,
-    Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase
+    Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase, FormHelperText
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -78,7 +78,12 @@ function Classification(props) {
         test_groups: "",
         status: "Active",
         searchText: null,
-        selectedStatus:"All"
+        selectedStatus: "All",
+        nameError: false,
+        codeError: false,
+        testTypeError: false,
+        isSearch: false
+
     })
 
     const router = useRouter();
@@ -99,8 +104,8 @@ function Classification(props) {
     };
 
     const handleChange = (e, param) => {
-       if (param === "S") {
-            setState({ ...state, selectedStatus: e.target.value })
+        if (param === "S") {
+            setState({ ...state, selectedStatus: e.target.value, isSearch: false, searchText: null, })
         }
     }
 
@@ -110,23 +115,38 @@ function Classification(props) {
 
     const submit = async () => {
         let { id, name, code, test_type, test_groups, status } = state;
-        let data = {}
-        data.id = id;
-        data.code = code;
-        data.name = name;
-        data.test_type = test_type;
-        data.test_groups = test_groups;
-        data.status = status;
+        let isError = false;
+        if (name === "" || name === null || name === undefined) {
+            setState(ref => ({ ...ref, nameError: true }))
+            isError = true;
+        }
+        if (code === "" || code === null || code === undefined) {
+            setState(ref => ({ ...ref, codeError: true }))
+            isError = true;
+        }
+        if (test_type === "" || test_type === null || test_type === undefined) {
+            setState(ref => ({ ...ref, testTypeError: true }))
+            isError = true;
+        }
+        if (isError === false) {
+            let data = {}
+            data.id = id;
+            data.code = code;
+            data.name = name;
+            data.test_type = test_type;
+            data.test_groups = test_groups;
+            data.status = status;
 
-        if (state.mode === "ADD") {
-            data.id = classification.length + 1
-            dispatch(createClassificationAction(data))
+            if (state.mode === "ADD") {
+                data.id = classification.length + 1
+                dispatch(createClassificationAction(data))
+            }
+            else {
+                data.id = id
+                dispatch(updateClassificationAction(data))
+            }
+            setState({ ...state, addClassificationOpen: false })
         }
-        else {
-            data.id = id
-            dispatch(updateClassificationAction(data))
-        }
-        setState({ ...state, addClassificationOpen: false })
     };
 
     const cancel = () => {
@@ -134,14 +154,28 @@ function Classification(props) {
     };
 
     const addAction = () => {
-        setState({ ...state, mode: "ADD", addClassificationOpen: true, id: "", name: "", code: "", test_type: "", test_groups: "", status: "Active" })
+        setState({ ...state, mode: "ADD", addClassificationOpen: true, id: "", name: "", code: "", test_type: "", test_groups: "", status: "Active", nameError: false, codeError: false, testTypeError: false })
     };
 
     const editAction = (param) => {
         setState({ ...state, mode: "EDIT", addClassificationOpen: true, id: param.id, code: param.code, name: param.name, code: param.code, test_type: param.test_type, test_groups: param.test_groups, status: param.status })
     };
+    const search = (name) => {
+        setState({ ...state, searchText: name, isSearch: true })
+    }
 
-    let displayClassificationRecord = state.selectedStatus === "All" ? classification : classification.filter((item) => item.status === state.selectedStatus);
+    let displayClassificationRecord = []
+    if (state.searchText === null && state.selectedStatus === "All") {
+        displayClassificationRecord = classification
+    }
+    else {
+        if (state.isSearch === true) {
+            displayClassificationRecord = classification.filter((item, index) => item.name.toLowerCase().includes(state.searchText.toLowerCase()))
+        }
+        else {
+            displayClassificationRecord = classification.filter((item) => item.status === state.selectedStatus)
+        }
+    }
 
     return (
         <>
@@ -150,14 +184,14 @@ function Classification(props) {
                     <Grid container spacing={2}>
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4} >
                             <CustomSearchInput
-                                placeholder='Search test upload name, tube number, file name'
-                                onChange={(name) => alert("WIP")}
+                                placeholder='Search classification name, code'
+                                onChange={(name) => search(name)}
                             />
                         </Grid>
                         <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
                             <CustomizedButtons variant={"contained"} style={{ padding: "4px 15px 4px 15px", marginLeft: "5px", marginTop: "20px" }} onClick={() => addAction()}>
                                 <Image src={Union} alt='union' width={14} height={15} />
-                                <Typography style={{ marginLeft: "5px"}} >
+                                <Typography style={{ marginLeft: "5px" }} >
                                     Add Classification
                                 </Typography>
                             </CustomizedButtons>
@@ -203,7 +237,7 @@ function Classification(props) {
                                         <StyledTableCell>{classification.test_groups}</StyledTableCell>
                                         <StyledTableCell >{classification.status}</StyledTableCell>
                                         <StyledTableCell>
-                                            <div style={{ display: "flex", flexDirection: "row", cursor:"pointer" }} onClick={() => editAction(classification)}>
+                                            <div style={{ display: "flex", flexDirection: "row", cursor: "pointer" }} onClick={() => editAction(classification)}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -235,7 +269,7 @@ function Classification(props) {
                 <Dialog open={state.addClassificationOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => classificationClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => classificationClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add classification" : "Edit classification"}</DialogTitle>
@@ -251,31 +285,41 @@ function Classification(props) {
                                             placeholder={"Name"}
                                             fullWidth
                                             value={state.name}
-                                            onChange={(event) => setState({ ...state, name: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, name: event.target.value, nameError: false })}
+                                            error={state.nameError} />
+                                        {state.nameError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the name</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
                                             placeholder={"Code"}
                                             fullWidth
                                             value={state.code}
-                                            onChange={(event) => setState({ ...state, code: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, code: event.target.value, codeError: false })}
+                                            error={state.codeError} />
+                                        {state.codeError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the code</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <Select size='small'
                                             fullWidth
                                             value={!!state.test_type && state.test_type}
                                             input={<CustomInput />}
-                                            onChange={(e) => setState({ ...state, test_type: e.target.value })}
+                                            onChange={(e) => setState({ ...state, test_type: e.target.value, testTypeError: false })}
                                             displayEmpty
                                             renderValue={
                                                 state.test_type !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Test type</Typography></Placeholder>
-                                            }  >
-                                            {!!test_type && test_type.map((item, index) =>
+                                            }
+                                            error={state.testTypeError} >
+                                            {!!test_type && test_type.filter((item)=>item.status==="Active").map((item, index) =>
                                                 <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
                                             )}
                                         </Select>
+                                        {state.testTypeError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please select the test type</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"

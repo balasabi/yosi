@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses, TableContainer, Paper,
-    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, FormControl, Select, MenuItem, Autocomplete
+    tableRowClasses, Checkbox, TablePagination, Dialog, DialogTitle, DialogContent, TableFooter, FormControl, Select, MenuItem, FormHelperText
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomizedButtons from '../../components/CustomButton';
@@ -16,8 +16,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 import _ from 'underscore';
 import InputBase from "@mui/material/InputBase";
-import { updateTestResult } from "../../store/reducers/testResultReducer"
-import { jsx } from '@emotion/react';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -93,12 +92,15 @@ function Result(props) {
         isClickCheckBox: false,
         selectedResults: [],
         sortOrder: false,
-        testResult: testResult
+        testResult: testResult,
+        nameError: false,
+        locationTestTypeError: false,
+        locationError: false
     })
 
 
     useEffect(() => {
-        setState({...state,testResult:testResult})
+        setState({ ...state, testResult: testResult })
     }, [testResult])
 
     const handleChangePage = (event, newPage) => {
@@ -140,17 +142,32 @@ function Result(props) {
         //         .toDataURL('image/png')
         // })
         let { id, name, last_name, location, location_test_type, ordering_provider, test_lab, signature } = state;
-        let data = {}
-        data.id = testResult.length + 1;
-        data.patient_name = name;
-        // data.last_name = last_name;
-        data.location = location;
-        data.test_type = location_test_type;
-        data.ordering_provider = ordering_provider;
-        // data.test_lab = test_lab;
-        // data.signature = signature;
-        dispatch(addTestResultAction(data))
-        setState({ ...state, addTestOpen: false })
+        let isError = false;
+        if (state.name === null || state.name === "" || state.name === undefined) {
+            setState(ref => ({ ...ref, nameError: true }))
+            isError = true;
+        }
+        if (state.location_test_type === null || state.location_test_type === "" || state.location_test_type === undefined) {
+            setState(ref => ({ ...ref, locationTestTypeError: true }))
+            isError = true;
+        }
+        if (state.location === null || state.location === "" || state.location === undefined) {
+            setState(ref => ({ ...ref, locationError: true }))
+            isError = true;
+        }
+        if (isError === false) {
+            let data = {}
+            data.id = testResult.length + 1;
+            data.patient_name = name;
+            // data.last_name = last_name;
+            data.location = location;
+            data.test_type = location_test_type;
+            data.ordering_provider = ordering_provider;
+            // data.test_lab = test_lab;
+            // data.signature = signature;
+            dispatch(addTestResultAction(data))
+            setState({ ...state, addTestOpen: false })
+        }
     };
 
     const cancel = () => {
@@ -192,7 +209,7 @@ function Result(props) {
     };
 
     const sortByOrder = (param) => {
-        let records =[... state.testResult]
+        let records = [...state.testResult]
         if (!state.sortOrder) {
             let result = records.sort((a, b) => (a[param] > b[param]) ? 1 : -1);
             setState({ ...state, testResult: result, sortOrder: true })
@@ -200,7 +217,6 @@ function Result(props) {
             let result = records.sort((a, b) => (b[param] > a[param]) ? 1 : -1);
             setState({ ...state, testResult: result, sortOrder: false })
         }
-        console.log("*****surya********"+JSON.stringify(state.testResult))
     };
 
     return (
@@ -314,6 +330,7 @@ function Result(props) {
                                             </div>
                                         </div>
                                     </StyledTableCell>
+                                    <StyledTableCell>View</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             {!!state.testResult && state.testResult.length > 0 ?
@@ -335,6 +352,11 @@ function Result(props) {
                                             <StyledTableCell className='tableContent'>{test.tube_number}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.result}</StyledTableCell>
                                             <StyledTableCell className='tableContent'>{test.status}</StyledTableCell>
+                                            <StyledTableCell className='tableContent'>
+                                                {!!test.status &&
+                                                    <PictureAsPdfIcon style={{ color: "red" }} onClick={() => router.push({ pathname: '/test/test-result-pdf' })} />
+                                                }
+                                            </StyledTableCell>
                                         </StyledTableRow>
                                     </TableBody>)
                                 :
@@ -380,8 +402,12 @@ function Result(props) {
                                             placeholder={"Patient name"}
                                             fullWidth
                                             value={state.name}
-                                            onChange={(event) => setState({ ...state, name: event.target.value })}
+                                            onChange={(event) => setState({ ...state, name: event.target.value, nameError: false })}
+                                            error={state.nameError}
                                         />
+                                        {state.nameError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter name</FormHelperText>
+                                        }
                                     </Grid>
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                        <CustomInput size="small"
@@ -397,8 +423,12 @@ function Result(props) {
                                             placeholder={"Location"}
                                             fullWidth
                                             value={state.location}
-                                            onChange={(event) => setState({ ...state, location: event.target.value })}
+                                            onChange={(event) => setState({ ...state, location: event.target.value, locationError: false })}
+                                            error={state.locationError ? true : false}
                                         />
+                                        {state.locationError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter location</FormHelperText>
+                                        }
                                     </Grid>
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
@@ -414,15 +444,19 @@ function Result(props) {
                                             fullWidth
                                             value={!!state.location_test_type && state.location_test_type}
                                             input={<CustomInput />}
-                                            onChange={(e) => setState({ ...state, location_test_type: e.target.value })}
+                                            onChange={(e) => setState({ ...state, location_test_type: e.target.value, locationTestTypeError: false })}
                                             displayEmpty
+                                            error={state.locationTestTypeError}
                                             renderValue={
                                                 state.location_test_type !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Test type</Typography></Placeholder>
                                             }  >
-                                            {!!test_type && test_type.map((item, index) =>
+                                            {!!test_type && test_type.filter((item)=>item.status==="Active").map((item, index) =>
                                                 <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
                                             )}
                                         </Select>
+                                        {state.locationTestTypeError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter location test type</FormHelperText>
+                                        }
                                     </Grid>
                                     {/* <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"

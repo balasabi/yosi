@@ -1,4 +1,4 @@
-import { createTestType, updateTestType, createCategory, updateCategory, createClassification, updateClassification } from '../reducers/testTypeReducer';
+import { createTestType, updateTestType, createCategory, updateCategory, createClassification, updateClassification, deleteTestType } from '../reducers/testTypeReducer';
 
 export function createTestTypeAction(data) {
     return async dispatch => {
@@ -30,5 +30,10 @@ export function createClassificationAction(data) {
 export function updateClassificationAction(data) {
     return async dispatch => {
         dispatch(updateClassification(data))
+    }
+}
+export function removeTestTypeAction(data) {
+    return async dispatch => {
+        dispatch(deleteTestType(data))
     }
 }

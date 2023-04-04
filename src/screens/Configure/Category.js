@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     Typography, Grid, Table, TableRow, TableBody, TableHead, styled, TableCell, tableCellClasses,
     tableRowClasses, TablePagination, TableFooter, FormControl, Select, MenuItem, TableContainer, Paper,
-    Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase
+    Dialog, DialogTitle, DialogContent, FormControlLabel, RadioGroup, Radio, InputBase, FormHelperText
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import CustomSearchInput from '../../components/CustomSearchInput';
@@ -83,7 +83,10 @@ function Category(props) {
         description: "",
         status: "Active",
         mode: 'ADD',
-        selectedStatus:"All"
+        selectedStatus: "All",
+        nameError: false,
+        codeError: false,
+        isSearch: false
     })
 
     const router = useRouter();
@@ -104,7 +107,7 @@ function Category(props) {
 
     const handleChange = (e, param) => {
         if (param === "S") {
-            setState({ ...state, selectedStatus: e.target.value })
+            setState({ ...state, selectedStatus: e.target.value, isSearch: false, searchText: null, })
         }
     };
     const categoryClose = () => {
@@ -112,23 +115,34 @@ function Category(props) {
     };
     const submit = async () => {
         let { id, name, code, short_code, sequence_number, description, status } = state;
-        let data = {}
-        data.id = id;
-        data.code = code;
-        data.name = name;
-        data.short_code = short_code;
-        data.sequence_number = sequence_number;
-        data.description = description;
-        data.status = status;
-        if (state.mode === "ADD") {
-            data.id = category.length + 1
-            dispatch(createCategoryAction(data))
+        let isError = false;
+        if (name === "" || name === null || name === undefined) {
+            setState(ref => ({ ...ref, nameError: true }))
+            isError = true;
         }
-        else {
-            data.id = id
-            dispatch(updateCategoryAction(data))
+        if (code === "" || code === null || code === undefined) {
+            setState(ref => ({ ...ref, codeError: true }))
+            isError = true;
         }
-        setState({ ...state, addCategoryOpen: false })
+        if (isError === false) {
+            let data = {}
+            data.id = id;
+            data.code = code;
+            data.name = name;
+            data.short_code = short_code;
+            data.sequence_number = sequence_number;
+            data.description = description;
+            data.status = status;
+            if (state.mode === "ADD") {
+                data.id = category.length + 1
+                dispatch(createCategoryAction(data))
+            }
+            else {
+                data.id = id
+                dispatch(updateCategoryAction(data))
+            }
+            setState({ ...state, addCategoryOpen: false })
+        }
     };
 
     const cancel = () => {
@@ -136,15 +150,29 @@ function Category(props) {
     };
 
     const addAction = () => {
-        setState({ ...state, mode: "ADD", addCategoryOpen: true, id: "", name: "", code: "", short_code: "", sequence_number: "", description: "", status: "Active" })
+        setState({ ...state, mode: "ADD", addCategoryOpen: true, id: "", name: "", code: "", short_code: "", sequence_number: "", description: "", status: "Active", nameError: false, codeError: false })
     };
 
     const editAction = (param, mode) => {
         setState({ ...state, mode: mode, addCategoryOpen: true, id: param.id, code: param.code, name: param.name, code: param.code, short_code: param.short_code, sequence_number: param.sequence_number, description: param.description, status: param.status })
     };
+    const search = (name) => {
+        setState({ ...state, searchText: name, isSearch: true })
+    }
 
-    let displayCategoryRecord = state.selectedStatus === "All" ? category : category.filter((item) => item.status === state.selectedStatus)
-    
+    let displayCategoryRecord = []
+    if (state.searchText === null && state.selectedStatus === "All") {
+        displayCategoryRecord = category
+    }
+    else {
+        if (state.isSearch === true) {
+            displayCategoryRecord = category.filter((item, index) => item.name.toLowerCase().includes(state.searchText.toLowerCase()))
+        }
+        else {
+            displayCategoryRecord = category.filter((item) => item.status === state.selectedStatus)
+        }
+    }
+
     return (
         <>
             <Grid container>
@@ -152,8 +180,8 @@ function Category(props) {
                     <Grid container spacing={2}>
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
-                                placeholder='Search test upload name, tube number, file name'
-                                onChange={(name) => alert("WIP")}
+                                placeholder='Search category name, code'
+                                onChange={(name) => search(name)}
                             />
                         </Grid>
                         <Grid item xs={3} sm={3} md={3} lg={3} xl={3} >
@@ -207,7 +235,7 @@ function Category(props) {
                                         <StyledTableCell style={{ wordBreak: "break-word" }}>{category.description}</StyledTableCell>
                                         <StyledTableCell >{category.status}</StyledTableCell>
                                         <StyledTableCell>
-                                            <div style={{ display: "flex", flexDirection: "row", cursor:"pointer" }} onClick={() => editAction(category, "EDIT")}>
+                                            <div style={{ display: "flex", flexDirection: "row", cursor: "pointer" }} onClick={() => editAction(category, "EDIT")}>
                                                 <Image src={Edit} alt='edit' width={18} height={18} />
                                                 <Typography className="subText" style={{ marginLeft: "5px" }}>Edit</Typography>
                                             </div>
@@ -239,7 +267,7 @@ function Category(props) {
                 <Dialog open={state.addCategoryOpen} maxWidth={'sm'} >
                     <Grid container>
                         <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
-                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor:"pointer" }} onClick={() => categoryClose()} />
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => categoryClose()} />
                         </Grid>
                     </Grid>
                     <DialogTitle style={{ fontSize: "20px", fontStyle: "normal", lineHeight: "32px", fontFamily: "Avenir-Black", color: "#000", borderBottom: "1px solid #E8E8E8" }}>{state.mode === "ADD" ? "Add category" : "Edit category"}</DialogTitle>
@@ -256,8 +284,11 @@ function Category(props) {
                                             fullWidth
                                             // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.name}
-                                            onChange={(event) => setState({ ...state, name: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, name: event.target.value, nameError: false })}
+                                            error={state.nameError} />
+                                        {state.nameError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the name</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"
@@ -265,8 +296,11 @@ function Category(props) {
                                             fullWidth
                                             // inputProps={{ style: { fontSize: "12px", fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir-Book", backgroundColor: "#F0E9FF" } }}
                                             value={state.code}
-                                            onChange={(event) => setState({ ...state, code: event.target.value })}
-                                        />
+                                            onChange={(event) => setState({ ...state, code: event.target.value, codeError: false })}
+                                            error={state.codeError} />
+                                        {state.codeError === true &&
+                                            <FormHelperText style={{ color: 'red', marginLeft: '10px' }}>Please enter the code</FormHelperText>
+                                        }
                                     </Grid>
                                     <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                         <CustomInput size="small"

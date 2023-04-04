@@ -156,7 +156,7 @@ function Appointments(props) {
                                         renderValue={
                                             state.test_name !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Test name</Typography></Placeholder>
                                         }>
-                                        {!!test_type && test_type.map((item, index) =>
+                                        {!!test_type && test_type.filter((item)=>item.status==="Active").map((item, index) =>
                                             <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
                                         )}
                                     </Select>

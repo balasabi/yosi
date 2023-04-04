@@ -248,11 +248,11 @@ function Locations(props) {
                                         }}></Typography>
                                     </Grid>
                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
-                                    <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: 'pointer' }}>
+                                    <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: 'pointer' }} onClick={() => handleView(item.id)}>
                                         <Typography style={{
                                             letterSpacing: "0.4px", fontSize: "14px", lineHeight: "20px", fontFamily: "Avenir-Black", fontWeight: 'bold'
                                         }} color={"#313237"}>Show Details</Typography>
-                                        <IconButton onClick={() => handleView(item.id)}>
+                                        <IconButton >
                                             <ArrowForwardIcon width={20} height={20} style={{ color: "#6425FE" }} />
                                         </IconButton>
                                     </Grid>
