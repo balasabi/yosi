@@ -170,7 +170,7 @@ function TestCombo(props) {
                     <Grid container spacing={2}>
                         <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
                             <CustomSearchInput
-                                placeholder='Search test combo name'
+                                placeholder='Search Test Combo'
                                 onChange={(name) => alert("WIP")}
                             />
                         </Grid>
@@ -240,7 +240,7 @@ function TestCombo(props) {
                                                         <Typography style={{
                                                             letterSpacing: "0.4px", fontWeight: 700, fontSize: "14px", lineHeight: "20px", marginTop: "5px", fontFamily: "Avenir-Book"
                                                         }} color={"#313237"}>
-                                                            Test Type Covered: {item.testComboTestTypes.length > 0 && item.testComboTestTypes.length} </Typography>
+                                                            Tests Covered: {item.testComboTestTypes.length > 0 && item.testComboTestTypes.length} </Typography>
                                                         <Typography ></Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
