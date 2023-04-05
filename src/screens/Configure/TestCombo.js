@@ -17,6 +17,7 @@ import _ from 'underscore';
 import InputBase from "@mui/material/InputBase";
 import { createTestComboAction, updateTestComboAction, removeItemFromTestComboAction } from "../../store/actions/testComboAction";
 import { useRouter } from 'next/router';
+import DisabledByDefaultRoundedIcon from '@mui/icons-material/DisabledByDefaultRounded';
 
 const CustomInput = styled(InputBase)(({ theme }) => ({
     "label + &": {
@@ -100,7 +101,12 @@ function TestCombo(props) {
 
 
     const dialogAction = () => {
-        setState({ ...state, dialogOpen: !state.dialogOpen, mode: "ADD" })
+        setState({
+            ...state, dialogOpen: !state.dialogOpen, mode: "ADD", id: "",
+            testComboName: "",
+            price: "",
+            selectedTestType: []
+        })
     };
 
 
@@ -108,25 +114,25 @@ function TestCombo(props) {
         let data = {}
         data.testComboName = state.testComboName
         data.testComboTestTypes = state.selectedTestType
-        data.price = state.price      
-        
+        data.price = state.price
+
         if (state.mode === "ADD") {
             data.id = testCombo.length + 1
             data.status = "Active"
             dispatch(createTestComboAction(data, state, setState))
-            setState({ ...state, dialogOpen: false, price: "", testComboName: "", id: "", selectedTestType: [],status:"" })
+            setState({ ...state, dialogOpen: false, price: "", testComboName: "", id: "", selectedTestType: [], status: "" })
         }
         else {
             data.status = state.status
             data.id = state.id
             dispatch(updateTestComboAction(data, state, setState))
-            setState({ ...state, dialogOpen: false, price: "", testComboName: "", id: "", selectedTestType: [] ,status:""})
+            setState({ ...state, dialogOpen: false, price: "", testComboName: "", id: "", selectedTestType: [], status: "" })
         }
     }
 
     const editAction = (value) => {
         let selectedTypeType = value.testComboTestTypes
-        setState({ ...state, dialogOpen: !state.dialogOpen, id: value.id, testComboName: value.testComboName, price: value.price, selectedTestType: selectedTypeType, mode: "EDIT" ,status:value.status})
+        setState({ ...state, dialogOpen: !state.dialogOpen, id: value.id, testComboName: value.testComboName, price: value.price, selectedTestType: selectedTypeType, mode: "EDIT", status: value.status })
     }
 
     const deleteAction = (value) => {
@@ -144,6 +150,10 @@ function TestCombo(props) {
 
     const handleView = (param) => {
         router.push({ pathname: '/configure/view-test-combo', query: "testComboId=" + param })
+    };
+
+    const handleCloseTestCombo = () => {
+        setState({ ...state, dialogOpen: false })
     };
 
 
@@ -208,8 +218,8 @@ function TestCombo(props) {
                                                                 <Typography className='subHeading'>{item.testComboName} </Typography>
                                                             </Grid>
                                                             <Grid item xs={2} style={{ display: "flex", justifyContent: "space-between" }}>
-                                                                <EditIcon onClick={() => editAction(item)} />                                                                
-                                                                <DeleteIcon  style={{ color: "red" }} onClick={() => deleteAction(item)} />
+                                                                <EditIcon onClick={() => editAction(item)} />
+                                                                <DeleteIcon style={{ color: "red" }} onClick={() => deleteAction(item)} />
                                                             </Grid>
                                                         </Grid>
                                                     </Grid>
@@ -234,7 +244,7 @@ function TestCombo(props) {
                                                         <Typography ></Typography>
                                                     </Grid>
                                                     <Grid item xs={12} style={{ borderBottom: "0.5px solid rgba(0, 0, 0, 0.16)" }} />
-                                                    <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: "pointer" }}  onClick={() => handleView(item.id)}>
+                                                    <Grid item xs={12} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginTop: "10px", cursor: "pointer" }} onClick={() => handleView(item.id)}>
                                                         <Typography className='miniHeading'>Show Details</Typography>
                                                         <ArrowForwardIcon style={{ color: "#6425FE" }} />
                                                     </Grid>
@@ -254,25 +264,35 @@ function TestCombo(props) {
                 <Dialog
                     open={state.dialogOpen}
                     onClose={() => dialogAction()}>
+                      <Grid container>
+                        <Grid item xs={12} style={{ display: "flex", justifyContent: "flex-end" }}>
+                            <DisabledByDefaultRoundedIcon style={{ color: "#5824D6", fontSize: "45px", position: "absolute", cursor: "pointer" }} onClick={() => handleCloseTestCombo()} />
+                        </Grid>
+                    </Grid>
                     <DialogTitle>
-                        <Typography className='header'>
-                            Add Test Combo
-                        </Typography>
+                        <Typography style={{ fontSize: "20px", paddingBottom: '10px', fontWeight: "bold", fontFamily: 'Avenir-Black' }}> {state.mode ==="ADD" ? "Add Test Combo":"Edit Test Combo"}</Typography>
+                        <div style={{ background: '#E8E8E8', height: 1 }}></div>
                     </DialogTitle>
-                    <DialogContent>
+                 <DialogContent>
                         <Grid container rowGap={3}>
-                            <Grid item xs={12}>                                
+                            <Grid item xs={12}>
                                 <Grid container>
                                     <Grid item xs={12}>
                                         <Select
                                             labelId="mutiple-select-label"
+                                            displayEmpty
                                             multiple
                                             fullWidth
-                                            
                                             size='small'
                                             value={state.selectedTestType !== undefined && state.selectedTestType}
                                             onChange={(e) => handleChange(e)}
-                                            renderValue={(selected) =>    selected.join(", ")}                                            
+                                            renderValue={(selected) => {
+                                                if (selected.length === 0) {
+                                                    return <p>Select Tests </p>;
+                                                }
+                                                return selected.join(', ');
+                                            }}
+                                            inputProps={{ 'aria-label': 'Without label' }}
                                             MenuProps={MenuProps}>
                                             {test_type.map((option) => (
                                                 <MenuItem key={option.name} value={option.name}>
@@ -284,19 +304,19 @@ function TestCombo(props) {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={12} >                           
-                            <CustomInput value={state.testComboName} placeholder="Test Combo Name"
-                                size='small' fullWidth
-                                onChange={(e) => setState({ ...state, testComboName: e.target.value })} />
-                           </Grid>                              
-                           
-                            <Grid item xs={12} >                           
-                            <CustomInput value={state.price} placeholder="Test Combo Price"
-                                size='small' fullWidth
-                                onChange={(e) => setState({ ...state, price: e.target.value })} />                     
-                           </Grid>
+                            <Grid item xs={12} >
+                                <CustomInput value={state.testComboName} placeholder="Test Combo Name"
+                                    size='small' fullWidth
+                                    onChange={(e) => setState({ ...state, testComboName: e.target.value })} />
+                            </Grid>
+
+                            <Grid item xs={12} >
+                                <CustomInput value={state.price} placeholder="Test Combo Price"
+                                    size='small' fullWidth
+                                    onChange={(e) => setState({ ...state, price: e.target.value })} />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}  style={{ display: "flex", flexDirection:"row", alignItems: "center" , marginTop:0}}>
+                        <Grid item xs={12} style={{ display: "flex", flexDirection: "row", alignItems: "center", marginTop: 20 }}>
                             <Typography style={{ fontFamily: 'Avenir-Bold', paddingRight: "7px" }}>Status</Typography>
                             <RadioGroup defaultValue={state.mode === "ADD" ? "Active" : state.status} row onChange={(event) => setState({ ...state, status: event.target.value })}>
                                 <FormControlLabel value="Active" control={<Radio sx={{ color: '#5824D6', '&.Mui-checked': { color: '#5824D6' } }} />} label="Active" />
