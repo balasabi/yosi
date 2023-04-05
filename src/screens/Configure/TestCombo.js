@@ -283,13 +283,12 @@ function TestCombo(props) {
                                             displayEmpty
                                             multiple
                                             fullWidth
-                                            size='small'
-                                            
+                                            size='small'                                            
                                             value={state.selectedTestType !== undefined && state.selectedTestType}
                                             onChange={(e) => handleChange(e)}
                                             renderValue={(selected) => {
                                                 if (selected.length === 0) {
-                                                    return <p>Select Tests</p>;
+                                                    return "Select Tests";
                                                 }
                                                 return selected.join(', ');
                                             }}

@@ -171,13 +171,19 @@ function RolesAndPermission(props) {
                                                 <Typography style={{ fontSize: 11, color: "#4D1EC0"  }}>{selectedValue(roleItem[Object.keys(roleItem)[0]]).join(", ")}</Typography>
                                                 <FormControl sx={{ m: 0, width: 150, mt: 1, }}>
                                                     <Select
-                                                        labelId="mutiple-select-label"
+                                                      displayEmpty
+                                                       labelId="mutiple-select-label"
                                                         multiple
                                                         fullWidth
                                                         size='small'
                                                         value={selectedValue(roleItem[Object.keys(roleItem)[0]])}
                                                         onChange={(e) => handleChange(e, Object.keys(roleItem)[0], item.screen)}
-                                                        renderValue={(selected) => selected.join(", ")}
+                                                        renderValue={(selected) => {
+                                                            if (selected.length === 0) {
+                                                                return "Select";
+                                                            }
+                                                            return selected.join(', ');
+                                                        }}
                                                         MenuProps={MenuProps}>
                                                         {access.map((option) => (
                                                             <MenuItem key={option} value={option}>
