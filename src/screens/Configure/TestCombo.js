@@ -203,8 +203,8 @@ function TestCombo(props) {
                     </Grid>
                     {/* */}
                 </Grid>
-                <Grid item xs={12} style={{}}>
-                    <Grid container style={{}}>
+                <Grid item xs={12} >
+                    <Grid container>
                         {!!displayTestComboRecord && displayTestComboRecord.length > 0 ? displayTestComboRecord.map((item, index) =>
                             <Grid item xs={12} sm={6} md={6} lg={4} xl={4} key={index.toString()}>
                                 <Table>
@@ -278,17 +278,18 @@ function TestCombo(props) {
                             <Grid item xs={12}>
                                 <Grid container>
                                     <Grid item xs={12}>
-                                        <Select
+                                        <Select style={{backgroundColor:"#F0E9FF"}}
                                             labelId="mutiple-select-label"
                                             displayEmpty
                                             multiple
                                             fullWidth
                                             size='small'
+                                            
                                             value={state.selectedTestType !== undefined && state.selectedTestType}
                                             onChange={(e) => handleChange(e)}
                                             renderValue={(selected) => {
                                                 if (selected.length === 0) {
-                                                    return <p>Select Tests </p>;
+                                                    return <p>Select Tests</p>;
                                                 }
                                                 return selected.join(', ');
                                             }}
