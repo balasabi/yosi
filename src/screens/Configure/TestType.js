@@ -252,7 +252,7 @@ function TestType(props) {
                             </Grid>
                         ) :
                             <Grid item xs={12}>
-                                <Typography style={{ fontSize: "16px", color: "grey", textAlign: "center", marginTop: "10px" }}>No {state.selectedStatus} records available</Typography>
+                                <Typography style={{ fontSize: "16px", color: "grey", textAlign: "center", marginTop: "10px" }}>No records available</Typography>
                             </Grid>
                         }
                     </Grid>

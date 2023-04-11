@@ -45,6 +45,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function Dashboard(props) {
     const test_type = useSelector(state => state.testTypeReducer.test_type);
+    const locations = useSelector(state => state.locationReducer.location);
+
     const [state, setState] = useState({
         isClickCheckBox: false,
         selectedPatients: [],
@@ -52,6 +54,7 @@ function Dashboard(props) {
         lab: "",
         data: "",
         isClick: false,
+        location:"Adyar",
         useMoreUserTest: [
             { "id": 1, "testId": "WEL-00001", "patientName": "Basco", "testType": "Insurance CAB Test", "collectionDate": "12/12/2022 10:12 AM", "tubeNumber": "T00001", "result": "Negative", "analysis": "Result unavailable " },
             { "id": 2, "testId": "WEL-00017", "patientName": "John Williams ", "testType": "Insurance CRAB test", "collectionDate": "13/12/2022 11.00 AM", "tubeNumber": "T00012", "result": "Negative", "analysis": "result available" },
@@ -125,17 +128,38 @@ function Dashboard(props) {
         setState({ ...state, data: file })
     }
 
+    const handleChange = (event) => {
+        setState({...state, location:event.target.value});
+      };
+
     let testList = state.isClick ? state.useMoreUserTest : state.useMoreUserTest.slice(0, 4)
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography className='header'>Dashboard</Typography>
+                <Grid item xs={12} style={{ display: "flex" }}>
+                    <Grid item xs={9}>
+                        <Typography className='header'>Dashboard</Typography>
+                    </Grid>
+                    <Grid item xs={3} style={{ display: "flex" }}>
+                        <Typography style={{ fontWeight: "bold", fontSize: "20px", marginRight:"5px" }}>Location :</Typography>
+                        <Select
+                        sx={{minWidth:180, height:35}}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={state.location}
+                            onChange={(event)=>handleChange(event)}
+                        >
+                            {!!locations && locations.map((item,index)=>
+                            <MenuItem  key={index.toString()}value={item.location}>{item.location}</MenuItem>
+                            )}
+                        </Select>
+                    </Grid>
+
                 </Grid>
                 <Grid item xs={8.5}>
                     <Grid container style={{ boxShadow: '1px 2px 5px rgb(0 0 0 / 20%)', marginTop: "2px", padding: "15px", borderRadius: "15px" }}>
                         <Grid item xs={12} style={{ border: "1px dashed #998E8A", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "25px", background: '#F7F7F7' }}>
-                            <div style={{ backgroundColor: '#F7F7F7'}}
+                            <div style={{ backgroundColor: '#F7F7F7' }}
                                 onDragOver={(e) => dragOver(e)}
                                 onDragEnter={(e) => dragEnter(e)}
                                 onDragLeave={(e) => dragLeave(e)}
@@ -148,19 +172,19 @@ function Dashboard(props) {
                                         type="file"
                                         multiple
                                         onChange={(e) => fileHandler(e)}
-                                    />
-                                    <label htmlFor="text-button-file2" style={{cursor:"pointer"}}>
+                                    /> 
+                                    <label htmlFor="text-button-file2" style={{ cursor: "pointer" }}>
                                         {!isDragActive &&
                                             <Image src={Upload} alt='upload' width={30} height={30} style={{ marginLeft: "60px" }} />}
                                     </label>
                                 </div>
                                 <Typography className='header'>{state.data === "" ? "Upload test" : state.data.name}{state.data !== "" && <MdDelete style={{ color: "red", marginTop: "10px", cursor: "pointer" }} onClick={() => setState({ ...state, data: "" })} />}</Typography>
-                                { state.data === "" ?
-                                        <>
-                                            <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
-                                            <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
-                                        </>
-                                        : "" }
+                                {state.data === "" ?
+                                    <>
+                                        <Typography className='miniLiteText' textAlign={"center"}>Supports: .csv, .xl</Typography>
+                                        <Typography className='miniLiteText' textAlign={"center"}>Maximum size: .10Kb</Typography>
+                                    </>
+                                    : ""}
                             </div>
                         </Grid>
                         <Grid container spacing={2}>
@@ -175,7 +199,7 @@ function Dashboard(props) {
                                         state.test !== "" ? undefined : () => <Placeholder><Typography style={{ fontStyle: "normal", lineHeight: "24px", fontFamily: "Avenir", color: "#998E8A" }}>Select test</Typography></Placeholder>
                                     }>
                                     {!!test_type && test_type.map((item, index) =>
-                                      <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
+                                        <MenuItem key={index.toString()} value={item.name}>{item.name}</MenuItem>
                                     )}
                                 </Select>
                             </Grid>
@@ -223,7 +247,7 @@ function Dashboard(props) {
                                 <Image src={Barcode} alt='Vector' width={"5vw"} height={"5vh"} />
                             </div>
                         </Grid>
-                        <Grid container style={{ display: "flex", flexDirection: "row", alignItems: "center", }}>
+                        <Grid container style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                             <Grid item xs={6} style={{ border: "1px solid #D9D9D9" }} />
                             <Grid item xs={1}>
                                 <Typography style={{ marginLeft: "5px", marginRight: "5px", fontSize: "10px", fontFamily: "Avenir-Book-Book", fontStyle: "normal", lineHeight: "24px", color: "#474747" }} >or</Typography>

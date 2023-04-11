@@ -8,6 +8,9 @@ import Setting from '../../public/Images/svg/CarbonSettings.svg';
 import IdentificationBadge from '../../public/Images/IdentificationBadge.png';
 import UsersThree from '../../public/Images/svg/UsersThree.svg';
 import IdentificationCard from '../../public/Images/svg/IdentificationBadge.svg';
+import PublicIcon from '@mui/icons-material/Public';
+import BiotechIcon from '@mui/icons-material/Biotech';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export const sideMenu = [
     {
@@ -56,10 +59,22 @@ export const sideMenu = [
         name: "Configuration",
         menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />,
         url: '/configure',
-        pages: [{ title: "Country", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure' },
-        { title: "Test", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-configure' },
-        { title: "Location", menuIcon: <Image src={Location} alt={"location"} width={18} height={21} />, url: '/locations' },
-        { title: "Test Combo", menuIcon: <Image src={Setting} alt={"setting"} width={20} height={20} />, url: '/configure/test-combo' },
+        pages: [{ title: "Country", menuIcon:
+        <PublicIcon color='primary' sx={{ fontSize: 20 }}/> 
+        // <Image src={Setting} alt={"setting"} width={20} height={20} />
+        , url: '/configure' },
+        { title: "Test", menuIcon: 
+        <BiotechIcon color='primary' sx={{ fontSize: 22 }}/>,
+        // <Image src={Setting} alt={"setting"} width={20} height={20} />,
+         url: '/configure/test-configure' },
+        { title: "Location", menuIcon: 
+        <LocationOnIcon color='primary' sx={{ fontSize: 22 }}/>,
+        // <Image src={Location} alt={"location"} width={18} height={21} />,
+         url: '/locations' },
+        { title: "Test Combo", menuIcon: 
+        <BiotechIcon color='primary' sx={{ fontSize: 22 }}/>,
+        // <Image src={Setting} alt={"setting"} width={20} height={20} />,
+         url: '/configure/test-combo' },
     ]
     },
     {

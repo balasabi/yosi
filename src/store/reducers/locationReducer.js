@@ -5,7 +5,7 @@ const initialState = {
        {
             id:1,
             location_code:"VLCY",
-            location: "Velacherry",
+            location: "Velachery",
             status: "Active",
             lab_name: "Yosi Lab",
             lab_code:"YL001",

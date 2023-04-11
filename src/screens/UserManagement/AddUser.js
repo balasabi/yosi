@@ -106,7 +106,7 @@ function AddUser(props) {
                 <Grid item xs={12}>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
-                            <Typography style={{ color: '#6425FE' }}>User information</Typography>
+                            <Typography style={{ color: '#6425FE' }}>User Information</Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Select size='small'

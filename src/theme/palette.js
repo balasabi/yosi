@@ -11,5 +11,8 @@ const palette = {
     dark: '#C54800',
     contrastText: '#000',
   },
+  success: {
+    main: '#D7C7FF',
+  }
 };
 export default palette;
